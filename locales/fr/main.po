@@ -1,0 +1,41 @@
+# SOME DESCRIPTIVE TITLE.
+# This file is put in the public domain.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Dotclear 2 addToAny module\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-01-17 14:00+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Add social meta to your posts and pages"
+msgstr "Ajoute les métadonnées sociales à vos billets et pages"
+
+msgid "socialMeta"
+msgstr "socialMeta"
+
+msgid "Active socialMeta"
+msgstr "Activer socialMeta"
+
+msgid "Add social meta on posts"
+msgstr "Ajouter les métadonnées sociales aux billets"
+
+msgid "Add social meta on pages"
+msgstr "Ajouter les métadonnées sociales aux pages"
+
+msgid "Settings"
+msgstr "Réglages"
+
+msgid "Twitter account:"
+msgstr "Compte twitter :"
+
+msgid "With or without @ prefix."
+msgstr "Avec ou sans le préfixe @."
