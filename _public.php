@@ -52,7 +52,7 @@ class dcSocialMeta
 
 					// Facebook meta
 					echo
-					'<!- - Facebook - ->'."\n".
+					'<!-- Facebook -->'."\n".
 					'<meta property="og:title" content="'.$title.'" />'."\n".
 					'<meta property="og:description" content="'.$content.'" />'."\n";
 					if (strlen($img)) {
@@ -61,7 +61,7 @@ class dcSocialMeta
 					}
 					// Google+
 					echo
-					'<!- - Google +1 - ->'."\n".
+					'<!-- Google +1 -->'."\n".
 					'<meta itemprop="name" content="'.$title.'" />'."\n".
 					'<meta itemprop="description" content="'.$content.'" />'."\n";
 					if (strlen($img)) {
@@ -70,7 +70,7 @@ class dcSocialMeta
 					}
 					// Twitter
 					echo
-					'<!- - Twitter - ->'."\n".
+					'<!-- Twitter -->'."\n".
 					'<meta name="twitter:card" content="summary" />'."\n".
 					'<meta name="twitter:url" content="'.$url.'" />'."\n".
 					'<meta name="twitter:title" content="'.$title.'" />'."\n".
