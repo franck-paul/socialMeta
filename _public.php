@@ -54,26 +54,36 @@ class dcSocialMeta
 					echo
 					'<!- - Facebook - ->'."\n".
 					'<meta property="og:title" content="'.$title.'" />'."\n".
-					'<meta property="og:description" content="'.$content.'" />'."\n".
-					'<meta property="og:image" content="'.$img.'" />'."\n";
-
+					'<meta property="og:description" content="'.$content.'" />'."\n";
+					if (strlen($img)) {
+						echo
+						'<meta property="og:image" content="'.$img.'" />'."\n";
+					}
 					// Google+
 					echo
 					'<!- - Google +1 - ->'."\n".
 					'<meta itemprop="name" content="'.$title.'" />'."\n".
-					'<meta itemprop="description" content="'.$content.'" />'."\n".
-					'<meta itemprop="image" content="'.$img.'" />'."\n";
-
+					'<meta itemprop="description" content="'.$content.'" />'."\n";
+					if (strlen($img)) {
+						echo
+						'<meta itemprop="image" content="'.$img.'" />'."\n";
+					}
 					// Twitter
 					echo
 					'<!- - Twitter - ->'."\n".
 					'<meta name="twitter:card" content="summary" />'."\n".
 					'<meta name="twitter:url" content="'.$url.'" />'."\n".
 					'<meta name="twitter:title" content="'.$title.'" />'."\n".
-					'<meta name="twitter:description" content="'.$content.'" />'."\n".
-					'<meta name="twitter:image:src" content="'.$img.'"/>'."\n".
-					'<meta name="twitter:site" content="'.$account.'" />'."\n".
-					'<meta name="twitter:creator" content="'.$account.'" />'."\n";
+					'<meta name="twitter:description" content="'.$content.'" />'."\n";
+					if (strlen($img)) {
+						echo
+						'<meta name="twitter:image:src" content="'.$img.'"/>'."\n";
+					}
+					if (strlen($account)) {
+						echo
+						'<meta name="twitter:site" content="'.$account.'" />'."\n".
+						'<meta name="twitter:creator" content="'.$account.'" />'."\n";
+					}
 				}
 			}
 		}
