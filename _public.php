@@ -28,6 +28,12 @@ class dcSocialMeta
 				if (($_ctx->posts->post_type == 'post' && $core->blog->settings->socialMeta->on_post) ||
 					($_ctx->posts->post_type == 'page' && $core->blog->settings->socialMeta->on_page))
 				{
+					if (!$core->blog->settings->socialMeta->facebook &&
+						!$core->blog->settings->socialMeta->google &&
+						!$core->blog->settings->socialMeta->twitter) {
+						return;
+					}
+
 					// Post/Page URL
 					$url = $_ctx->posts->getURL();
 					// Post/Page title
@@ -44,45 +50,51 @@ class dcSocialMeta
 						$root = preg_replace('#^(.+?//.+?)/(.*)$#','$1',$core->blog->url);
 						$img = $root.$img;
 					}
-					// Twitter account
-					$account = $core->blog->settings->socialMeta->twitter_account;
-					if (strlen($account) && substr($account,0,1) != '@') {
-						$account = '@'.$account;
-					}
 
-					// Facebook meta
-					echo
-					'<!-- Facebook -->'."\n".
-					'<meta property="og:title" content="'.$title.'" />'."\n".
-					'<meta property="og:description" content="'.$content.'" />'."\n";
-					if (strlen($img)) {
+					if ($core->blog->settings->socialMeta->facebook) {
+						// Facebook meta
 						echo
-						'<meta property="og:image" content="'.$img.'" />'."\n";
+						'<!-- Facebook -->'."\n".
+						'<meta property="og:title" content="'.$title.'" />'."\n".
+						'<meta property="og:description" content="'.$content.'" />'."\n";
+						if (strlen($img)) {
+							echo
+							'<meta property="og:image" content="'.$img.'" />'."\n";
+						}
 					}
-					// Google+
-					echo
-					'<!-- Google +1 -->'."\n".
-					'<meta itemprop="name" content="'.$title.'" />'."\n".
-					'<meta itemprop="description" content="'.$content.'" />'."\n";
-					if (strlen($img)) {
+					if ($core->blog->settings->socialMeta->google) {
+						// Google+
 						echo
-						'<meta itemprop="image" content="'.$img.'" />'."\n";
+						'<!-- Google+ -->'."\n".
+						'<meta itemprop="name" content="'.$title.'" />'."\n".
+						'<meta itemprop="description" content="'.$content.'" />'."\n";
+						if (strlen($img)) {
+							echo
+							'<meta itemprop="image" content="'.$img.'" />'."\n";
+						}
 					}
-					// Twitter
-					echo
-					'<!-- Twitter -->'."\n".
-					'<meta name="twitter:card" content="summary" />'."\n".
-					'<meta name="twitter:url" content="'.$url.'" />'."\n".
-					'<meta name="twitter:title" content="'.$title.'" />'."\n".
-					'<meta name="twitter:description" content="'.$content.'" />'."\n";
-					if (strlen($img)) {
+					if ($core->blog->settings->socialMeta->twitter) {
+						// Twitter account
+						$account = $core->blog->settings->socialMeta->twitter_account;
+						if (strlen($account) && substr($account,0,1) != '@') {
+							$account = '@'.$account;
+						}
+						// Twitter
 						echo
-						'<meta name="twitter:image:src" content="'.$img.'"/>'."\n";
-					}
-					if (strlen($account)) {
-						echo
-						'<meta name="twitter:site" content="'.$account.'" />'."\n".
-						'<meta name="twitter:creator" content="'.$account.'" />'."\n";
+						'<!-- Twitter -->'."\n".
+						'<meta name="twitter:card" content="summary" />'."\n".
+						'<meta name="twitter:url" content="'.$url.'" />'."\n".
+						'<meta name="twitter:title" content="'.$title.'" />'."\n".
+						'<meta name="twitter:description" content="'.$content.'" />'."\n";
+						if (strlen($img)) {
+							echo
+							'<meta name="twitter:image:src" content="'.$img.'"/>'."\n";
+						}
+						if (strlen($account)) {
+							echo
+							'<meta name="twitter:site" content="'.$account.'" />'."\n".
+							'<meta name="twitter:creator" content="'.$account.'" />'."\n";
+						}
 					}
 				}
 			}

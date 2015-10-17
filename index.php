@@ -20,6 +20,9 @@ if (is_null($core->blog->settings->socialMeta->active)) {
 		$core->blog->settings->socialMeta->put('on_post',true,'boolean','Add social meta on post',false);
 		$core->blog->settings->socialMeta->put('on_page',false,'boolean','Add social meta on page',false);
 		$core->blog->settings->socialMeta->put('twitter_account','','string','Twitter account',false);
+		$core->blog->settings->socialMeta->put('facebook',true,'boolean','Insert Facebook meta',false);
+		$core->blog->settings->socialMeta->put('google',true,'boolean','Insert Google+ meta',false);
+		$core->blog->settings->socialMeta->put('twitter',true,'boolean','Insert Twitter meta',false);
 
 		$core->blog->triggerBlog();
 		http::redirect($p_url);
@@ -33,6 +36,9 @@ $sm_active = (boolean) $core->blog->settings->socialMeta->active;
 $sm_on_post = (boolean) $core->blog->settings->socialMeta->on_post;
 $sm_on_page = (boolean) $core->blog->settings->socialMeta->on_page;
 $sm_twitter_account = $core->blog->settings->socialMeta->twitter_account;
+$sm_facebook = (boolean) $core->blog->settings->socialMeta->facebook;
+$sm_google = (boolean) $core->blog->settings->socialMeta->google;
+$sm_twitter = (boolean) $core->blog->settings->socialMeta->twitter;
 
 if (!empty($_POST))
 {
@@ -42,6 +48,9 @@ if (!empty($_POST))
 		$sm_on_post = !empty($_POST['sm_on_post']);
 		$sm_on_page = !empty($_POST['sm_on_page']);
 		$sm_twitter_account = trim(html::escapeHTML($_POST['sm_twitter_account']));
+		$sm_facebook = !empty($_POST['sm_facebook']);
+		$sm_google = !empty($_POST['sm_google']);
+		$sm_twitter = !empty($_POST['sm_twitter']);
 
 		# Everything's fine, save options
 		$core->blog->settings->addNamespace('socialMeta');
@@ -49,6 +58,9 @@ if (!empty($_POST))
 		$core->blog->settings->socialMeta->put('on_post',$sm_on_post);
 		$core->blog->settings->socialMeta->put('on_page',$sm_on_page);
 		$core->blog->settings->socialMeta->put('twitter_account',$sm_twitter_account);
+		$core->blog->settings->socialMeta->put('facebook',$sm_facebook);
+		$core->blog->settings->socialMeta->put('google',$sm_google);
+		$core->blog->settings->socialMeta->put('twitter',$sm_twitter);
 
 		$core->blog->triggerBlog();
 
@@ -88,11 +100,52 @@ echo
 '<p>'.form::checkbox('sm_on_page',1,$sm_on_page).' '.
 '<label for="sm_on_page" class="classic">'.__('Add social meta on pages').'</label></p>'.
 
+'<hr />'.
+
+'<p>'.form::checkbox('sm_facebook',1,$sm_facebook).' '.
+'<label for="sm_facebook" class="classic">'.__('Use Facebook social meta:').'</label></p>'.
+'<pre>'.
+html::escapeHTML(
+	'<!-- Facebook -->'."\n".
+	'<meta property="og:title" content="Plugin socialMeta 0.2 pour Dotclear" />'."\n".
+	'<meta property="og:description" content="Nouvelle version de ce petit plugin, ..." />'."\n".
+	'<meta property="og:image" content="http://open-time.net/public/illustrations/2014/.googleplus-twitter-facebook_s.jpg" />'."\n"
+	).
+'</pre>'.
+
+'<p>'.form::checkbox('sm_google',1,$sm_google).' '.
+'<label for="sm_google" class="classic">'.__('Use Google+ social meta:').'</label></p>'.
+'<pre>'.
+html::escapeHTML(
+	'<!-- Google+ -->'."\n".
+	'<meta itemprop="name" content="Plugin socialMeta 0.2 pour Dotclear" />'."\n".
+	'<meta itemprop="description" content="Nouvelle version de ce petit plugin, ..." />'."\n".
+	'<meta itemprop="image" content="http://open-time.net/public/illustrations/2014/.googleplus-twitter-facebook_s.jpg" />'."\n"
+	).
+'</pre>'.
+
+'<p>'.form::checkbox('sm_twitter',1,$sm_twitter).' '.
+'<label for="sm_twitter" class="classic">'.__('Use Twitter social meta:').'</label></p>'.
+'<pre>'.
+html::escapeHTML(
+	'<!-- Twitter -->'."\n".
+	'<meta name="twitter:card" content="summary" />'."\n".
+	'<meta name="twitter:url" content="http://open-time.net/post/2014/01/20/Plugin-socialMeta-02-pour-Dotclear" />'."\n".
+	'<meta name="twitter:title" content="Plugin socialMeta 0.2 pour Dotclear" />'."\n".
+	'<meta name="twitter:description" content="Nouvelle version de ce petit plugin, ..." />'."\n".
+	'<meta name="twitter:image:src" content="http://open-time.net/public/illustrations/2014/.googleplus-twitter-facebook_s.jpg"/>'."\n".
+	'<meta name="twitter:site" content="@franckpaul" />'."\n".
+	'<meta name="twitter:creator" content="@franckpaul" />'."\n"
+	).
+'</pre>'.
+
 '<h3>'.__('Settings').'</h3>'.
 
 '<p><label for="sm_twitter_account">'.__('Twitter account:').'</label> '.
 form::field('sm_twitter_account',30,128,html::escapeHTML($sm_twitter_account)).'</p>'.
 '<p class="form-note">'.__('With or without @ prefix.').'</p>'.
+
+
 
 '<p>'.$core->formNonce().'<input type="submit" value="'.__('Save').'" /></p>'.
 '</form>';

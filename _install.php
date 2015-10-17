@@ -24,6 +24,9 @@ try
 	$core->blog->settings->socialMeta->put('on_post',true,'boolean','Add social meta on post',false,true);
 	$core->blog->settings->socialMeta->put('on_page',false,'boolean','Add social meta on page',false,true);
 	$core->blog->settings->socialMeta->put('twitter_account','','string','Twitter account',false,true);
+	$core->blog->settings->socialMeta->put('facebook',true,'boolean','Insert Facebook meta',false,true);
+	$core->blog->settings->socialMeta->put('google',true,'boolean','Insert Google+ meta',false,true);
+	$core->blog->settings->socialMeta->put('twitter',true,'boolean','Insert Twitter meta',false,true);
 
 	$core->setVersion('socialMeta',$new_version);
 
