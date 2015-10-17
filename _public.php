@@ -58,9 +58,13 @@ class dcSocialMeta
 					}
 					// Post/Page first image
 					$img = '';
+					$largeImg = false;
 					if ($core->blog->settings->socialMeta->photo) {
 						// Photoblog, use original photo rather than small one
 						$img = context::EntryFirstImageHelper('o','',false,true);
+						if ($img != '') {
+							$largeImg = true;
+						}
 					}
 					if ($img == '') {
 						$img = context::EntryFirstImageHelper('s','',false,true);
@@ -101,7 +105,7 @@ class dcSocialMeta
 						// Twitter
 						echo
 						'<!-- Twitter -->'."\n".
-						'<meta name="twitter:card" content="summary" />'."\n".
+						'<meta name="twitter:card" content="'.($largeImg ? 'summary_large_image' : 'summary').'" />'."\n".
 						'<meta name="twitter:url" content="'.$url.'" />'."\n".
 						'<meta name="twitter:title" content="'.$title.'" />'."\n".
 						'<meta name="twitter:description" content="'.$content.'" />'."\n";

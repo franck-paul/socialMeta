@@ -14,11 +14,11 @@ if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
 	/* Name */					"socialMeta",
-	/* Description*/		"Add social meta to your posts and pages",
+	/* Description*/			"Add social meta to your posts and pages",
 	/* Author */				"Franck Paul",
-	/* Version */				'0.3',
+	/* Version */				'0.3.1',
 	array(
-		/* Permissions */	'permissions' =>	'admin',
+		/* Permissions */		'permissions' =>	'admin',
 		/* Type */				'type' =>			'plugin'
 	)
 );
