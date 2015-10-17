@@ -23,6 +23,8 @@ if (is_null($core->blog->settings->socialMeta->active)) {
 		$core->blog->settings->socialMeta->put('facebook',true,'boolean','Insert Facebook meta',false);
 		$core->blog->settings->socialMeta->put('google',true,'boolean','Insert Google+ meta',false);
 		$core->blog->settings->socialMeta->put('twitter',true,'boolean','Insert Twitter meta',false);
+		$core->blog->settings->socialMeta->put('photo',false,'boolean','Photoblog',false);
+		$core->blog->settings->socialMeta->put('description','','string','Default description',false);
 
 		$core->blog->triggerBlog();
 		http::redirect($p_url);
@@ -39,6 +41,8 @@ $sm_twitter_account = $core->blog->settings->socialMeta->twitter_account;
 $sm_facebook = (boolean) $core->blog->settings->socialMeta->facebook;
 $sm_google = (boolean) $core->blog->settings->socialMeta->google;
 $sm_twitter = (boolean) $core->blog->settings->socialMeta->twitter;
+$sm_photo = (boolean) $core->blog->settings->socialMeta->photo;
+$sm_description = $core->blog->settings->socialMeta->description;
 
 if (!empty($_POST))
 {
@@ -51,6 +55,8 @@ if (!empty($_POST))
 		$sm_facebook = !empty($_POST['sm_facebook']);
 		$sm_google = !empty($_POST['sm_google']);
 		$sm_twitter = !empty($_POST['sm_twitter']);
+		$sm_photo = !empty($_POST['sm_photo']);
+		$sm_description = trim(html::escapeHTML($_POST['sm_description']));
 
 		# Everything's fine, save options
 		$core->blog->settings->addNamespace('socialMeta');
@@ -61,6 +67,8 @@ if (!empty($_POST))
 		$core->blog->settings->socialMeta->put('facebook',$sm_facebook);
 		$core->blog->settings->socialMeta->put('google',$sm_google);
 		$core->blog->settings->socialMeta->put('twitter',$sm_twitter);
+		$core->blog->settings->socialMeta->put('photo',$sm_photo);
+		$core->blog->settings->socialMeta->put('description',$sm_description);
 
 		$core->blog->triggerBlog();
 
@@ -145,7 +153,13 @@ html::escapeHTML(
 form::field('sm_twitter_account',30,128,html::escapeHTML($sm_twitter_account)).'</p>'.
 '<p class="form-note">'.__('With or without @ prefix.').'</p>'.
 
+'<p>'.form::checkbox('sm_photo',1,$sm_photo).' '.
+'<label for="sm_photo" class="classic">'.__('This blog is a photoblog').'</label></p>'.
+'<p class="form-note">'.__('Will use "summary_large_image" twitter card type rather than "summary", and will include the first original photo if possible rather than the small thumbnail.').'</p>'.
 
+'<p><label for="sm_description">'.__('Default description:').'</label> '.
+form::field('sm_description',80,255,html::escapeHTML($sm_description)).'</p>'.
+'<p class="form-note">'.__('Will be used if post (or page) have no text.').'</p>'.
 
 '<p>'.$core->formNonce().'<input type="submit" value="'.__('Save').'" /></p>'.
 '</form>';

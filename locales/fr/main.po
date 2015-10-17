@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Dotclear 2 addToAny module\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-17 09:22+0200\n"
+"POT-Creation-Date: 2015-10-17 10:06+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -48,3 +48,15 @@ msgstr "Compte twitter :"
 
 msgid "With or without @ prefix."
 msgstr "Avec ou sans le préfixe @."
+
+msgid "This blog is a photoblog"
+msgstr "Ce blog est un photoblog"
+
+msgid "Will use \"summary_large_image\" twitter card type rather than \"summary\", and will include the first original photo if possible rather than the small thumbnail."
+msgstr "Utilisera le type de carte twitter \"summary_large_image\" plutôt que \"summary\" et insérera la première photo originale plutôt qu'une petite miniature."
+
+msgid "Default description:"
+msgstr "Description par défaut :"
+
+msgid "Will be used if post (or page) have no text."
+msgstr "Sera utilisé en absence de texte dans le billet ou la page."

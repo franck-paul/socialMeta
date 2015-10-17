@@ -44,8 +44,27 @@ class dcSocialMeta
 					$content = preg_replace('/\s+/',' ',$content);
 					$content = html::escapeHTML($content);
 					$content = text::cutString($content,180);
+					if ($content == '') {
+						// Use default description if any
+						$content = $core->blog->settings->socialMeta->description;
+						if ($content == '') {
+							// Use blog description if any
+							$content = $core->blog->desc;
+							if ($content == '') {
+								// Use blog title
+								$content = $core->blog->name;
+							}
+						}
+					}
 					// Post/Page first image
-					$img = context::EntryFirstImageHelper('s','',false,true);
+					$img = '';
+					if ($core->blog->settings->socialMeta->photo) {
+						// Photoblog, use original photo rather than small one
+						$img = context::EntryFirstImageHelper('o','',false,true);
+					}
+					if ($img == '') {
+						$img = context::EntryFirstImageHelper('s','',false,true);
+					}
 					if (strlen($img) && substr($img,0,4) != 'http') {
 						$root = preg_replace('#^(.+?//.+?)/(.*)$#','$1',$core->blog->url);
 						$img = $root.$img;
