@@ -15,6 +15,8 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
 // dead but useful code, in order to have translations
 __('socialMeta').__('Add social meta to your posts and pages');
 
-$_menu['Blog']->addItem(__('socialMeta'),'plugin.php?p=socialMeta','index.php?pf=socialMeta/icon.png',
+$_menu['Blog']->addItem(__('socialMeta'),
+		'plugin.php?p=socialMeta',
+		urldecode(dcPage::getPF('socialMeta/icon.png')),
 		preg_match('/plugin.php\?p=socialMeta(&.*)?$/',$_SERVER['REQUEST_URI']),
 		$core->auth->check('admin',$core->blog->id));
