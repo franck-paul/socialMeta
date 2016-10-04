@@ -116,6 +116,8 @@ echo
 html::escapeHTML(
 	'<!-- Facebook -->'."\n".
 	'<meta property="og:title" content="Plugin socialMeta 0.2 pour Dotclear" />'."\n".
+	'<meta property="og:url" content="http://open-time.net/post/2014/01/20/Plugin-socialMeta-02-pour-Dotclear" />'."\n".
+	'<meta property="og:site_name" content="Open-Time" />'."\n".
 	'<meta property="og:description" content="Nouvelle version de ce petit plugin, ..." />'."\n".
 	'<meta property="og:image" content="http://open-time.net/public/illustrations/2014/.googleplus-twitter-facebook_s.jpg" />'."\n"
 	).
@@ -138,10 +140,10 @@ html::escapeHTML(
 html::escapeHTML(
 	'<!-- Twitter -->'."\n".
 	'<meta name="twitter:card" content="summary" />'."\n".
-	'<meta name="twitter:url" content="http://open-time.net/post/2014/01/20/Plugin-socialMeta-02-pour-Dotclear" />'."\n".
 	'<meta name="twitter:title" content="Plugin socialMeta 0.2 pour Dotclear" />'."\n".
 	'<meta name="twitter:description" content="Nouvelle version de ce petit plugin, ..." />'."\n".
-	'<meta name="twitter:image:src" content="http://open-time.net/public/illustrations/2014/.googleplus-twitter-facebook_s.jpg"/>'."\n".
+	'<meta name="twitter:image" content="http://open-time.net/public/illustrations/2014/.googleplus-twitter-facebook_s.jpg"/>'."\n".
+	'<meta name="twitter:image:alt" content="G+, Twitter et Facebook"/>'."\n".
 	'<meta name="twitter:site" content="@franckpaul" />'."\n".
 	'<meta name="twitter:creator" content="@franckpaul" />'."\n"
 	).
