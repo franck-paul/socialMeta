@@ -89,6 +89,7 @@ class dcSocialMeta
 						// Facebook meta
 						echo
 						'<!-- Facebook -->'."\n".
+						'<meta property="og:type" content="article" />'."\n".
 						'<meta property="og:title" content="'.$title.'" />'."\n".
 						'<meta property="og:url" content="'.$url.'" />'."\n".
 						'<meta property="og:site_name" content="'.$core->blog->name.'" />'."\n".
