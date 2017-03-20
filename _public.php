@@ -72,9 +72,9 @@ class dcSocialMeta
 						}
 					}
 					if ($img == '') {
-						$img = context::EntryFirstImageHelper('s',true,'',true);
+						$img = context::EntryFirstImageHelper('m',true,'',true);
 						if ($img != '') {
-							$tag = context::EntryFirstImageHelper('s',true,'',false);
+							$tag = context::EntryFirstImageHelper('m',true,'',false);
 							if (preg_match('/alt="([^"]+)"/',$tag,$malt)) {
 								$alt = $malt[1];
 							}

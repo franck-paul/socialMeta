@@ -119,7 +119,7 @@ html::escapeHTML(
 	'<meta property="og:url" content="http://open-time.net/post/2014/01/20/Plugin-socialMeta-02-pour-Dotclear" />'."\n".
 	'<meta property="og:site_name" content="Open-Time" />'."\n".
 	'<meta property="og:description" content="Nouvelle version de ce petit plugin, ..." />'."\n".
-	'<meta property="og:image" content="http://open-time.net/public/illustrations/2014/.googleplus-twitter-facebook_s.jpg" />'."\n"
+	'<meta property="og:image" content="http://open-time.net/public/illustrations/2014/.googleplus-twitter-facebook_m.jpg" />'."\n"
 	).
 '</pre>'.
 
@@ -130,7 +130,7 @@ html::escapeHTML(
 	'<!-- Google+ -->'."\n".
 	'<meta itemprop="name" content="Plugin socialMeta 0.2 pour Dotclear" />'."\n".
 	'<meta itemprop="description" content="Nouvelle version de ce petit plugin, ..." />'."\n".
-	'<meta itemprop="image" content="http://open-time.net/public/illustrations/2014/.googleplus-twitter-facebook_s.jpg" />'."\n"
+	'<meta itemprop="image" content="http://open-time.net/public/illustrations/2014/.googleplus-twitter-facebook_m.jpg" />'."\n"
 	).
 '</pre>'.
 
@@ -142,7 +142,7 @@ html::escapeHTML(
 	'<meta name="twitter:card" content="summary" />'."\n".
 	'<meta name="twitter:title" content="Plugin socialMeta 0.2 pour Dotclear" />'."\n".
 	'<meta name="twitter:description" content="Nouvelle version de ce petit plugin, ..." />'."\n".
-	'<meta name="twitter:image" content="http://open-time.net/public/illustrations/2014/.googleplus-twitter-facebook_s.jpg"/>'."\n".
+	'<meta name="twitter:image" content="http://open-time.net/public/illustrations/2014/.googleplus-twitter-facebook_m.jpg"/>'."\n".
 	'<meta name="twitter:image:alt" content="G+, Twitter et Facebook"/>'."\n".
 	'<meta name="twitter:site" content="@franckpaul" />'."\n".
 	'<meta name="twitter:creator" content="@franckpaul" />'."\n"
@@ -157,7 +157,7 @@ form::field('sm_twitter_account',30,128,html::escapeHTML($sm_twitter_account)).'
 
 '<p>'.form::checkbox('sm_photo',1,$sm_photo).' '.
 '<label for="sm_photo" class="classic">'.__('This blog is a photoblog').'</label></p>'.
-'<p class="form-note">'.__('Will use "summary_large_image" twitter card type rather than "summary", and will include the first original photo if possible rather than the small thumbnail.').'</p>'.
+'<p class="form-note">'.__('Will use "summary_large_image" twitter card type rather than "summary", and will include the first original photo if possible rather than the medium thumbnail.').'</p>'.
 
 '<p><label for="sm_description">'.__('Default description:').'</label> '.
 form::field('sm_description',80,255,html::escapeHTML($sm_description)).'</p>'.

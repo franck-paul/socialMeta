@@ -52,8 +52,8 @@ msgstr "Avec ou sans le préfixe @."
 msgid "This blog is a photoblog"
 msgstr "Ce blog est un photoblog"
 
-msgid "Will use \"summary_large_image\" twitter card type rather than \"summary\", and will include the first original photo if possible rather than the small thumbnail."
-msgstr "Utilisera le type de carte twitter \"summary_large_image\" plutôt que \"summary\" et insérera la première photo originale plutôt qu'une petite miniature."
+msgid "Will use \"summary_large_image\" twitter card type rather than \"summary\", and will include the first original photo if possible rather than the medium thumbnail."
+msgstr "Utilisera le type de carte twitter \"summary_large_image\" plutôt que \"summary\" et insérera la première photo originale plutôt qu'une miniature moyenne."
 
 msgid "Default description:"
 msgstr "Description par défaut :"
