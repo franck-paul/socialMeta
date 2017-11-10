@@ -60,3 +60,9 @@ msgstr "Description par défaut :"
 
 msgid "Will be used if post (or page) have no text."
 msgstr "Sera utilisé en absence de texte dans le billet ou la page."
+
+msgid "Default image (URL):"
+msgstr "Image par défaut (URL) :"
+
+msgid "Will be used if post (or page) have no image."
+msgstr "Sera utilisé en absence d'image dans le billet ou la page."

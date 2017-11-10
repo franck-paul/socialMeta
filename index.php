@@ -25,6 +25,7 @@ if (is_null($core->blog->settings->socialMeta->active)) {
 		$core->blog->settings->socialMeta->put('twitter',true,'boolean','Insert Twitter meta',false);
 		$core->blog->settings->socialMeta->put('photo',false,'boolean','Photoblog',false);
 		$core->blog->settings->socialMeta->put('description','','string','Default description',false);
+		$core->blog->settings->socialMeta->put('image','','string','Default image',false);
 
 		$core->blog->triggerBlog();
 		http::redirect($p_url);
@@ -43,6 +44,7 @@ $sm_google = (boolean) $core->blog->settings->socialMeta->google;
 $sm_twitter = (boolean) $core->blog->settings->socialMeta->twitter;
 $sm_photo = (boolean) $core->blog->settings->socialMeta->photo;
 $sm_description = $core->blog->settings->socialMeta->description;
+$sm_image = $core->blog->settings->socialMeta->image;
 
 if (!empty($_POST))
 {
@@ -57,6 +59,7 @@ if (!empty($_POST))
 		$sm_twitter = !empty($_POST['sm_twitter']);
 		$sm_photo = !empty($_POST['sm_photo']);
 		$sm_description = trim(html::escapeHTML($_POST['sm_description']));
+		$sm_image = trim(html::escapeHTML($_POST['sm_image']));
 
 		# Everything's fine, save options
 		$core->blog->settings->addNamespace('socialMeta');
@@ -69,6 +72,7 @@ if (!empty($_POST))
 		$core->blog->settings->socialMeta->put('twitter',$sm_twitter);
 		$core->blog->settings->socialMeta->put('photo',$sm_photo);
 		$core->blog->settings->socialMeta->put('description',$sm_description);
+		$core->blog->settings->socialMeta->put('image',$sm_image);
 
 		$core->blog->triggerBlog();
 
@@ -162,6 +166,10 @@ form::field('sm_twitter_account',30,128,html::escapeHTML($sm_twitter_account)).'
 '<p><label for="sm_description">'.__('Default description:').'</label> '.
 form::field('sm_description',80,255,html::escapeHTML($sm_description)).'</p>'.
 '<p class="form-note">'.__('Will be used if post (or page) have no text.').'</p>'.
+
+'<p><label for="sm_image">'.__('Default image (URL):').'</label> '.
+form::field('sm_image',80,255,html::escapeHTML($sm_image)).'</p>'.
+'<p class="form-note">'.__('Will be used if post (or page) have no image.').'</p>'.
 
 '<p>'.$core->formNonce().'<input type="submit" value="'.__('Save').'" /></p>'.
 '</form>';

@@ -29,6 +29,7 @@ try
 	$core->blog->settings->socialMeta->put('twitter',true,'boolean','Insert Twitter meta',false,true);
 	$core->blog->settings->socialMeta->put('photo',false,'boolean','Photoblog',false,true);
 	$core->blog->settings->socialMeta->put('description','','string','Default description',false,true);
+	$core->blog->settings->socialMeta->put('image','','string','Default image',false,true);
 
 	$core->setVersion('socialMeta',$new_version);
 

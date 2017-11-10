@@ -80,6 +80,11 @@ class dcSocialMeta
 							}
 						}
 					}
+					if ($img == '' && $core->blog->settings->socialMeta->description != '') {
+						// Use default image as decoration if set
+						$img = $core->blog->settings->socialMeta->image;
+						$alt = '';
+					}
 					if (strlen($img) && substr($img,0,4) != 'http') {
 						$root = preg_replace('#^(.+?//.+?)/(.*)$#','$1',$core->blog->url);
 						$img = $root.$img;
