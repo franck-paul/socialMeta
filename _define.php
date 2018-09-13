@@ -17,9 +17,10 @@ $this->registerModule(
     "socialMeta",                              // Name
     "Add social meta to your posts and pages", // Description
     "Franck Paul",                             // Author
-    '0.4',                                     // Version
-    array(
-        'permissions' => 'admin',  // Permissions
-        'type'        => 'plugin' // Type
-    )
+    '0.5',                                     // Version
+    [
+        'requires'    => [['core', '2.13']], // Dependencies
+        'permissions' => 'admin',            // Permissions
+        'type'        => 'plugin'           // Type
+    ]
 );

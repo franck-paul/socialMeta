@@ -13,7 +13,7 @@
 
 if (!defined('DC_RC_PATH')) {return;}
 
-$core->addBehavior('publicHeadContent', array('dcSocialMeta', 'publicHeadContent'));
+$core->addBehavior('publicHeadContent', ['dcSocialMeta', 'publicHeadContent']);
 
 class dcSocialMeta
 {
