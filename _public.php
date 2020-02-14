@@ -56,37 +56,44 @@ class dcSocialMeta
                         }
                     }
                     // Post/Page first image
-                    $img      = '';
-                    $alt      = '';
-                    $largeImg = false;
-                    if ($core->blog->settings->socialMeta->photo) {
-                        // Photoblog, use original photo rather than small one
-                        $img = context::EntryFirstImageHelper('o', true, '', true);
-                        if ($img != '') {
-                            $largeImg = true;
-                            $tag      = context::EntryFirstImageHelper('o', true, '', false);
-                            if (preg_match('/alt="([^"]+)"/', $tag, $malt)) {
-                                $alt = $malt[1];
+                    $media = new ArrayObject([
+                        'img'   => '',
+                        'alt'   => '',
+                        'large' => false
+                    ]);
+                    // Let 3rd party plugins the opportunity to give media info
+                    $core->callBehavior('socialMetaMedia', $media);
+
+                    if ($media['img'] == '') {
+                        if ($core->blog->settings->socialMeta->photo) {
+                            // Photoblog, use original photo rather than small one
+                            $media['img'] = context::EntryFirstImageHelper('o', true, '', true);
+                            if ($media['img'] != '') {
+                                $media['large'] = true;
+                                $tag          = context::EntryFirstImageHelper('o', true, '', false);
+                                if (preg_match('/alt="([^"]+)"/', $tag, $malt)) {
+                                    $media['alt'] = $malt[1];
+                                }
                             }
                         }
                     }
-                    if ($img == '') {
-                        $img = context::EntryFirstImageHelper('m', true, '', true);
-                        if ($img != '') {
+                    if ($media['img'] == '') {
+                        $media['img'] = context::EntryFirstImageHelper('m', true, '', true);
+                        if ($media['img'] != '') {
                             $tag = context::EntryFirstImageHelper('m', true, '', false);
                             if (preg_match('/alt="([^"]+)"/', $tag, $malt)) {
-                                $alt = $malt[1];
+                                $media['alt'] = $malt[1];
                             }
                         }
                     }
-                    if ($img == '' && $core->blog->settings->socialMeta->description != '') {
+                    if ($media['img'] == '' && $core->blog->settings->socialMeta->description != '') {
                         // Use default image as decoration if set
-                        $img = $core->blog->settings->socialMeta->image;
-                        $alt = '';
+                        $media['img'] = $core->blog->settings->socialMeta->image;
+                        $media['alt'] = '';
                     }
-                    if (strlen($img) && substr($img, 0, 4) != 'http') {
+                    if (strlen($media['img']) && substr($media['img'], 0, 4) != 'http') {
                         $root = preg_replace('#^(.+?//.+?)/(.*)$#', '$1', $core->blog->url);
-                        $img  = $root . $img;
+                        $media['img']  = $root . $media['img'];
                     }
 
                     if ($core->blog->settings->socialMeta->facebook) {
@@ -98,9 +105,9 @@ class dcSocialMeta
                         '<meta property="og:url" content="' . $url . '" />' . "\n" .
                         '<meta property="og:site_name" content="' . $core->blog->name . '" />' . "\n" .
                             '<meta property="og:description" content="' . $content . '" />' . "\n";
-                        if (strlen($img)) {
+                        if (strlen($media['img'])) {
                             echo
-                                '<meta property="og:image" content="' . $img . '" />' . "\n";
+                                '<meta property="og:image" content="' . $media['img'] . '" />' . "\n";
                         }
                     }
                     if ($core->blog->settings->socialMeta->google) {
@@ -109,9 +116,9 @@ class dcSocialMeta
                             '<!-- Google+ -->' . "\n" .
                             '<meta itemprop="name" content="' . $title . '" />' . "\n" .
                             '<meta itemprop="description" content="' . $content . '" />' . "\n";
-                        if (strlen($img)) {
+                        if (strlen($media['img'])) {
                             echo
-                                '<meta itemprop="image" content="' . $img . '" />' . "\n";
+                                '<meta itemprop="image" content="' . $media['img'] . '" />' . "\n";
                         }
                     }
                     if ($core->blog->settings->socialMeta->twitter) {
@@ -123,15 +130,15 @@ class dcSocialMeta
                         // Twitter
                         echo
                             '<!-- Twitter -->' . "\n" .
-                            '<meta name="twitter:card" content="' . ($largeImg ? 'summary_large_image' : 'summary') . '" />' . "\n" .
+                            '<meta name="twitter:card" content="' . ($media['large'] ? 'summary_large_image' : 'summary') . '" />' . "\n" .
                             '<meta name="twitter:title" content="' . $title . '" />' . "\n" .
                             '<meta name="twitter:description" content="' . $content . '" />' . "\n";
-                        if (strlen($img)) {
+                        if (strlen($media['img'])) {
                             echo
-                                '<meta name="twitter:image" content="' . $img . '"/>' . "\n";
-                            if ($alt != '') {
+                                '<meta name="twitter:image" content="' . $media['img'] . '"/>' . "\n";
+                            if ($media['alt'] != '') {
                                 echo
-                                    '<meta name="twitter:image:alt" content="' . $alt . '"/>' . "\n";
+                                    '<meta name="twitter:image:alt" content="' . $media['alt'] . '"/>' . "\n";
                             }
                         }
                         if (strlen($account)) {
