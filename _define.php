@@ -17,7 +17,7 @@ $this->registerModule(
     "socialMeta",                              // Name
     "Add social meta to your posts and pages", // Description
     "Franck Paul",                             // Author
-    '0.5',                                     // Version
+    '0.6',                                     // Version
     [
         'requires'    => [['core', '2.13']], // Dependencies
         'permissions' => 'admin',            // Permissions
