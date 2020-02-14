@@ -19,8 +19,9 @@ $this->registerModule(
     "Franck Paul",                             // Author
     '0.6',                                     // Version
     [
-        'requires'    => [['core', '2.13']], // Dependencies
-        'permissions' => 'admin',            // Permissions
-        'type'        => 'plugin'           // Type
+        'requires'    => [['core', '2.13']],                          // Dependencies
+        'support'     => 'https://github.com/franck-paul/socialMeta', // Support URL
+        'permissions' => 'admin',                                     // Permissions
+        'type'        => 'plugin'                                     // Type
     ]
 );
