@@ -153,20 +153,20 @@ html::escapeHTML(
 '<h3>' . __('Settings') . '</h3>' .
 
 '<p><label for="sm_twitter_account">' . __('Twitter account:') . '</label> ' .
-form::field('sm_twitter_account', 30, 128, html::escapeHTML($sm_twitter_account)) . '</p>' .
-'<p class="form-note">' . __('With or without @ prefix.') . '</p>' .
+form::field('sm_twitter_account', 30, 128, html::escapeHTML($sm_twitter_account), '', '', false, 'aria-describedby="prefix-twitter_account"') . '</p>' .
+'<p class="form-note" id="prefix-twitter_account">' . __('With or without @ prefix.') . '</p>' .
 
-'<p>' . form::checkbox('sm_photo', 1, $sm_photo) . ' ' .
+'<p>' . form::checkbox('sm_photo', 1, $sm_photo, '', '', false, 'aria-describedby="summary_large_image"') . ' ' .
 '<label for="sm_photo" class="classic">' . __('This blog is a photoblog') . '</label></p>' .
-'<p class="form-note">' . __('Will use "summary_large_image" twitter card type rather than "summary", and will include the first original photo if possible rather than the medium thumbnail.') . '</p>' .
+'<p class="form-note" id="summary_large_image">' . __('Will use "summary_large_image" twitter card type rather than "summary", and will include the first original photo if possible rather than the medium thumbnail.') . '</p>' .
 
 '<p><label for="sm_description">' . __('Default description:') . '</label> ' .
-form::field('sm_description', 80, 255, html::escapeHTML($sm_description)) . '</p>' .
-'<p class="form-note">' . __('Will be used if post (or page) have no text.') . '</p>' .
+form::field('sm_description', 80, 255, html::escapeHTML($sm_description), '', '', false, 'aria-describedby="default_description"') . '</p>' .
+'<p class="form-note" id="default_description">' . __('Will be used if post (or page) have no text.') . '</p>' .
 
 '<p><label for="sm_image">' . __('Default image (URL):') . '</label> ' .
-form::field('sm_image', 80, 255, html::escapeHTML($sm_image)) . '</p>' .
-'<p class="form-note">' . __('Will be used if post (or page) have no image.') . '</p>' .
+form::field('sm_image', 80, 255, html::escapeHTML($sm_image), '', '', false, 'aria-describedby="default_image"') . '</p>' .
+'<p class="form-note" id="default_image">' . __('Will be used if post (or page) have no image.') . '</p>' .
 
 '<p>' . $core->formNonce() . '<input type="submit" value="' . __('Save') . '" /></p>' .
     '</form>';
