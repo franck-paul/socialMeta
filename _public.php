@@ -28,7 +28,6 @@ class dcSocialMeta
                 if (($_ctx->posts->post_type == 'post' && $core->blog->settings->socialMeta->on_post) ||
                     ($_ctx->posts->post_type == 'page' && $core->blog->settings->socialMeta->on_page)) {
                     if (!$core->blog->settings->socialMeta->facebook &&
-                        !$core->blog->settings->socialMeta->google &&
                         !$core->blog->settings->socialMeta->twitter) {
                         return;
                     }
@@ -108,17 +107,6 @@ class dcSocialMeta
                         if (strlen($media['img'])) {
                             echo
                                 '<meta property="og:image" content="' . $media['img'] . '" />' . "\n";
-                        }
-                    }
-                    if ($core->blog->settings->socialMeta->google) {
-                        // Google+
-                        echo
-                            '<!-- Google+ -->' . "\n" .
-                            '<meta itemprop="name" content="' . $title . '" />' . "\n" .
-                            '<meta itemprop="description" content="' . $content . '" />' . "\n";
-                        if (strlen($media['img'])) {
-                            echo
-                                '<meta itemprop="image" content="' . $media['img'] . '" />' . "\n";
                         }
                     }
                     if ($core->blog->settings->socialMeta->twitter) {

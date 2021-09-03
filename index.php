@@ -22,7 +22,6 @@ if (is_null($core->blog->settings->socialMeta->active)) {
         $core->blog->settings->socialMeta->put('on_page', false, 'boolean', 'Add social meta on page', false);
         $core->blog->settings->socialMeta->put('twitter_account', '', 'string', 'Twitter account', false);
         $core->blog->settings->socialMeta->put('facebook', true, 'boolean', 'Insert Facebook meta', false);
-        $core->blog->settings->socialMeta->put('google', true, 'boolean', 'Insert Google+ meta', false);
         $core->blog->settings->socialMeta->put('twitter', true, 'boolean', 'Insert Twitter meta', false);
         $core->blog->settings->socialMeta->put('photo', false, 'boolean', 'Photoblog', false);
         $core->blog->settings->socialMeta->put('description', '', 'string', 'Default description', false);
@@ -40,7 +39,6 @@ $sm_on_post         = (boolean) $core->blog->settings->socialMeta->on_post;
 $sm_on_page         = (boolean) $core->blog->settings->socialMeta->on_page;
 $sm_twitter_account = $core->blog->settings->socialMeta->twitter_account;
 $sm_facebook        = (boolean) $core->blog->settings->socialMeta->facebook;
-$sm_google          = (boolean) $core->blog->settings->socialMeta->google;
 $sm_twitter         = (boolean) $core->blog->settings->socialMeta->twitter;
 $sm_photo           = (boolean) $core->blog->settings->socialMeta->photo;
 $sm_description     = $core->blog->settings->socialMeta->description;
@@ -54,7 +52,6 @@ if (!empty($_POST)) {
         $sm_on_page         = !empty($_POST['sm_on_page']);
         $sm_twitter_account = trim(html::escapeHTML($_POST['sm_twitter_account']));
         $sm_facebook        = !empty($_POST['sm_facebook']);
-        $sm_google          = !empty($_POST['sm_google']);
         $sm_twitter         = !empty($_POST['sm_twitter']);
         $sm_photo           = !empty($_POST['sm_photo']);
         $sm_description     = trim(html::escapeHTML($_POST['sm_description']));
@@ -67,7 +64,6 @@ if (!empty($_POST)) {
         $core->blog->settings->socialMeta->put('on_page', $sm_on_page);
         $core->blog->settings->socialMeta->put('twitter_account', $sm_twitter_account);
         $core->blog->settings->socialMeta->put('facebook', $sm_facebook);
-        $core->blog->settings->socialMeta->put('google', $sm_google);
         $core->blog->settings->socialMeta->put('twitter', $sm_twitter);
         $core->blog->settings->socialMeta->put('photo', $sm_photo);
         $core->blog->settings->socialMeta->put('description', $sm_description);
@@ -121,17 +117,6 @@ html::escapeHTML(
     '<meta property="og:site_name" content="Open-Time" />' . "\n" .
     '<meta property="og:description" content="Nouvelle version de ce petit plugin, ..." />' . "\n" .
     '<meta property="og:image" content="http://open-time.net/public/illustrations/2014/.googleplus-twitter-facebook_m.jpg" />' . "\n"
-) .
-'</pre>' .
-
-'<p>' . form::checkbox('sm_google', 1, $sm_google) . ' ' .
-'<label for="sm_google" class="classic">' . __('Use Google+ social meta:') . '</label></p>' .
-'<pre>' .
-html::escapeHTML(
-    '<!-- Google+ -->' . "\n" .
-    '<meta itemprop="name" content="Plugin socialMeta 0.2 pour Dotclear" />' . "\n" .
-    '<meta itemprop="description" content="Nouvelle version de ce petit plugin, ..." />' . "\n" .
-    '<meta itemprop="image" content="http://open-time.net/public/illustrations/2014/.googleplus-twitter-facebook_m.jpg" />' . "\n"
 ) .
 '</pre>' .
 
