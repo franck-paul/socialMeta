@@ -10,8 +10,9 @@
  * @copyright Franck Paul carnet.franck.paul@gmail.com
  * @copyright GPL-2.0 https://www.gnu.org/licenses/gpl-2.0.html
  */
-
-if (!defined('DC_CONTEXT_ADMIN')) {return;}
+if (!defined('DC_CONTEXT_ADMIN')) {
+    return;
+}
 
 $core->blog->settings->addNamespace('socialMeta');
 if (is_null($core->blog->settings->socialMeta->active)) {
@@ -22,7 +23,7 @@ if (is_null($core->blog->settings->socialMeta->active)) {
         $core->blog->settings->socialMeta->put('on_page', false, 'boolean', 'Add social meta on page', false);
         $core->blog->settings->socialMeta->put('twitter_account', '', 'string', 'Twitter account', false);
         $core->blog->settings->socialMeta->put('facebook', true, 'boolean', 'Insert Facebook meta', false);
-        $core->blog->settings->socialMeta->put('google', true, 'boolean', 'Insert Google+ meta', false);
+        $core->blog->settings->socialMeta->put('google', true, 'boolean', 'Insert Google meta', false);
         $core->blog->settings->socialMeta->put('twitter', true, 'boolean', 'Insert Twitter meta', false);
         $core->blog->settings->socialMeta->put('photo', false, 'boolean', 'Photoblog', false);
         $core->blog->settings->socialMeta->put('description', '', 'string', 'Default description', false);
@@ -47,8 +48,7 @@ $sm_description     = $core->blog->settings->socialMeta->description;
 $sm_image           = $core->blog->settings->socialMeta->image;
 
 if (!empty($_POST)) {
-    try
-    {
+    try {
         $sm_active          = !empty($_POST['sm_active']);
         $sm_on_post         = !empty($_POST['sm_on_post']);
         $sm_on_page         = !empty($_POST['sm_on_page']);
@@ -125,10 +125,10 @@ html::escapeHTML(
 '</pre>' .
 
 '<p>' . form::checkbox('sm_google', 1, $sm_google) . ' ' .
-'<label for="sm_google" class="classic">' . __('Use Google+ social meta:') . '</label></p>' .
+'<label for="sm_google" class="classic">' . __('Use Google social meta:') . '</label></p>' .
 '<pre>' .
 html::escapeHTML(
-    '<!-- Google+ -->' . "\n" .
+    '<!-- Google -->' . "\n" .
     '<meta itemprop="name" content="Plugin socialMeta 0.2 pour Dotclear" />' . "\n" .
     '<meta itemprop="description" content="Nouvelle version de ce petit plugin, ..." />' . "\n" .
     '<meta itemprop="image" content="http://open-time.net/public/illustrations/2014/.googleplus-twitter-facebook_m.jpg" />' . "\n"

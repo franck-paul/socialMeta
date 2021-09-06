@@ -10,8 +10,9 @@
  * @copyright Franck Paul carnet.franck.paul@gmail.com
  * @copyright GPL-2.0 https://www.gnu.org/licenses/gpl-2.0.html
  */
-
-if (!defined('DC_RC_PATH')) {return;}
+if (!defined('DC_RC_PATH')) {
+    return;
+}
 
 $core->addBehavior('publicHeadContent', ['dcSocialMeta', 'publicHeadContent']);
 
@@ -24,12 +25,8 @@ class dcSocialMeta
         $core->blog->settings->addNamespace('socialMeta');
         if ($core->blog->settings->socialMeta->active) {
             if (($core->url->type == 'post') || ($core->url->type == 'pages')) {
-
-                if (($_ctx->posts->post_type == 'post' && $core->blog->settings->socialMeta->on_post) ||
-                    ($_ctx->posts->post_type == 'page' && $core->blog->settings->socialMeta->on_page)) {
-                    if (!$core->blog->settings->socialMeta->facebook &&
-                        !$core->blog->settings->socialMeta->google &&
-                        !$core->blog->settings->socialMeta->twitter) {
+                if (($_ctx->posts->post_type == 'post' && $core->blog->settings->socialMeta->on_post) || ($_ctx->posts->post_type == 'page' && $core->blog->settings->socialMeta->on_page)) {
+                    if (!$core->blog->settings->socialMeta->facebook && !$core->blog->settings->socialMeta->google && !$core->blog->settings->socialMeta->twitter) {
                         return;
                     }
 
@@ -70,7 +67,7 @@ class dcSocialMeta
                             $media['img'] = context::EntryFirstImageHelper('o', true, '', true);
                             if ($media['img'] != '') {
                                 $media['large'] = true;
-                                $tag          = context::EntryFirstImageHelper('o', true, '', false);
+                                $tag            = context::EntryFirstImageHelper('o', true, '', false);
                                 if (preg_match('/alt="([^"]+)"/', $tag, $malt)) {
                                     $media['alt'] = $malt[1];
                                 }
@@ -92,8 +89,8 @@ class dcSocialMeta
                         $media['alt'] = '';
                     }
                     if (strlen($media['img']) && substr($media['img'], 0, 4) != 'http') {
-                        $root = preg_replace('#^(.+?//.+?)/(.*)$#', '$1', $core->blog->url);
-                        $media['img']  = $root . $media['img'];
+                        $root         = preg_replace('#^(.+?//.+?)/(.*)$#', '$1', $core->blog->url);
+                        $media['img'] = $root . $media['img'];
                     }
 
                     if ($core->blog->settings->socialMeta->facebook) {
@@ -113,7 +110,7 @@ class dcSocialMeta
                     if ($core->blog->settings->socialMeta->google) {
                         // Google+
                         echo
-                            '<!-- Google+ -->' . "\n" .
+                            '<!-- Google -->' . "\n" .
                             '<meta itemprop="name" content="' . $title . '" />' . "\n" .
                             '<meta itemprop="description" content="' . $content . '" />' . "\n";
                         if (strlen($media['img'])) {

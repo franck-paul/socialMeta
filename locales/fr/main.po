@@ -34,8 +34,8 @@ msgstr "Ajouter les métadonnées sociales aux pages"
 msgid "Use Facebook social meta:"
 msgstr "Insérer les métadonnées pour Facebook :"
 
-msgid "Use Google+ social meta:"
-msgstr "Insérer les métadonnées pour Google+ :"
+msgid "Use Google social meta:"
+msgstr "Insérer les métadonnées pour Google :"
 
 msgid "Use Twitter social meta:"
 msgstr "Insérer les métadonnées pour Twitter :"

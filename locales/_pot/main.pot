@@ -43,7 +43,7 @@ msgid "Use Facebook social meta:"
 msgstr ""
 
 #: ../hg-plugins/socialMeta/index.php:125
-msgid "Use Google+ social meta:"
+msgid "Use Google social meta:"
 msgstr ""
 
 #: ../hg-plugins/socialMeta/index.php:136
