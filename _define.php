@@ -26,6 +26,6 @@ $this->registerModule(
 
         'details'    => 'https://open-time.net/?q=socialMeta',       // Details URL
         'support'    => 'https://github.com/franck-paul/socialMeta', // Support URL
-        'repository' => 'https://raw.githubusercontent.com/franck-paul/socialMeta/main/dcstore.xml'
+        'repository' => 'https://raw.githubusercontent.com/franck-paul/socialMeta/master/dcstore.xml'
     ]
 );
