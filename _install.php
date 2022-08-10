@@ -14,31 +14,31 @@ if (!defined('DC_CONTEXT_ADMIN')) {
     return;
 }
 
-$new_version = $core->plugins->moduleInfo('socialMeta', 'version');
-$old_version = $core->getVersion('socialMeta');
+$new_version = dcCore::app()->plugins->moduleInfo('socialMeta', 'version');
+$old_version = dcCore::app()->getVersion('socialMeta');
 
 if (version_compare($old_version, $new_version, '>=')) {
     return;
 }
 
 try {
-    $core->blog->settings->addNamespace('socialMeta');
-    $core->blog->settings->socialMeta->put('active', false, 'boolean', 'Active', false, true);
-    $core->blog->settings->socialMeta->put('on_post', true, 'boolean', 'Add social meta on post', false, true);
-    $core->blog->settings->socialMeta->put('on_page', false, 'boolean', 'Add social meta on page', false, true);
-    $core->blog->settings->socialMeta->put('twitter_account', '', 'string', 'Twitter account', false, true);
-    $core->blog->settings->socialMeta->put('facebook', true, 'boolean', 'Insert Facebook meta', false, true);
-    $core->blog->settings->socialMeta->put('google', true, 'boolean', 'Insert Google meta', false, true);
-    $core->blog->settings->socialMeta->put('twitter', true, 'boolean', 'Insert Twitter meta', false, true);
-    $core->blog->settings->socialMeta->put('photo', false, 'boolean', 'Photoblog', false, true);
-    $core->blog->settings->socialMeta->put('description', '', 'string', 'Default description', false, true);
-    $core->blog->settings->socialMeta->put('image', '', 'string', 'Default image', false, true);
+    dcCore::app()->blog->settings->addNamespace('socialMeta');
+    dcCore::app()->blog->settings->socialMeta->put('active', false, 'boolean', 'Active', false, true);
+    dcCore::app()->blog->settings->socialMeta->put('on_post', true, 'boolean', 'Add social meta on post', false, true);
+    dcCore::app()->blog->settings->socialMeta->put('on_page', false, 'boolean', 'Add social meta on page', false, true);
+    dcCore::app()->blog->settings->socialMeta->put('twitter_account', '', 'string', 'Twitter account', false, true);
+    dcCore::app()->blog->settings->socialMeta->put('facebook', true, 'boolean', 'Insert Facebook meta', false, true);
+    dcCore::app()->blog->settings->socialMeta->put('google', true, 'boolean', 'Insert Google meta', false, true);
+    dcCore::app()->blog->settings->socialMeta->put('twitter', true, 'boolean', 'Insert Twitter meta', false, true);
+    dcCore::app()->blog->settings->socialMeta->put('photo', false, 'boolean', 'Photoblog', false, true);
+    dcCore::app()->blog->settings->socialMeta->put('description', '', 'string', 'Default description', false, true);
+    dcCore::app()->blog->settings->socialMeta->put('image', '', 'string', 'Default image', false, true);
 
-    $core->setVersion('socialMeta', $new_version);
+    dcCore::app()->setVersion('socialMeta', $new_version);
 
     return true;
 } catch (Exception $e) {
-    $core->error->add($e->getMessage());
+    dcCore::app()->error->add($e->getMessage());
 }
 
 return false;

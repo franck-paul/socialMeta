@@ -14,38 +14,38 @@ if (!defined('DC_CONTEXT_ADMIN')) {
     return;
 }
 
-$core->blog->settings->addNamespace('socialMeta');
-if (is_null($core->blog->settings->socialMeta->active)) {
+dcCore::app()->blog->settings->addNamespace('socialMeta');
+if (is_null(dcCore::app()->blog->settings->socialMeta->active)) {
     try {
         // Add default settings values if necessary
-        $core->blog->settings->socialMeta->put('active', false, 'boolean', 'Active', false);
-        $core->blog->settings->socialMeta->put('on_post', true, 'boolean', 'Add social meta on post', false);
-        $core->blog->settings->socialMeta->put('on_page', false, 'boolean', 'Add social meta on page', false);
-        $core->blog->settings->socialMeta->put('twitter_account', '', 'string', 'Twitter account', false);
-        $core->blog->settings->socialMeta->put('facebook', true, 'boolean', 'Insert Facebook meta', false);
-        $core->blog->settings->socialMeta->put('google', true, 'boolean', 'Insert Google meta', false);
-        $core->blog->settings->socialMeta->put('twitter', true, 'boolean', 'Insert Twitter meta', false);
-        $core->blog->settings->socialMeta->put('photo', false, 'boolean', 'Photoblog', false);
-        $core->blog->settings->socialMeta->put('description', '', 'string', 'Default description', false);
-        $core->blog->settings->socialMeta->put('image', '', 'string', 'Default image', false);
+        dcCore::app()->blog->settings->socialMeta->put('active', false, 'boolean', 'Active', false);
+        dcCore::app()->blog->settings->socialMeta->put('on_post', true, 'boolean', 'Add social meta on post', false);
+        dcCore::app()->blog->settings->socialMeta->put('on_page', false, 'boolean', 'Add social meta on page', false);
+        dcCore::app()->blog->settings->socialMeta->put('twitter_account', '', 'string', 'Twitter account', false);
+        dcCore::app()->blog->settings->socialMeta->put('facebook', true, 'boolean', 'Insert Facebook meta', false);
+        dcCore::app()->blog->settings->socialMeta->put('google', true, 'boolean', 'Insert Google meta', false);
+        dcCore::app()->blog->settings->socialMeta->put('twitter', true, 'boolean', 'Insert Twitter meta', false);
+        dcCore::app()->blog->settings->socialMeta->put('photo', false, 'boolean', 'Photoblog', false);
+        dcCore::app()->blog->settings->socialMeta->put('description', '', 'string', 'Default description', false);
+        dcCore::app()->blog->settings->socialMeta->put('image', '', 'string', 'Default image', false);
 
-        $core->blog->triggerBlog();
+        dcCore::app()->blog->triggerBlog();
         http::redirect($p_url);
     } catch (Exception $e) {
-        $core->error->add($e->getMessage());
+        dcCore::app()->error->add($e->getMessage());
     }
 }
 
-$sm_active          = (boolean) $core->blog->settings->socialMeta->active;
-$sm_on_post         = (boolean) $core->blog->settings->socialMeta->on_post;
-$sm_on_page         = (boolean) $core->blog->settings->socialMeta->on_page;
-$sm_twitter_account = $core->blog->settings->socialMeta->twitter_account;
-$sm_facebook        = (boolean) $core->blog->settings->socialMeta->facebook;
-$sm_google          = (boolean) $core->blog->settings->socialMeta->google;
-$sm_twitter         = (boolean) $core->blog->settings->socialMeta->twitter;
-$sm_photo           = (boolean) $core->blog->settings->socialMeta->photo;
-$sm_description     = $core->blog->settings->socialMeta->description;
-$sm_image           = $core->blog->settings->socialMeta->image;
+$sm_active          = (bool) dcCore::app()->blog->settings->socialMeta->active;
+$sm_on_post         = (bool) dcCore::app()->blog->settings->socialMeta->on_post;
+$sm_on_page         = (bool) dcCore::app()->blog->settings->socialMeta->on_page;
+$sm_twitter_account = dcCore::app()->blog->settings->socialMeta->twitter_account;
+$sm_facebook        = (bool) dcCore::app()->blog->settings->socialMeta->facebook;
+$sm_google          = (bool) dcCore::app()->blog->settings->socialMeta->google;
+$sm_twitter         = (bool) dcCore::app()->blog->settings->socialMeta->twitter;
+$sm_photo           = (bool) dcCore::app()->blog->settings->socialMeta->photo;
+$sm_description     = dcCore::app()->blog->settings->socialMeta->description;
+$sm_image           = dcCore::app()->blog->settings->socialMeta->image;
 
 if (!empty($_POST)) {
     try {
@@ -61,24 +61,24 @@ if (!empty($_POST)) {
         $sm_image           = trim(html::escapeHTML($_POST['sm_image']));
 
         # Everything's fine, save options
-        $core->blog->settings->addNamespace('socialMeta');
-        $core->blog->settings->socialMeta->put('active', $sm_active);
-        $core->blog->settings->socialMeta->put('on_post', $sm_on_post);
-        $core->blog->settings->socialMeta->put('on_page', $sm_on_page);
-        $core->blog->settings->socialMeta->put('twitter_account', $sm_twitter_account);
-        $core->blog->settings->socialMeta->put('facebook', $sm_facebook);
-        $core->blog->settings->socialMeta->put('google', $sm_google);
-        $core->blog->settings->socialMeta->put('twitter', $sm_twitter);
-        $core->blog->settings->socialMeta->put('photo', $sm_photo);
-        $core->blog->settings->socialMeta->put('description', $sm_description);
-        $core->blog->settings->socialMeta->put('image', $sm_image);
+        dcCore::app()->blog->settings->addNamespace('socialMeta');
+        dcCore::app()->blog->settings->socialMeta->put('active', $sm_active);
+        dcCore::app()->blog->settings->socialMeta->put('on_post', $sm_on_post);
+        dcCore::app()->blog->settings->socialMeta->put('on_page', $sm_on_page);
+        dcCore::app()->blog->settings->socialMeta->put('twitter_account', $sm_twitter_account);
+        dcCore::app()->blog->settings->socialMeta->put('facebook', $sm_facebook);
+        dcCore::app()->blog->settings->socialMeta->put('google', $sm_google);
+        dcCore::app()->blog->settings->socialMeta->put('twitter', $sm_twitter);
+        dcCore::app()->blog->settings->socialMeta->put('photo', $sm_photo);
+        dcCore::app()->blog->settings->socialMeta->put('description', $sm_description);
+        dcCore::app()->blog->settings->socialMeta->put('image', $sm_image);
 
-        $core->blog->triggerBlog();
+        dcCore::app()->blog->triggerBlog();
 
         dcPage::addSuccessNotice(__('Settings have been successfully updated.'));
         http::redirect($p_url);
     } catch (Exception $e) {
-        $core->error->add($e->getMessage());
+        dcCore::app()->error->add($e->getMessage());
     }
 }
 
@@ -92,9 +92,10 @@ if (!empty($_POST)) {
 <?php
 echo dcPage::breadcrumb(
     [
-        html::escapeHTML($core->blog->name) => '',
-        __('socialMeta')                    => ''
-    ]);
+        html::escapeHTML(dcCore::app()->blog->name) => '',
+        __('socialMeta')                            => '',
+    ]
+);
 echo dcPage::notices();
 
 echo
@@ -168,7 +169,7 @@ form::field('sm_description', 80, 255, html::escapeHTML($sm_description), '', ''
 form::field('sm_image', 80, 255, html::escapeHTML($sm_image), '', '', false, 'aria-describedby="default_image"') . '</p>' .
 '<p class="form-note" id="default_image">' . __('Will be used if post (or page) have no image.') . '</p>' .
 
-'<p>' . $core->formNonce() . '<input type="submit" value="' . __('Save') . '" /></p>' .
+'<p>' . dcCore::app()->formNonce() . '<input type="submit" value="' . __('Save') . '" /></p>' .
     '</form>';
 
 ?>
