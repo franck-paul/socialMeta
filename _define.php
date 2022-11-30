@@ -15,17 +15,19 @@ if (!defined('DC_RC_PATH')) {
 }
 
 $this->registerModule(
-    'socialMeta',                              // Name
-    'Add social meta to your posts and pages', // Description
-    'Franck Paul',                             // Author
-    '0.7',                                     // Version
+    'socialMeta',
+    'Add social meta to your posts and pages',
+    'Franck Paul',
+    '1.0',
     [
-        'requires'    => [['core', '2.23']],                          // Dependencies
-        'permissions' => 'admin',                                     // Permissions
-        'type'        => 'plugin',                                    // Type
+        'requires'    => [['core', '2.24']],
+        'permissions' => dcCore::app()->auth->makePermissions([
+            dcAuth::PERMISSION_ADMIN,
+        ]),
+        'type' => 'plugin',
 
-        'details'    => 'https://open-time.net/?q=socialMeta',       // Details URL
-        'support'    => 'https://github.com/franck-paul/socialMeta', // Support URL
+        'details'    => 'https://open-time.net/?q=socialMeta',
+        'support'    => 'https://github.com/franck-paul/socialMeta',
         'repository' => 'https://raw.githubusercontent.com/franck-paul/socialMeta/master/dcstore.xml',
     ]
 );

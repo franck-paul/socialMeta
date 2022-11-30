@@ -14,8 +14,6 @@ if (!defined('DC_RC_PATH')) {
     return;
 }
 
-dcCore::app()->addBehavior('publicHeadContent', ['dcSocialMeta', 'publicHeadContent']);
-
 class dcSocialMeta
 {
     public static function publicHeadContent()
@@ -147,3 +145,5 @@ class dcSocialMeta
         }
     }
 }
+
+dcCore::app()->addBehavior('publicHeadContent', [dcSocialMeta::class, 'publicHeadContent']);
