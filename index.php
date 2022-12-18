@@ -30,7 +30,7 @@ if (is_null(dcCore::app()->blog->settings->socialMeta->active)) {
         dcCore::app()->blog->settings->socialMeta->put('image', '', 'string', 'Default image', false);
 
         dcCore::app()->blog->triggerBlog();
-        http::redirect($p_url);
+        http::redirect(dcCore::app()->admin->getPageURL());
     } catch (Exception $e) {
         dcCore::app()->error->add($e->getMessage());
     }
@@ -76,7 +76,7 @@ if (!empty($_POST)) {
         dcCore::app()->blog->triggerBlog();
 
         dcPage::addSuccessNotice(__('Settings have been successfully updated.'));
-        http::redirect($p_url);
+        http::redirect(dcCore::app()->admin->getPageURL());
     } catch (Exception $e) {
         dcCore::app()->error->add($e->getMessage());
     }
@@ -99,7 +99,7 @@ echo dcPage::breadcrumb(
 echo dcPage::notices();
 
 echo
-'<form action="' . $p_url . '" method="post">' .
+'<form action="' . dcCore::app()->admin->getPageURL() . '" method="post">' .
 '<p>' . form::checkbox('sm_active', 1, $sm_active) . ' ' .
 '<label for="sm_active" class="classic">' . __('Active socialMeta') . '</label></p>' .
 

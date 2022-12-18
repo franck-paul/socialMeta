@@ -14,10 +14,7 @@ if (!defined('DC_CONTEXT_ADMIN')) {
     return;
 }
 
-$new_version = dcCore::app()->plugins->moduleInfo('socialMeta', 'version');
-$old_version = dcCore::app()->getVersion('socialMeta');
-
-if (version_compare((string) $old_version, $new_version, '>=')) {
+if (!dcCore::app()->newVersion(basename(__DIR__), dcCore::app()->plugins->moduleInfo(basename(__DIR__), 'version'))) {
     return;
 }
 
@@ -33,8 +30,6 @@ try {
     dcCore::app()->blog->settings->socialMeta->put('photo', false, 'boolean', 'Photoblog', false, true);
     dcCore::app()->blog->settings->socialMeta->put('description', '', 'string', 'Default description', false, true);
     dcCore::app()->blog->settings->socialMeta->put('image', '', 'string', 'Default image', false, true);
-
-    dcCore::app()->setVersion('socialMeta', $new_version);
 
     return true;
 } catch (Exception $e) {
