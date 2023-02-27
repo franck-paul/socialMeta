@@ -10,15 +10,20 @@
  * @copyright Franck Paul carnet.franck.paul@gmail.com
  * @copyright GPL-2.0 https://www.gnu.org/licenses/gpl-2.0.html
  */
-if (!defined('DC_RC_PATH')) {
-    return;
-}
+declare(strict_types=1);
 
-class dcSocialMeta
+namespace Dotclear\Plugin\socialMeta;
+
+use ArrayObject;
+use context;
+use dcCore;
+use html;
+use text;
+
+class FrontendBehaviors
 {
     public static function publicHeadContent()
     {
-        dcCore::app()->blog->settings->addNamespace('socialMeta');
         if (dcCore::app()->blog->settings->socialMeta->active) {
             if ((dcCore::app()->url->type == 'post') || (dcCore::app()->url->type == 'pages')) {
                 if ((dcCore::app()->ctx->posts->post_type == 'post' && dcCore::app()->blog->settings->socialMeta->on_post) || (dcCore::app()->ctx->posts->post_type == 'page' && dcCore::app()->blog->settings->socialMeta->on_page)) {
@@ -97,10 +102,14 @@ class dcSocialMeta
                         '<meta property="og:title" content="' . $title . '" />' . "\n" .
                         '<meta property="og:url" content="' . $url . '" />' . "\n" .
                         '<meta property="og:site_name" content="' . dcCore::app()->blog->name . '" />' . "\n" .
-                            '<meta property="og:description" content="' . $content . '" />' . "\n";
+                        '<meta property="og:description" content="' . $content . '" />' . "\n";
                         if (strlen($media['img'])) {
                             echo
-                                '<meta property="og:image" content="' . $media['img'] . '" />' . "\n";
+                            '<meta property="og:image" content="' . $media['img'] . '" />' . "\n";
+                            if (isset($media['alt']) && $media['alt'] !== '') {
+                                echo
+                                '<meta property="og:image:alt" content="' . $media['alt'] . '" />' . "\n";
+                            }
                         }
                     }
                     if (dcCore::app()->blog->settings->socialMeta->google) {
@@ -145,5 +154,3 @@ class dcSocialMeta
         }
     }
 }
-
-dcCore::app()->addBehavior('publicHeadContent', [dcSocialMeta::class, 'publicHeadContent']);

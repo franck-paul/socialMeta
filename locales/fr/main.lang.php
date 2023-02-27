@@ -12,12 +12,12 @@
 l10n::$locales['Add social meta to your posts and pages'] = 'Ajoute les métadonnées sociales à vos billets et pages';
 l10n::$locales['socialMeta'] = 'socialMeta';
 l10n::$locales['Active socialMeta'] = 'Activer socialMeta';
+l10n::$locales['Options'] = '';
 l10n::$locales['Add social meta on posts'] = 'Ajouter les métadonnées sociales aux billets';
 l10n::$locales['Add social meta on pages'] = 'Ajouter les métadonnées sociales aux pages';
 l10n::$locales['Use Facebook social meta:'] = 'Insérer les métadonnées pour Facebook :';
 l10n::$locales['Use Google social meta:'] = 'Insérer les métadonnées pour Google :';
 l10n::$locales['Use Twitter social meta:'] = 'Insérer les métadonnées pour Twitter :';
-l10n::$locales['Settings'] = 'Réglages';
 l10n::$locales['Twitter account:'] = 'Compte twitter :';
 l10n::$locales['With or without @ prefix.'] = 'Avec ou sans le préfixe @.';
 l10n::$locales['This blog is a photoblog'] = 'Ce blog est un photoblog';
