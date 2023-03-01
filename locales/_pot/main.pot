@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Dotclear 2 socialMeta module\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-27 15:48+0100\n"
+"POT-Creation-Date: 2023-03-01 12:05+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,71 +22,71 @@ msgstr ""
 
 #: ../git-plugins/socialMeta/src/Backend.php:30
 #: ../git-plugins/socialMeta/src/Backend.php:42
-#: ../git-plugins/socialMeta/src/Manage.php:127
-#: ../git-plugins/socialMeta/src/Manage.php:134
+#: ../git-plugins/socialMeta/src/Manage.php:163
+#: ../git-plugins/socialMeta/src/Manage.php:168
 msgid "socialMeta"
 msgstr ""
 
-#: ../git-plugins/socialMeta/src/Manage.php:142
+#: ../git-plugins/socialMeta/src/Manage.php:183
 msgid "Active socialMeta"
 msgstr ""
 
-#: ../git-plugins/socialMeta/src/Manage.php:144
+#: ../git-plugins/socialMeta/src/Manage.php:189
 msgid "Options"
 msgstr ""
 
-#: ../git-plugins/socialMeta/src/Manage.php:147
+#: ../git-plugins/socialMeta/src/Manage.php:197
 msgid "Add social meta on posts"
 msgstr ""
 
-#: ../git-plugins/socialMeta/src/Manage.php:149
+#: ../git-plugins/socialMeta/src/Manage.php:206
 msgid "Add social meta on pages"
 msgstr ""
 
-#: ../git-plugins/socialMeta/src/Manage.php:154
-msgid "Use Facebook social meta:"
+#: ../git-plugins/socialMeta/src/Manage.php:217
+msgid "Use Open Graph (Mastodon/Facebook) social meta:"
 msgstr ""
 
-#: ../git-plugins/socialMeta/src/Manage.php:167
+#: ../git-plugins/socialMeta/src/Manage.php:239
 msgid "Use Google social meta:"
 msgstr ""
 
-#: ../git-plugins/socialMeta/src/Manage.php:178
+#: ../git-plugins/socialMeta/src/Manage.php:258
 msgid "Use Twitter social meta:"
 msgstr ""
 
-#: ../git-plugins/socialMeta/src/Manage.php:194
+#: ../git-plugins/socialMeta/src/Manage.php:285
 msgid "Twitter account:"
 msgstr ""
 
-#: ../git-plugins/socialMeta/src/Manage.php:196
+#: ../git-plugins/socialMeta/src/Manage.php:296
 msgid "With or without @ prefix."
 msgstr ""
 
-#: ../git-plugins/socialMeta/src/Manage.php:199
+#: ../git-plugins/socialMeta/src/Manage.php:304
 msgid "This blog is a photoblog"
 msgstr ""
 
-#: ../git-plugins/socialMeta/src/Manage.php:200
+#: ../git-plugins/socialMeta/src/Manage.php:312
 msgid "Will use \"summary_large_image\" twitter card type rather than \"summary\", and will include the first original photo if possible rather than the medium thumbnail."
 msgstr ""
 
-#: ../git-plugins/socialMeta/src/Manage.php:202
+#: ../git-plugins/socialMeta/src/Manage.php:318
 msgid "Default description:"
 msgstr ""
 
-#: ../git-plugins/socialMeta/src/Manage.php:204
+#: ../git-plugins/socialMeta/src/Manage.php:329
 msgid "Will be used if post (or page) have no text."
 msgstr ""
 
-#: ../git-plugins/socialMeta/src/Manage.php:206
+#: ../git-plugins/socialMeta/src/Manage.php:335
 msgid "Default image (URL):"
 msgstr ""
 
-#: ../git-plugins/socialMeta/src/Manage.php:208
+#: ../git-plugins/socialMeta/src/Manage.php:346
 msgid "Will be used if post (or page) have no image."
 msgstr ""
 
-#: ../git-plugins/socialMeta/src/Manage.php:210
+#: ../git-plugins/socialMeta/src/Manage.php:354
 msgid "Save"
 msgstr ""
