@@ -111,37 +111,6 @@ class Manage extends dcNsProcess
     }
 
     /**
-     * Opens a module.
-     *
-     * Will be replaced by dcPage::openModule() in 2.26
-     *
-     * @param      string       $title  The title
-     * @param      null|string  $head   The head
-     */
-    public static function openModule(string $title = DC_VENDOR_NAME, ?string $head = '')
-    {
-        echo
-        '<html>' .
-        '<head>' .
-        '<title>' . $title . '</title>' .
-        $head .
-        '</head>' .
-        '<body>';
-    }
-
-    /**
-     * Closes a module.
-     *
-     * Will be replaced by dcPage::closeModule() in 2.26
-     */
-    public static function closeModule()
-    {
-        echo
-        '</body>' .
-        '</html>';
-    }
-
-    /**
      * Renders the page.
      */
     public static function render(): void
@@ -161,7 +130,7 @@ class Manage extends dcNsProcess
         $sm_description     = dcCore::app()->blog->settings->socialMeta->description;
         $sm_image           = dcCore::app()->blog->settings->socialMeta->image;
 
-        self::openModule(__('socialMeta'));
+        dcPage::openModule(__('socialMeta'));
 
         echo dcPage::breadcrumb(
             [
@@ -350,6 +319,6 @@ class Manage extends dcNsProcess
             ])
             ->render();
 
-        self::closeModule();
+        dcPage::closeModule();
     }
 }
