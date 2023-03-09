@@ -46,7 +46,7 @@ class FrontendBehaviors
                         $content = dcCore::app()->blog->settings->socialMeta->description;
                         if ($content == '') {
                             // Use blog description if any
-                            $content = dcCore::app()->blog->desc;
+                            $content = html::clean(dcCore::app()->blog->desc);
                             if ($content == '') {
                                 // Use blog title
                                 $content = dcCore::app()->blog->name;
