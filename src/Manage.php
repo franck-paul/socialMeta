@@ -17,19 +17,19 @@ namespace Dotclear\Plugin\socialMeta;
 use dcCore;
 use dcNsProcess;
 use dcPage;
+use Dotclear\Helper\Html\Form\Checkbox;
+use Dotclear\Helper\Html\Form\Fieldset;
+use Dotclear\Helper\Html\Form\Form;
+use Dotclear\Helper\Html\Form\Input;
+use Dotclear\Helper\Html\Form\Label;
+use Dotclear\Helper\Html\Form\Legend;
+use Dotclear\Helper\Html\Form\Note;
+use Dotclear\Helper\Html\Form\Para;
+use Dotclear\Helper\Html\Form\Submit;
+use Dotclear\Helper\Html\Form\Text;
+use Dotclear\Helper\Html\Html;
+use Dotclear\Helper\Network\Http;
 use Exception;
-use formCheckbox;
-use formFieldset;
-use formForm;
-use formInput;
-use formLabel;
-use formLegend;
-use formNote;
-use formPara;
-use formSubmit;
-use formText;
-use html;
-use http;
 
 class Manage extends dcNsProcess
 {
@@ -53,7 +53,7 @@ class Manage extends dcNsProcess
                 dcCore::app()->blog->settings->socialMeta->put('image', '', 'string', 'Default image', false);
 
                 dcCore::app()->blog->triggerBlog();
-                http::redirect(dcCore::app()->admin->getPageURL());
+                Http::redirect(dcCore::app()->admin->getPageURL());
             } catch (Exception $e) {
                 dcCore::app()->error->add($e->getMessage());
             }
@@ -78,13 +78,13 @@ class Manage extends dcNsProcess
                 $sm_active          = !empty($_POST['sm_active']);
                 $sm_on_post         = !empty($_POST['sm_on_post']);
                 $sm_on_page         = !empty($_POST['sm_on_page']);
-                $sm_twitter_account = trim(html::escapeHTML($_POST['sm_twitter_account']));
+                $sm_twitter_account = trim(Html::escapeHTML($_POST['sm_twitter_account']));
                 $sm_facebook        = !empty($_POST['sm_facebook']);
                 $sm_google          = !empty($_POST['sm_google']);
                 $sm_twitter         = !empty($_POST['sm_twitter']);
                 $sm_photo           = !empty($_POST['sm_photo']);
-                $sm_description     = trim(html::escapeHTML($_POST['sm_description']));
-                $sm_image           = trim(html::escapeHTML($_POST['sm_image']));
+                $sm_description     = trim(Html::escapeHTML($_POST['sm_description']));
+                $sm_image           = trim(Html::escapeHTML($_POST['sm_image']));
 
                 # Everything's fine, save options
                 dcCore::app()->blog->settings->socialMeta->put('active', $sm_active);
@@ -101,7 +101,7 @@ class Manage extends dcNsProcess
                 dcCore::app()->blog->triggerBlog();
 
                 dcPage::addSuccessNotice(__('Settings have been successfully updated.'));
-                http::redirect(dcCore::app()->admin->getPageURL());
+                Http::redirect(dcCore::app()->admin->getPageURL());
             } catch (Exception $e) {
                 dcCore::app()->error->add($e->getMessage());
             }
@@ -134,61 +134,61 @@ class Manage extends dcNsProcess
 
         echo dcPage::breadcrumb(
             [
-                html::escapeHTML(dcCore::app()->blog->name) => '',
+                Html::escapeHTML(dcCore::app()->blog->name) => '',
                 __('socialMeta')                            => '',
             ]
         );
         echo dcPage::notices();
 
-        echo (new formForm('frmreport'))
+        echo (new Form('frmreport'))
             ->action(dcCore::app()->admin->getPageURL())
             ->method('post')
             ->fields([
                 // Activation
-                (new formPara())
+                (new Para())
                     ->separator(' ')
                     ->items([
-                        (new formCheckbox('sm_active', $sm_active))
+                        (new Checkbox('sm_active', $sm_active))
                             ->value(1),
-                        (new formLabel(__('Active socialMeta')))
+                        (new Label(__('Active socialMeta')))
                             ->for('sm_active')
                             ->class('classic'),
                     ]),
                 // Options
-                (new formFieldset('sm_opt'))
-                    ->legend((new formLegend(__('Options'))))
+                (new Fieldset('sm_opt'))
+                    ->legend((new Legend(__('Options'))))
                     ->class('fieldset')
                     ->fields([
-                        ((new formPara()))
+                        ((new Para()))
                             ->separator(' ')
                             ->items([
-                                (new formCheckbox('sm_on_post', $sm_on_post))
+                                (new Checkbox('sm_on_post', $sm_on_post))
                                     ->value(1),
-                                (new formLabel(__('Add social meta on posts')))
+                                (new Label(__('Add social meta on posts')))
                                     ->for('sm_on_post')
                                     ->class('classic'),
                             ]),
-                        (new formPara())
+                        (new Para())
                             ->separator(' ')
                             ->items([
-                                (new formCheckbox('sm_on_page', $sm_on_page))
+                                (new Checkbox('sm_on_page', $sm_on_page))
                                     ->value(1),
-                                (new formLabel(__('Add social meta on pages')))
+                                (new Label(__('Add social meta on pages')))
                                     ->for('sm_on_page')
                                     ->class('classic'),
                             ]),
-                        (new formText('hr')),
+                        (new Text('hr')),
                         // Specific Facebook
-                        (new formPara())
+                        (new Para())
                             ->separator(' ')
                             ->items([
-                                (new formCheckbox('sm_facebook', $sm_facebook))
+                                (new Checkbox('sm_facebook', $sm_facebook))
                                     ->value(1),
-                                (new formLabel(__('Use Open Graph (Mastodon/Facebook) social meta:')))
+                                (new Label(__('Use Open Graph (Mastodon/Facebook) social meta:')))
                                     ->for('sm_facebook')
                                     ->class('classic'),
                             ]),
-                        (new formText(
+                        (new Text(
                             'pre',
                             html::escapeHTML(
                                 '<!-- Open Graph (Mastodon/Facebook) -->' . "\n" .
@@ -201,16 +201,16 @@ class Manage extends dcNsProcess
                             )
                         )),
                         // Specific Google
-                        (new formPara())
+                        (new Para())
                             ->separator(' ')
                             ->items([
-                                (new formCheckbox('sm_google', $sm_google))
+                                (new Checkbox('sm_google', $sm_google))
                                     ->value(1),
-                                (new formLabel(__('Use Google social meta:')))
+                                (new Label(__('Use Google social meta:')))
                                     ->for('sm_google')
                                     ->class('classic'),
                             ]),
-                        (new formText(
+                        (new Text(
                             'pre',
                             html::escapeHTML(
                                 '<!-- Google -->' . "\n" .
@@ -220,16 +220,16 @@ class Manage extends dcNsProcess
                             )
                         )),
                         // Specific Twitter
-                        (new formPara())
+                        (new Para())
                             ->separator(' ')
                             ->items([
-                                (new formCheckbox('sm_twitter', $sm_twitter))
+                                (new Checkbox('sm_twitter', $sm_twitter))
                                     ->value(1),
-                                (new formLabel(__('Use Twitter social meta:')))
+                                (new Label(__('Use Twitter social meta:')))
                                     ->for('sm_twitter')
                                     ->class('classic'),
                             ]),
-                        (new formText(
+                        (new Text(
                             'pre',
                             html::escapeHTML(
                                 '<!-- Twitter -->' . "\n" .
@@ -244,74 +244,74 @@ class Manage extends dcNsProcess
                         )),
                     ]),
                 // Settings
-                (new formFieldset('sm_conf'))
-                    ->legend((new formLegend(__('Settings'))))
+                (new Fieldset('sm_conf'))
+                    ->legend((new Legend(__('Settings'))))
                     ->class('fieldset')
                     ->fields([
                         // Twitter account
-                        (new formPara())
+                        (new Para())
                             ->separator(' ')
                             ->items([
-                                (new formLabel(__('Twitter account:')))
+                                (new Label(__('Twitter account:')))
                                     ->for('sm_twitter_account'),
-                                (new formInput('sm_twitter_account'))
-                                    ->value(html::escapeHTML($sm_twitter_account))
+                                (new Input('sm_twitter_account'))
+                                    ->value(Html::escapeHTML($sm_twitter_account))
                                     ->size(30)
                                     ->maxlength(128)
                                     ->extra('aria-describedby="prefix-twitter_account"'),
                             ]),
-                        (new formNote('prefix-twitter_account'))
+                        (new Note('prefix-twitter_account'))
                             ->class('form-note')
                             ->text(__('With or without @ prefix.')),
                         // Photoblog
-                        (new formPara())
+                        (new Para())
                             ->separator(' ')
                             ->items([
-                                (new formCheckbox('sm_photo', $sm_photo))
+                                (new Checkbox('sm_photo', $sm_photo))
                                     ->value(1),
-                                (new formLabel(__('This blog is a photoblog')))
+                                (new Label(__('This blog is a photoblog')))
                                     ->for('sm_photo')
                                     ->class('classic')
                                     ->extra('aria-describedby="summary_large_image"'),
                             ]),
-                        (new formNote('summary_large_image'))
+                        (new Note('summary_large_image'))
                             ->class('form-note')
                             ->text(__('Will use "summary_large_image" twitter card type rather than "summary", and will include the first original photo if possible rather than the medium thumbnail.')),
                         // Default description
-                        (new formPara())
+                        (new Para())
                             ->separator(' ')
                             ->items([
-                                (new formLabel(__('Default description:')))
+                                (new Label(__('Default description:')))
                                     ->for('sm_description'),
-                                (new formInput('sm_description'))
+                                (new Input('sm_description'))
                                     ->value(html::escapeHTML($sm_description))
                                     ->size(80)
                                     ->maxlength(255)
                                     ->extra('aria-describedby="default_description"'),
                             ]),
-                        (new formNote('default_description'))
+                        (new Note('default_description'))
                             ->class('form-note')
                             ->text(__('Will be used if post (or page) have no text.')),
                         // Default image
-                        (new formPara())
+                        (new Para())
                             ->separator(' ')
                             ->items([
-                                (new formLabel(__('Default image (URL):')))
+                                (new Label(__('Default image (URL):')))
                                     ->for('sm_image'),
-                                (new formInput('sm_image'))
+                                (new Input('sm_image'))
                                     ->value(html::escapeHTML($sm_image))
                                     ->size(80)
                                     ->maxlength(255)
                                     ->extra('aria-describedby="default_image"'),
                             ]),
-                        (new formNote('default_image'))
+                        (new Note('default_image'))
                             ->class('form-note')
                             ->text(__('Will be used if post (or page) have no image.')),
                     ]),
                 // Button
-                (new formPara())
+                (new Para())
                     ->items([
-                        (new formSubmit('frmsave'))
+                        (new Submit('frmsave'))
                             ->accesskey('s')
                             ->value(__('Save')),
                         dcCore::app()->formNonce(false),

@@ -17,8 +17,8 @@ namespace Dotclear\Plugin\socialMeta;
 use ArrayObject;
 use context;
 use dcCore;
-use html;
-use text;
+use Dotclear\Helper\Html\Html;
+use Dotclear\Helper\Text;
 
 class FrontendBehaviors
 {
@@ -34,19 +34,19 @@ class FrontendBehaviors
                     // Post/Page URL
                     $url = dcCore::app()->ctx->posts->getURL();
                     // Post/Page title
-                    $title = html::escapeHTML(dcCore::app()->ctx->posts->post_title);
+                    $title = Html::escapeHTML(dcCore::app()->ctx->posts->post_title);
                     // Post/Page content
                     $content = dcCore::app()->ctx->posts->getExcerpt() . ' ' . dcCore::app()->ctx->posts->getContent();
-                    $content = html::decodeEntities(html::clean($content));
+                    $content = Html::decodeEntities(Html::clean($content));
                     $content = preg_replace('/\s+/', ' ', $content);
-                    $content = html::escapeHTML($content);
-                    $content = text::cutString($content, 180);
+                    $content = Html::escapeHTML($content);
+                    $content = Text::cutString($content, 180);
                     if ($content == '') {
                         // Use default description if any
                         $content = dcCore::app()->blog->settings->socialMeta->description;
                         if ($content == '') {
                             // Use blog description if any
-                            $content = html::clean(dcCore::app()->blog->desc);
+                            $content = Html::clean(dcCore::app()->blog->desc);
                             if ($content == '') {
                                 // Use blog title
                                 $content = dcCore::app()->blog->name;
