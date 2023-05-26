@@ -28,3 +28,4 @@ L10n::$locales['Default description:'] = 'Description par défaut :';
 L10n::$locales['Will be used if post (or page) have no text.'] = 'Sera utilisé en absence de texte dans le billet ou la page.';
 L10n::$locales['Default image (URL):'] = 'Image par défaut (URL) :';
 L10n::$locales['Will be used if post (or page) have no image.'] = 'Sera utilisé en absence d\'image dans le billet ou la page.';
+L10n::$locales['Save'] = '';
