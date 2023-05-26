@@ -15,16 +15,14 @@ declare(strict_types=1);
 namespace Dotclear\Plugin\socialMeta;
 
 use dcCore;
+use dcNamespace;
 use dcNsProcess;
 
 class Install extends dcNsProcess
 {
     public static function init(): bool
     {
-        $module = basename(dirname(__DIR__));
-        $check  = dcCore::app()->newVersion($module, dcCore::app()->plugins->moduleInfo($module, 'version'));
-
-        static::$init = defined('DC_CONTEXT_ADMIN') && $check;
+        static::$init = My::checkContext(My::INSTALL);
 
         return static::$init;
     }
@@ -35,16 +33,18 @@ class Install extends dcNsProcess
             return false;
         }
 
-        dcCore::app()->blog->settings->socialMeta->put('active', false, 'boolean', 'Active', false, true);
-        dcCore::app()->blog->settings->socialMeta->put('on_post', true, 'boolean', 'Add social meta on post', false, true);
-        dcCore::app()->blog->settings->socialMeta->put('on_page', false, 'boolean', 'Add social meta on page', false, true);
-        dcCore::app()->blog->settings->socialMeta->put('twitter_account', '', 'string', 'Twitter account', false, true);
-        dcCore::app()->blog->settings->socialMeta->put('facebook', true, 'boolean', 'Insert Facebook meta', false, true);
-        dcCore::app()->blog->settings->socialMeta->put('google', true, 'boolean', 'Insert Google meta', false, true);
-        dcCore::app()->blog->settings->socialMeta->put('twitter', true, 'boolean', 'Insert Twitter meta', false, true);
-        dcCore::app()->blog->settings->socialMeta->put('photo', false, 'boolean', 'Photoblog', false, true);
-        dcCore::app()->blog->settings->socialMeta->put('description', '', 'string', 'Default description', false, true);
-        dcCore::app()->blog->settings->socialMeta->put('image', '', 'string', 'Default image', false, true);
+        $settings = dcCore::app()->blog->settings->get(My::id());
+
+        $settings->put('active', false, dcNamespace::NS_BOOL, 'Active', false, true);
+        $settings->put('on_post', true, dcNamespace::NS_BOOL, 'Add social meta on post', false, true);
+        $settings->put('on_page', false, dcNamespace::NS_BOOL, 'Add social meta on page', false, true);
+        $settings->put('twitter_account', '', dcNamespace::NS_STRING, 'Twitter account', false, true);
+        $settings->put('facebook', true, dcNamespace::NS_BOOL, 'Insert Facebook meta', false, true);
+        $settings->put('google', true, dcNamespace::NS_BOOL, 'Insert Google meta', false, true);
+        $settings->put('twitter', true, dcNamespace::NS_BOOL, 'Insert Twitter meta', false, true);
+        $settings->put('photo', false, dcNamespace::NS_BOOL, 'Photoblog', false, true);
+        $settings->put('description', '', dcNamespace::NS_STRING, 'Default description', false, true);
+        $settings->put('image', '', dcNamespace::NS_STRING, 'Default image', false, true);
 
         return true;
     }

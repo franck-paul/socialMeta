@@ -15,16 +15,14 @@ declare(strict_types=1);
 namespace Dotclear\Plugin\socialMeta;
 
 use dcAdmin;
-use dcAuth;
 use dcCore;
 use dcNsProcess;
-use dcPage;
 
 class Backend extends dcNsProcess
 {
     public static function init(): bool
     {
-        static::$init = defined('DC_CONTEXT_ADMIN');
+        static::$init = My::checkContext(My::BACKEND);
 
         // dead but useful code, in order to have translations
         __('socialMeta') . __('Add social meta to your posts and pages');
@@ -40,12 +38,10 @@ class Backend extends dcNsProcess
 
         dcCore::app()->menu[dcAdmin::MENU_BLOG]->addItem(
             __('socialMeta'),
-            'plugin.php?p=socialMeta',
-            urldecode(dcPage::getPF('socialMeta/icon.svg')),
-            preg_match('/plugin.php\?p=socialMeta(&.*)?$/', $_SERVER['REQUEST_URI']),
-            dcCore::app()->auth->check(dcCore::app()->auth->makePermissions([
-                dcAuth::PERMISSION_ADMIN,
-            ]), dcCore::app()->blog->id)
+            My::makeUrl(),
+            My::icons(),
+            preg_match(My::urlScheme(), $_SERVER['REQUEST_URI']),
+            My::checkContext(My::MENU)
         );
 
         return true;
