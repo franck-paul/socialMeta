@@ -32,6 +32,12 @@ class Frontend extends dcNsProcess
             return false;
         }
 
+        // Don't do things in frontend if plugin disabled
+        $settings = dcCore::app()->blog->settings->get(My::id());
+        if (!(bool) $settings->active) {
+            return false;
+        }
+
         dcCore::app()->addBehavior('publicHeadContent', [FrontendBehaviors::class, 'publicHeadContent']);
 
         return true;
