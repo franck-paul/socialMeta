@@ -16,8 +16,9 @@ namespace Dotclear\Plugin\socialMeta;
 
 use dcCore;
 use dcNamespace;
-use dcNsProcess;
-use dcPage;
+use Dotclear\Core\Backend\Notices;
+use Dotclear\Core\Backend\Page;
+use Dotclear\Core\Process;
 use Dotclear\Helper\Html\Form\Checkbox;
 use Dotclear\Helper\Html\Form\Fieldset;
 use Dotclear\Helper\Html\Form\Form;
@@ -31,17 +32,14 @@ use Dotclear\Helper\Html\Form\Text;
 use Dotclear\Helper\Html\Html;
 use Exception;
 
-class Manage extends dcNsProcess
+class Manage extends Process
 {
-    protected static $init = false; /** @deprecated since 2.27 */
     /**
      * Initializes the page.
      */
     public static function init(): bool
     {
-        static::$init = My::checkContext(My::MANAGE);
-
-        return static::$init;
+        return self::status(My::checkContext(My::MANAGE));
     }
 
     /**
@@ -49,7 +47,7 @@ class Manage extends dcNsProcess
      */
     public static function process(): bool
     {
-        if (!static::$init) {
+        if (!self::status()) {
             return false;
         }
 
@@ -69,7 +67,7 @@ class Manage extends dcNsProcess
                 $settings->put('image', '', dcNamespace::NS_STRING, 'Default image', false);
 
                 dcCore::app()->blog->triggerBlog();
-                dcCore::app()->adminurl->redirect('admin.plugin.' . My::id());
+                dcCore::app()->admin->url->redirect('admin.plugin.' . My::id());
             } catch (Exception $e) {
                 dcCore::app()->error->add($e->getMessage());
             }
@@ -102,8 +100,8 @@ class Manage extends dcNsProcess
 
                 dcCore::app()->blog->triggerBlog();
 
-                dcPage::addSuccessNotice(__('Settings have been successfully updated.'));
-                dcCore::app()->adminurl->redirect('admin.plugin.' . My::id());
+                Notices::addSuccessNotice(__('Settings have been successfully updated.'));
+                dcCore::app()->admin->url->redirect('admin.plugin.' . My::id());
             } catch (Exception $e) {
                 dcCore::app()->error->add($e->getMessage());
             }
@@ -117,7 +115,7 @@ class Manage extends dcNsProcess
      */
     public static function render(): void
     {
-        if (!static::$init) {
+        if (!self::status()) {
             return;
         }
 
@@ -133,15 +131,15 @@ class Manage extends dcNsProcess
         $sm_description     = $settings->description;
         $sm_image           = $settings->image;
 
-        dcPage::openModule(__('socialMeta'));
+        Page::openModule(__('socialMeta'));
 
-        echo dcPage::breadcrumb(
+        echo Page::breadcrumb(
             [
                 Html::escapeHTML(dcCore::app()->blog->name) => '',
                 __('socialMeta')                            => '',
             ]
         );
-        echo dcPage::notices();
+        echo Notices::getNotices();
 
         echo (new Form('frmreport'))
             ->action(dcCore::app()->admin->getPageURL())
@@ -322,6 +320,6 @@ class Manage extends dcNsProcess
             ])
             ->render();
 
-        dcPage::closeModule();
+        Page::closeModule();
     }
 }
