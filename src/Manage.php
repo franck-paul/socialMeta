@@ -51,7 +51,7 @@ class Manage extends Process
             return false;
         }
 
-        $settings = dcCore::app()->blog->settings->get(My::id());
+        $settings = My::settings();
         if (is_null($settings->active)) {
             try {
                 // Add default settings values if necessary
@@ -119,7 +119,7 @@ class Manage extends Process
             return;
         }
 
-        $settings           = dcCore::app()->blog->settings->get(My::id());
+        $settings           = My::settings();
         $sm_active          = (bool) $settings->active;
         $sm_on_post         = (bool) $settings->on_post;
         $sm_on_page         = (bool) $settings->on_page;
@@ -131,7 +131,7 @@ class Manage extends Process
         $sm_description     = $settings->description;
         $sm_image           = $settings->image;
 
-        Page::openModule(__('socialMeta'));
+        Page::openModule(My::name());
 
         echo Page::breadcrumb(
             [
@@ -315,7 +315,7 @@ class Manage extends Process
                         (new Submit('frmsave'))
                             ->accesskey('s')
                             ->value(__('Save')),
-                        dcCore::app()->formNonce(false),
+                        ... My::hiddenFields(),
                     ]),
             ])
             ->render();

@@ -14,7 +14,6 @@ declare(strict_types=1);
 
 namespace Dotclear\Plugin\socialMeta;
 
-use dcCore;
 use dcNamespace;
 use Dotclear\Core\Process;
 
@@ -31,7 +30,7 @@ class Install extends Process
             return false;
         }
 
-        $settings = dcCore::app()->blog->settings->get(My::id());
+        $settings = My::settings();
 
         $settings->put('active', false, dcNamespace::NS_BOOL, 'Active', false, true);
         $settings->put('on_post', true, dcNamespace::NS_BOOL, 'Add social meta on post', false, true);
