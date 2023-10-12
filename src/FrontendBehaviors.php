@@ -22,13 +22,13 @@ use Dotclear\Helper\Text;
 
 class FrontendBehaviors
 {
-    public static function publicHeadContent()
+    public static function publicHeadContent(): string
     {
         if (dcCore::app()->blog->settings->socialMeta->active) {
             if ((dcCore::app()->url->type == 'post') || (dcCore::app()->url->type == 'pages')) {
                 if ((dcCore::app()->ctx->posts->post_type == 'post' && dcCore::app()->blog->settings->socialMeta->on_post) || (dcCore::app()->ctx->posts->post_type == 'page' && dcCore::app()->blog->settings->socialMeta->on_page)) {
                     if (!dcCore::app()->blog->settings->socialMeta->facebook && !dcCore::app()->blog->settings->socialMeta->google && !dcCore::app()->blog->settings->socialMeta->twitter) {
-                        return;
+                        return '';
                     }
 
                     // Post/Page URL
@@ -152,5 +152,7 @@ class FrontendBehaviors
                 }
             }
         }
+
+        return '';
     }
 }
