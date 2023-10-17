@@ -89,7 +89,7 @@ class FrontendBehaviors
                         $media['img'] = dcCore::app()->blog->settings->socialMeta->image;
                         $media['alt'] = '';
                     }
-                    if (strlen($media['img']) && substr($media['img'], 0, 4) != 'http') {
+                    if (strlen((string) $media['img']) && substr((string) $media['img'], 0, 4) != 'http') {
                         $root         = preg_replace('#^(.+?//.+?)/(.*)$#', '$1', dcCore::app()->blog->url);
                         $media['img'] = $root . $media['img'];
                     }
@@ -103,7 +103,7 @@ class FrontendBehaviors
                         '<meta property="og:url" content="' . $url . '" />' . "\n" .
                         '<meta property="og:site_name" content="' . dcCore::app()->blog->name . '" />' . "\n" .
                         '<meta property="og:description" content="' . $content . '" />' . "\n";
-                        if (strlen($media['img'])) {
+                        if (strlen((string) $media['img'])) {
                             echo
                             '<meta property="og:image" content="' . $media['img'] . '" />' . "\n";
                             if (isset($media['alt']) && $media['alt'] !== '') {
@@ -118,7 +118,7 @@ class FrontendBehaviors
                             '<!-- Google -->' . "\n" .
                             '<meta itemprop="name" content="' . $title . '" />' . "\n" .
                             '<meta itemprop="description" content="' . $content . '" />' . "\n";
-                        if (strlen($media['img'])) {
+                        if (strlen((string) $media['img'])) {
                             echo
                                 '<meta itemprop="image" content="' . $media['img'] . '" />' . "\n";
                         }
@@ -135,7 +135,7 @@ class FrontendBehaviors
                             '<meta name="twitter:card" content="' . ($media['large'] ? 'summary_large_image' : 'summary') . '" />' . "\n" .
                             '<meta name="twitter:title" content="' . $title . '" />' . "\n" .
                             '<meta name="twitter:description" content="' . $content . '" />' . "\n";
-                        if (strlen($media['img'])) {
+                        if (strlen((string) $media['img'])) {
                             echo
                                 '<meta name="twitter:image" content="' . $media['img'] . '"/>' . "\n";
                             if ($media['alt'] != '') {
