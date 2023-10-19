@@ -17,6 +17,7 @@ namespace Dotclear\Plugin\socialMeta;
 use ArrayObject;
 use context;
 use dcCore;
+use Dotclear\App;
 use Dotclear\Helper\Html\Html;
 use Dotclear\Helper\Text;
 
@@ -24,10 +25,11 @@ class FrontendBehaviors
 {
     public static function publicHeadContent(): string
     {
-        if (dcCore::app()->blog->settings->socialMeta->active) {
+        $settings = My::settings();
+        if ($settings->active) {
             if ((dcCore::app()->url->type == 'post') || (dcCore::app()->url->type == 'pages')) {
-                if ((dcCore::app()->ctx->posts->post_type == 'post' && dcCore::app()->blog->settings->socialMeta->on_post) || (dcCore::app()->ctx->posts->post_type == 'page' && dcCore::app()->blog->settings->socialMeta->on_page)) {
-                    if (!dcCore::app()->blog->settings->socialMeta->facebook && !dcCore::app()->blog->settings->socialMeta->google && !dcCore::app()->blog->settings->socialMeta->twitter) {
+                if ((dcCore::app()->ctx->posts->post_type == 'post' && $settings->on_post) || (dcCore::app()->ctx->posts->post_type == 'page' && $settings->on_page)) {
+                    if (!$settings->facebook && !$settings->google && !$settings->twitter) {
                         return '';
                     }
 
@@ -43,13 +45,13 @@ class FrontendBehaviors
                     $content = Text::cutString($content, 180);
                     if ($content == '') {
                         // Use default description if any
-                        $content = dcCore::app()->blog->settings->socialMeta->description;
+                        $content = $settings->description;
                         if ($content == '') {
                             // Use blog description if any
-                            $content = Html::clean(dcCore::app()->blog->desc);
+                            $content = Html::clean(App::blog()->desc());
                             if ($content == '') {
                                 // Use blog title
-                                $content = dcCore::app()->blog->name;
+                                $content = App::blog()->name();
                             }
                         }
                     }
@@ -63,7 +65,7 @@ class FrontendBehaviors
                     dcCore::app()->callBehavior('socialMetaMedia', $media);
 
                     if ($media['img'] == '') {
-                        if (dcCore::app()->blog->settings->socialMeta->photo) {
+                        if ($settings->photo) {
                             // Photoblog, use original photo rather than small one
                             $media['img'] = context::EntryFirstImageHelper('o', true, '', true);
                             if ($media['img'] != '') {
@@ -84,24 +86,24 @@ class FrontendBehaviors
                             }
                         }
                     }
-                    if ($media['img'] == '' && dcCore::app()->blog->settings->socialMeta->description != '') {
+                    if ($media['img'] == '' && $settings->description != '') {
                         // Use default image as decoration if set
-                        $media['img'] = dcCore::app()->blog->settings->socialMeta->image;
+                        $media['img'] = $settings->image;
                         $media['alt'] = '';
                     }
                     if (strlen((string) $media['img']) && substr((string) $media['img'], 0, 4) != 'http') {
-                        $root         = preg_replace('#^(.+?//.+?)/(.*)$#', '$1', dcCore::app()->blog->url);
+                        $root         = preg_replace('#^(.+?//.+?)/(.*)$#', '$1', App::blog()->url());
                         $media['img'] = $root . $media['img'];
                     }
 
-                    if (dcCore::app()->blog->settings->socialMeta->facebook) {
+                    if ($settings->facebook) {
                         // Facebook meta
                         echo
                         '<!-- Facebook -->' . "\n" .
                         '<meta property="og:type" content="article" />' . "\n" .
                         '<meta property="og:title" content="' . $title . '" />' . "\n" .
                         '<meta property="og:url" content="' . $url . '" />' . "\n" .
-                        '<meta property="og:site_name" content="' . dcCore::app()->blog->name . '" />' . "\n" .
+                        '<meta property="og:site_name" content="' . App::blog()->name() . '" />' . "\n" .
                         '<meta property="og:description" content="' . $content . '" />' . "\n";
                         if (strlen((string) $media['img'])) {
                             echo
@@ -112,7 +114,7 @@ class FrontendBehaviors
                             }
                         }
                     }
-                    if (dcCore::app()->blog->settings->socialMeta->google) {
+                    if ($settings->google) {
                         // Google+
                         echo
                             '<!-- Google -->' . "\n" .
@@ -123,9 +125,9 @@ class FrontendBehaviors
                                 '<meta itemprop="image" content="' . $media['img'] . '" />' . "\n";
                         }
                     }
-                    if (dcCore::app()->blog->settings->socialMeta->twitter) {
+                    if ($settings->twitter) {
                         // Twitter account
-                        $account = dcCore::app()->blog->settings->socialMeta->twitter_account;
+                        $account = $settings->twitter_account;
                         if (strlen($account) && substr($account, 0, 1) != '@') {
                             $account = '@' . $account;
                         }

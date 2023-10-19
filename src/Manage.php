@@ -16,6 +16,7 @@ namespace Dotclear\Plugin\socialMeta;
 
 use dcCore;
 use dcNamespace;
+use Dotclear\App;
 use Dotclear\Core\Backend\Notices;
 use Dotclear\Core\Backend\Page;
 use Dotclear\Core\Process;
@@ -66,7 +67,7 @@ class Manage extends Process
                 $settings->put('description', '', dcNamespace::NS_STRING, 'Default description', false);
                 $settings->put('image', '', dcNamespace::NS_STRING, 'Default image', false);
 
-                dcCore::app()->blog->triggerBlog();
+                App::blog()->triggerBlog();
                 dcCore::app()->adminurl->redirect('admin.plugin.' . My::id());
             } catch (Exception $e) {
                 dcCore::app()->error->add($e->getMessage());
@@ -98,7 +99,7 @@ class Manage extends Process
                 $settings->put('description', $sm_description, dcNamespace::NS_STRING);
                 $settings->put('image', $sm_image, dcNamespace::NS_STRING);
 
-                dcCore::app()->blog->triggerBlog();
+                App::blog()->triggerBlog();
 
                 Notices::addSuccessNotice(__('Settings have been successfully updated.'));
                 dcCore::app()->adminurl->redirect('admin.plugin.' . My::id());
@@ -135,8 +136,8 @@ class Manage extends Process
 
         echo Page::breadcrumb(
             [
-                Html::escapeHTML(dcCore::app()->blog->name) => '',
-                __('socialMeta')                            => '',
+                Html::escapeHTML(App::blog()->name()) => '',
+                __('socialMeta')                      => '',
             ]
         );
         echo Notices::getNotices();
