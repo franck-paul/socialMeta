@@ -15,9 +15,8 @@ declare(strict_types=1);
 namespace Dotclear\Plugin\socialMeta;
 
 use ArrayObject;
-use context;
-use dcCore;
 use Dotclear\App;
+use Dotclear\Core\Frontend\Ctx;
 use Dotclear\Helper\Html\Html;
 use Dotclear\Helper\Text;
 
@@ -27,18 +26,18 @@ class FrontendBehaviors
     {
         $settings = My::settings();
         if ($settings->active) {
-            if ((dcCore::app()->url->type == 'post') || (dcCore::app()->url->type == 'pages')) {
-                if ((dcCore::app()->ctx->posts->post_type == 'post' && $settings->on_post) || (dcCore::app()->ctx->posts->post_type == 'page' && $settings->on_page)) {
+            if ((App::url()->type == 'post') || (App::url()->type == 'pages')) {
+                if ((App::frontend()->context()->posts->post_type == 'post' && $settings->on_post) || (App::frontend()->context()->posts->post_type == 'page' && $settings->on_page)) {
                     if (!$settings->facebook && !$settings->google && !$settings->twitter) {
                         return '';
                     }
 
                     // Post/Page URL
-                    $url = dcCore::app()->ctx->posts->getURL();
+                    $url = App::frontend()->context()->posts->getURL();
                     // Post/Page title
-                    $title = Html::escapeHTML(dcCore::app()->ctx->posts->post_title);
+                    $title = Html::escapeHTML(App::frontend()->context()->posts->post_title);
                     // Post/Page content
-                    $content = dcCore::app()->ctx->posts->getExcerpt() . ' ' . dcCore::app()->ctx->posts->getContent();
+                    $content = App::frontend()->context()->posts->getExcerpt() . ' ' . App::frontend()->context()->posts->getContent();
                     $content = Html::decodeEntities(Html::clean($content));
                     $content = preg_replace('/\s+/', ' ', $content);
                     $content = Html::escapeHTML($content);
@@ -62,15 +61,15 @@ class FrontendBehaviors
                         'large' => false,
                     ]);
                     // Let 3rd party plugins the opportunity to give media info
-                    dcCore::app()->callBehavior('socialMetaMedia', $media);
+                    App::behavior()->callBehavior('socialMetaMedia', $media);
 
                     if ($media['img'] == '') {
                         if ($settings->photo) {
                             // Photoblog, use original photo rather than small one
-                            $media['img'] = context::EntryFirstImageHelper('o', true, '', true);
+                            $media['img'] = Ctx::EntryFirstImageHelper('o', true, '', true);
                             if ($media['img'] != '') {
                                 $media['large'] = true;
-                                $tag            = context::EntryFirstImageHelper('o', true, '', false);
+                                $tag            = Ctx::EntryFirstImageHelper('o', true, '', false);
                                 if (preg_match('/alt="([^"]+)"/', $tag, $malt)) {
                                     $media['alt'] = $malt[1];
                                 }
@@ -78,9 +77,9 @@ class FrontendBehaviors
                         }
                     }
                     if ($media['img'] == '') {
-                        $media['img'] = context::EntryFirstImageHelper('m', true, '', true);
+                        $media['img'] = Ctx::EntryFirstImageHelper('m', true, '', true);
                         if ($media['img'] != '') {
-                            $tag = context::EntryFirstImageHelper('m', true, '', false);
+                            $tag = Ctx::EntryFirstImageHelper('m', true, '', false);
                             if (preg_match('/alt="([^"]+)"/', $tag, $malt)) {
                                 $media['alt'] = $malt[1];
                             }

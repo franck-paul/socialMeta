@@ -14,8 +14,6 @@ declare(strict_types=1);
 
 namespace Dotclear\Plugin\socialMeta;
 
-use dcCore;
-use dcNamespace;
 use Dotclear\App;
 use Dotclear\Core\Backend\Notices;
 use Dotclear\Core\Backend\Page;
@@ -56,21 +54,21 @@ class Manage extends Process
         if (is_null($settings->active)) {
             try {
                 // Add default settings values if necessary
-                $settings->put('active', false, dcNamespace::NS_BOOL, 'Active', false);
-                $settings->put('on_post', true, dcNamespace::NS_BOOL, 'Add social meta on post', false);
-                $settings->put('on_page', false, dcNamespace::NS_BOOL, 'Add social meta on page', false);
-                $settings->put('twitter_account', '', dcNamespace::NS_STRING, 'Twitter account', false);
-                $settings->put('facebook', true, dcNamespace::NS_BOOL, 'Insert Facebook meta', false);
-                $settings->put('google', true, dcNamespace::NS_BOOL, 'Insert Google meta', false);
-                $settings->put('twitter', true, dcNamespace::NS_BOOL, 'Insert Twitter meta', false);
-                $settings->put('photo', false, dcNamespace::NS_BOOL, 'Photoblog', false);
-                $settings->put('description', '', dcNamespace::NS_STRING, 'Default description', false);
-                $settings->put('image', '', dcNamespace::NS_STRING, 'Default image', false);
+                $settings->put('active', false, App::blogWorkspace()::NS_BOOL, 'Active', false);
+                $settings->put('on_post', true, App::blogWorkspace()::NS_BOOL, 'Add social meta on post', false);
+                $settings->put('on_page', false, App::blogWorkspace()::NS_BOOL, 'Add social meta on page', false);
+                $settings->put('twitter_account', '', App::blogWorkspace()::NS_STRING, 'Twitter account', false);
+                $settings->put('facebook', true, App::blogWorkspace()::NS_BOOL, 'Insert Facebook meta', false);
+                $settings->put('google', true, App::blogWorkspace()::NS_BOOL, 'Insert Google meta', false);
+                $settings->put('twitter', true, App::blogWorkspace()::NS_BOOL, 'Insert Twitter meta', false);
+                $settings->put('photo', false, App::blogWorkspace()::NS_BOOL, 'Photoblog', false);
+                $settings->put('description', '', App::blogWorkspace()::NS_STRING, 'Default description', false);
+                $settings->put('image', '', App::blogWorkspace()::NS_STRING, 'Default image', false);
 
                 App::blog()->triggerBlog();
-                dcCore::app()->adminurl->redirect('admin.plugin.' . My::id());
+                My::redirect();
             } catch (Exception $e) {
-                dcCore::app()->error->add($e->getMessage());
+                App::error()->add($e->getMessage());
             }
         }
 
@@ -88,23 +86,23 @@ class Manage extends Process
                 $sm_image           = trim(Html::escapeHTML($_POST['sm_image']));
 
                 # Everything's fine, save options
-                $settings->put('active', $sm_active, dcNamespace::NS_BOOL);
-                $settings->put('on_post', $sm_on_post, dcNamespace::NS_BOOL);
-                $settings->put('on_page', $sm_on_page, dcNamespace::NS_BOOL);
-                $settings->put('twitter_account', $sm_twitter_account, dcNamespace::NS_STRING);
-                $settings->put('facebook', $sm_facebook, dcNamespace::NS_BOOL);
-                $settings->put('google', $sm_google, dcNamespace::NS_BOOL);
-                $settings->put('twitter', $sm_twitter, dcNamespace::NS_BOOL);
-                $settings->put('photo', $sm_photo, dcNamespace::NS_BOOL);
-                $settings->put('description', $sm_description, dcNamespace::NS_STRING);
-                $settings->put('image', $sm_image, dcNamespace::NS_STRING);
+                $settings->put('active', $sm_active, App::blogWorkspace()::NS_BOOL);
+                $settings->put('on_post', $sm_on_post, App::blogWorkspace()::NS_BOOL);
+                $settings->put('on_page', $sm_on_page, App::blogWorkspace()::NS_BOOL);
+                $settings->put('twitter_account', $sm_twitter_account, App::blogWorkspace()::NS_STRING);
+                $settings->put('facebook', $sm_facebook, App::blogWorkspace()::NS_BOOL);
+                $settings->put('google', $sm_google, App::blogWorkspace()::NS_BOOL);
+                $settings->put('twitter', $sm_twitter, App::blogWorkspace()::NS_BOOL);
+                $settings->put('photo', $sm_photo, App::blogWorkspace()::NS_BOOL);
+                $settings->put('description', $sm_description, App::blogWorkspace()::NS_STRING);
+                $settings->put('image', $sm_image, App::blogWorkspace()::NS_STRING);
 
                 App::blog()->triggerBlog();
 
                 Notices::addSuccessNotice(__('Settings have been successfully updated.'));
-                dcCore::app()->adminurl->redirect('admin.plugin.' . My::id());
+                My::redirect();
             } catch (Exception $e) {
-                dcCore::app()->error->add($e->getMessage());
+                App::error()->add($e->getMessage());
             }
         }
 
@@ -143,7 +141,7 @@ class Manage extends Process
         echo Notices::getNotices();
 
         echo (new Form('frmreport'))
-            ->action(dcCore::app()->admin->getPageURL())
+            ->action(App::backend()->getPageURL())
             ->method('post')
             ->fields([
                 // Activation
