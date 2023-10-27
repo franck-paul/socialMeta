@@ -72,7 +72,7 @@ class Manage extends Process
             }
         }
 
-        if (!empty($_POST)) {
+        if ($_POST !== []) {
             try {
                 $sm_active          = !empty($_POST['sm_active']);
                 $sm_on_post         = !empty($_POST['sm_on_post']);
