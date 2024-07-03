@@ -99,13 +99,14 @@ class FrontendBehaviors
                 if ($settings->facebook) {
                     // Mastodon account
                     $account = (string) $settings->mastodon_account;
-                    if (strlen($account) && !str_starts_with($account, '@')) {
-                        $account = '@' . $account;
+                    if (strlen($account) && str_starts_with($account, '@')) {
+                        // Remove the first @ in @name@domain (see https://github.com/mastodon/mastodon/pull/30398)
+                        $account = ltrim($account, '@');
                     }
 
                     // Facebook/Mastodon meta
                     echo
-                    '<!-- Facebook -->' . "\n" .
+                    '<!-- Facebook/Mastodon (Open Graph) -->' . "\n" .
                     '<meta property="og:type" content="article">' . "\n" .
                     '<meta property="og:title" content="' . $title . '">' . "\n" .
                     '<meta property="og:url" content="' . $url . '">' . "\n" .
