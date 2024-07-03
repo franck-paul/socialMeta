@@ -36,6 +36,7 @@ class Install extends Process
         $settings->put('on_post', true, App::blogWorkspace()::NS_BOOL, 'Add social meta on post', false, true);
         $settings->put('on_page', false, App::blogWorkspace()::NS_BOOL, 'Add social meta on page', false, true);
         $settings->put('twitter_account', '', App::blogWorkspace()::NS_STRING, 'Twitter account', false, true);
+        $settings->put('mastodon_account', '', App::blogWorkspace()::NS_STRING, 'Mastodon account', false, true);
         $settings->put('facebook', true, App::blogWorkspace()::NS_BOOL, 'Insert Facebook meta', false, true);
         $settings->put('google', true, App::blogWorkspace()::NS_BOOL, 'Insert Google meta', false, true);
         $settings->put('twitter', true, App::blogWorkspace()::NS_BOOL, 'Insert Twitter meta', false, true);

@@ -58,6 +58,7 @@ class Manage extends Process
                 $settings->put('on_post', true, App::blogWorkspace()::NS_BOOL, 'Add social meta on post', false);
                 $settings->put('on_page', false, App::blogWorkspace()::NS_BOOL, 'Add social meta on page', false);
                 $settings->put('twitter_account', '', App::blogWorkspace()::NS_STRING, 'Twitter account', false);
+                $settings->put('mastodon_account', '', App::blogWorkspace()::NS_STRING, 'Mastodon account', false);
                 $settings->put('facebook', true, App::blogWorkspace()::NS_BOOL, 'Insert Facebook meta', false);
                 $settings->put('google', true, App::blogWorkspace()::NS_BOOL, 'Insert Google meta', false);
                 $settings->put('twitter', true, App::blogWorkspace()::NS_BOOL, 'Insert Twitter meta', false);
@@ -74,22 +75,24 @@ class Manage extends Process
 
         if ($_POST !== []) {
             try {
-                $sm_active          = !empty($_POST['sm_active']);
-                $sm_on_post         = !empty($_POST['sm_on_post']);
-                $sm_on_page         = !empty($_POST['sm_on_page']);
-                $sm_twitter_account = trim(Html::escapeHTML($_POST['sm_twitter_account']));
-                $sm_facebook        = !empty($_POST['sm_facebook']);
-                $sm_google          = !empty($_POST['sm_google']);
-                $sm_twitter         = !empty($_POST['sm_twitter']);
-                $sm_photo           = !empty($_POST['sm_photo']);
-                $sm_description     = trim(Html::escapeHTML($_POST['sm_description']));
-                $sm_image           = trim(Html::escapeHTML($_POST['sm_image']));
+                $sm_active           = !empty($_POST['sm_active']);
+                $sm_on_post          = !empty($_POST['sm_on_post']);
+                $sm_on_page          = !empty($_POST['sm_on_page']);
+                $sm_twitter_account  = trim(Html::escapeHTML($_POST['sm_twitter_account']));
+                $sm_mastodon_account = trim(Html::escapeHTML($_POST['sm_mastodon_account']));
+                $sm_facebook         = !empty($_POST['sm_facebook']);
+                $sm_google           = !empty($_POST['sm_google']);
+                $sm_twitter          = !empty($_POST['sm_twitter']);
+                $sm_photo            = !empty($_POST['sm_photo']);
+                $sm_description      = trim(Html::escapeHTML($_POST['sm_description']));
+                $sm_image            = trim(Html::escapeHTML($_POST['sm_image']));
 
                 # Everything's fine, save options
                 $settings->put('active', $sm_active, App::blogWorkspace()::NS_BOOL);
                 $settings->put('on_post', $sm_on_post, App::blogWorkspace()::NS_BOOL);
                 $settings->put('on_page', $sm_on_page, App::blogWorkspace()::NS_BOOL);
                 $settings->put('twitter_account', $sm_twitter_account, App::blogWorkspace()::NS_STRING);
+                $settings->put('mastodon_account', $sm_mastodon_account, App::blogWorkspace()::NS_STRING);
                 $settings->put('facebook', $sm_facebook, App::blogWorkspace()::NS_BOOL);
                 $settings->put('google', $sm_google, App::blogWorkspace()::NS_BOOL);
                 $settings->put('twitter', $sm_twitter, App::blogWorkspace()::NS_BOOL);
@@ -118,17 +121,18 @@ class Manage extends Process
             return;
         }
 
-        $settings           = My::settings();
-        $sm_active          = (bool) $settings->active;
-        $sm_on_post         = (bool) $settings->on_post;
-        $sm_on_page         = (bool) $settings->on_page;
-        $sm_twitter_account = $settings->twitter_account;
-        $sm_facebook        = (bool) $settings->facebook;
-        $sm_google          = (bool) $settings->google;
-        $sm_twitter         = (bool) $settings->twitter;
-        $sm_photo           = (bool) $settings->photo;
-        $sm_description     = $settings->description;
-        $sm_image           = $settings->image;
+        $settings            = My::settings();
+        $sm_active           = (bool) $settings->active;
+        $sm_on_post          = (bool) $settings->on_post;
+        $sm_on_page          = (bool) $settings->on_page;
+        $sm_twitter_account  = $settings->twitter_account;
+        $sm_mastodon_account = $settings->mastodon_account;
+        $sm_facebook         = (bool) $settings->facebook;
+        $sm_google           = (bool) $settings->google;
+        $sm_twitter          = (bool) $settings->twitter;
+        $sm_photo            = (bool) $settings->photo;
+        $sm_description      = $settings->description;
+        $sm_image            = $settings->image;
 
         Page::openModule(My::name());
 
@@ -192,12 +196,13 @@ class Manage extends Process
                             'pre',
                             html::escapeHTML(
                                 '<!-- Open Graph (Mastodon/Facebook) -->' . "\n" .
-                                '<meta property="og:title" content="Plugin socialMeta 0.2 pour Dotclear" />' . "\n" .
-                                '<meta property="og:url" content="http://open-time.net/post/2014/01/20/Plugin-socialMeta-02-pour-Dotclear" />' . "\n" .
-                                '<meta property="og:site_name" content="Open-Time" />' . "\n" .
-                                '<meta property="og:description" content="Nouvelle version de ce petit plugin, ..." />' . "\n" .
-                                '<meta property="og:image" content="http://open-time.net/public/illustrations/2014/.googleplus-twitter-facebook_m.jpg" />' . "\n" .
-                                '<meta property="og:image:alt" content="G+, Twitter et Facebook"/>' . "\n"
+                                '<meta property="og:title" content="Plugin socialMeta 0.2 pour Dotclear">' . "\n" .
+                                '<meta property="og:url" content="http://open-time.net/post/2014/01/20/Plugin-socialMeta-02-pour-Dotclear">' . "\n" .
+                                '<meta property="og:site_name" content="Open-Time">' . "\n" .
+                                '<meta property="og:description" content="Nouvelle version de ce petit plugin, ...">' . "\n" .
+                                '<meta property="og:image" content="http://open-time.net/public/illustrations/2014/.googleplus-twitter-facebook_m.jpg">' . "\n" .
+                                '<meta property="og:image:alt" content="G+, Twitter et Facebook">' . "\n" .
+                                '<meta property="fediverse:creator" content="@franckpaul@mstdn.fr">' . "\n"
                             )
                         )),
                         // Specific Google
@@ -214,9 +219,9 @@ class Manage extends Process
                             'pre',
                             html::escapeHTML(
                                 '<!-- Google -->' . "\n" .
-                                '<meta itemprop="name" content="Plugin socialMeta 0.2 pour Dotclear" />' . "\n" .
-                                '<meta itemprop="description" content="Nouvelle version de ce petit plugin, ..." />' . "\n" .
-                                '<meta itemprop="image" content="http://open-time.net/public/illustrations/2014/.googleplus-twitter-facebook_m.jpg" />' . "\n"
+                                '<meta itemprop="name" content="Plugin socialMeta 0.2 pour Dotclear">' . "\n" .
+                                '<meta itemprop="description" content="Nouvelle version de ce petit plugin, ...">' . "\n" .
+                                '<meta itemprop="image" content="http://open-time.net/public/illustrations/2014/.googleplus-twitter-facebook_m.jpg">' . "\n"
                             )
                         )),
                         // Specific Twitter
@@ -233,13 +238,13 @@ class Manage extends Process
                             'pre',
                             html::escapeHTML(
                                 '<!-- Twitter -->' . "\n" .
-                                '<meta name="twitter:card" content="summary" />' . "\n" .
-                                '<meta name="twitter:title" content="Plugin socialMeta 0.2 pour Dotclear" />' . "\n" .
-                                '<meta name="twitter:description" content="Nouvelle version de ce petit plugin, ..." />' . "\n" .
-                                '<meta name="twitter:image" content="http://open-time.net/public/illustrations/2014/.googleplus-twitter-facebook_m.jpg"/>' . "\n" .
-                                '<meta name="twitter:image:alt" content="G+, Twitter et Facebook"/>' . "\n" .
-                                '<meta name="twitter:site" content="@franckpaul" />' . "\n" .
-                                '<meta name="twitter:creator" content="@franckpaul" />' . "\n"
+                                '<meta name="twitter:card" content="summary">' . "\n" .
+                                '<meta name="twitter:title" content="Plugin socialMeta 0.2 pour Dotclear">' . "\n" .
+                                '<meta name="twitter:description" content="Nouvelle version de ce petit plugin, ...">' . "\n" .
+                                '<meta name="twitter:image" content="http://open-time.net/public/illustrations/2014/.googleplus-twitter-facebook_m.jpg">' . "\n" .
+                                '<meta name="twitter:image:alt" content="G+, Twitter et Facebook">' . "\n" .
+                                '<meta name="twitter:site" content="@franckpaul">' . "\n" .
+                                '<meta name="twitter:creator" content="@franckpaul">' . "\n"
                             )
                         )),
                     ]),
@@ -263,6 +268,21 @@ class Manage extends Process
                         (new Note('prefix-twitter_account'))
                             ->class('form-note')
                             ->text(__('With or without @ prefix.')),
+                        // Mastodon account
+                        (new Para())
+                            ->separator(' ')
+                            ->items([
+                                (new Label(__('Mastodon account:')))
+                                    ->for('sm_mastodon_account'),
+                                (new Input('sm_mastodon_account'))
+                                    ->value(Html::escapeHTML($sm_mastodon_account))
+                                    ->size(30)
+                                    ->maxlength(128)
+                                    ->extra('aria-describedby="prefix-mastodon_account"'),
+                            ]),
+                        (new Note('prefix-twitter_account'))
+                            ->class('form-note')
+                            ->text(__('@user@mastodon_instance.ext (see your Mastodon profile)')),
                         // Photoblog
                         (new Para())
                             ->separator(' ')
@@ -314,7 +334,7 @@ class Manage extends Process
                         (new Submit('frmsave'))
                             ->accesskey('s')
                             ->value(__('Save')),
-                        ... My::hiddenFields(),
+                        ...My::hiddenFields(),
                     ]),
             ])
             ->render();

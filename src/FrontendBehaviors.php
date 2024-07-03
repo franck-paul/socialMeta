@@ -97,62 +97,73 @@ class FrontendBehaviors
                 }
 
                 if ($settings->facebook) {
-                    // Facebook meta
+                    // Mastodon account
+                    $account = (string) $settings->mastodon_account;
+                    if (strlen($account) && !str_starts_with($account, '@')) {
+                        $account = '@' . $account;
+                    }
+
+                    // Facebook/Mastodon meta
                     echo
                     '<!-- Facebook -->' . "\n" .
-                    '<meta property="og:type" content="article" />' . "\n" .
-                    '<meta property="og:title" content="' . $title . '" />' . "\n" .
-                    '<meta property="og:url" content="' . $url . '" />' . "\n" .
-                    '<meta property="og:site_name" content="' . App::blog()->name() . '" />' . "\n" .
-                    '<meta property="og:description" content="' . $content . '" />' . "\n";
+                    '<meta property="og:type" content="article">' . "\n" .
+                    '<meta property="og:title" content="' . $title . '">' . "\n" .
+                    '<meta property="og:url" content="' . $url . '">' . "\n" .
+                    '<meta property="og:site_name" content="' . App::blog()->name() . '">' . "\n" .
+                    '<meta property="og:description" content="' . $content . '">' . "\n";
                     if (strlen((string) $media['img']) !== 0) {
                         echo
-                        '<meta property="og:image" content="' . $media['img'] . '" />' . "\n";
+                        '<meta property="og:image" content="' . $media['img'] . '">' . "\n";
                         if (isset($media['alt']) && $media['alt'] !== '') {
                             echo
-                            '<meta property="og:image:alt" content="' . $media['alt'] . '" />' . "\n";
+                            '<meta property="og:image:alt" content="' . $media['alt'] . '">' . "\n";
                         }
+                    }
+
+                    if (strlen($account) !== 0) {
+                        echo
+                        '<meta name="fediverse:creator" content="' . $account . '">' . "\n";
                     }
                 }
 
                 if ($settings->google) {
                     // Google+
                     echo
-                        '<!-- Google -->' . "\n" .
-                        '<meta itemprop="name" content="' . $title . '" />' . "\n" .
-                        '<meta itemprop="description" content="' . $content . '" />' . "\n";
+                    '<!-- Google -->' . "\n" .
+                    '<meta itemprop="name" content="' . $title . '">' . "\n" .
+                    '<meta itemprop="description" content="' . $content . '">' . "\n";
                     if (strlen((string) $media['img']) !== 0) {
                         echo
-                            '<meta itemprop="image" content="' . $media['img'] . '" />' . "\n";
+                        '<meta itemprop="image" content="' . $media['img'] . '">' . "\n";
                     }
                 }
 
                 if ($settings->twitter) {
                     // Twitter account
-                    $account = $settings->twitter_account;
+                    $account = (string) $settings->twitter_account;
                     if (strlen($account) && !str_starts_with($account, '@')) {
                         $account = '@' . $account;
                     }
 
                     // Twitter
                     echo
-                        '<!-- Twitter -->' . "\n" .
-                        '<meta name="twitter:card" content="' . ($media['large'] ? 'summary_large_image' : 'summary') . '" />' . "\n" .
-                        '<meta name="twitter:title" content="' . $title . '" />' . "\n" .
-                        '<meta name="twitter:description" content="' . $content . '" />' . "\n";
+                    '<!-- Twitter -->' . "\n" .
+                    '<meta name="twitter:card" content="' . ($media['large'] ? 'summary_large_image' : 'summary') . '">' . "\n" .
+                    '<meta name="twitter:title" content="' . $title . '">' . "\n" .
+                    '<meta name="twitter:description" content="' . $content . '">' . "\n";
                     if (strlen((string) $media['img']) !== 0) {
                         echo
-                            '<meta name="twitter:image" content="' . $media['img'] . '"/>' . "\n";
+                        '<meta name="twitter:image" content="' . $media['img'] . '">' . "\n";
                         if ($media['alt'] != '') {
                             echo
-                                '<meta name="twitter:image:alt" content="' . $media['alt'] . '"/>' . "\n";
+                            '<meta name="twitter:image:alt" content="' . $media['alt'] . '">' . "\n";
                         }
                     }
 
                     if (strlen($account) !== 0) {
                         echo
-                            '<meta name="twitter:site" content="' . $account . '" />' . "\n" .
-                            '<meta name="twitter:creator" content="' . $account . '" />' . "\n";
+                        '<meta name="twitter:site" content="' . $account . '">' . "\n" .
+                        '<meta name="twitter:creator" content="' . $account . '">' . "\n";
                     }
                 }
             }
