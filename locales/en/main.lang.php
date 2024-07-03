@@ -3,7 +3,6 @@
  * @package Dotclear
  *
  * @copyright Olivier Meunier & Association Dotclear
- * @copyright GPL-2.0-only
  */
 #
 # DOT NOT MODIFY THIS FILE !
@@ -22,6 +21,8 @@ L10n::$locales['Use Google social meta:'] = '';
 L10n::$locales['Use Twitter social meta:'] = '';
 L10n::$locales['Twitter account:'] = '';
 L10n::$locales['With or without @ prefix.'] = '';
+L10n::$locales['Mastodon account:'] = '';
+L10n::$locales['@user@mastodon_instance.ext (see your Mastodon profile)'] = '';
 L10n::$locales['This blog is a photoblog'] = '';
 L10n::$locales['Will use "summary_large_image" twitter card type rather than "summary", and will include the first original photo if possible rather than the medium thumbnail.'] = '';
 L10n::$locales['Default description:'] = '';
