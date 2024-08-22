@@ -14,7 +14,7 @@ $this->registerModule(
     'socialMeta',
     'Add social meta to your posts and pages',
     'Franck Paul',
-    '5.2.1',
+    '5.3',
     [
         'requires'    => [['core', '2.31']],
         'permissions' => 'My',
