@@ -26,6 +26,7 @@ use Dotclear\Helper\Html\Form\Label;
 use Dotclear\Helper\Html\Form\Legend;
 use Dotclear\Helper\Html\Form\Note;
 use Dotclear\Helper\Html\Form\Para;
+use Dotclear\Helper\Html\Form\Single;
 use Dotclear\Helper\Html\Form\Submit;
 use Dotclear\Helper\Html\Form\Text;
 use Dotclear\Helper\Html\Html;
@@ -181,7 +182,7 @@ class Manage extends Process
                                     ->for('sm_on_page')
                                     ->class('classic'),
                             ]),
-                        (new Text('hr')),
+                        (new Single('hr')),
                         // Specific Facebook
                         (new Para())
                             ->separator(' ')
