@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @brief socialMeta, a plugin for Dotclear 2
  *
@@ -92,7 +93,7 @@ class FrontendBehaviors
                 }
 
                 if (strlen((string) $media['img']) && !str_starts_with((string) $media['img'], 'http')) {
-                    $root         = preg_replace('#^(.+?//.+?)/(.*)$#', '$1', App::blog()->url());
+                    $root         = preg_replace('#^(.+?//.+?)/(.*)$#', '$1', (string) App::blog()->url());
                     $media['img'] = $root . $media['img'];
                 }
 
