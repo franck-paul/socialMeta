@@ -60,10 +60,10 @@ class FrontendBehaviors
             ]);
             // Let 3rd party plugins the opportunity to give media info
             App::behavior()->callBehavior('socialMetaMedia', $media);
-            if ($media['img'] == '' && $settings->photo) {
+            if ($media['img'] === '' && $settings->photo) {
                 // Photoblog, use original photo rather than small one
                 $media['img'] = Ctx::EntryFirstImageHelper('o', true, '', true);
-                if ($media['img'] != '') {
+                if ($media['img'] !== '') {     // @phpstan-ignore-line Ctx::EntryFirstImageHelper() may return empty string
                     $media['large'] = true;
                     $tag            = Ctx::EntryFirstImageHelper('o', true, '', false);
                     if (preg_match('/alt="([^"]+)"/', $tag, $malt)) {
@@ -71,16 +71,16 @@ class FrontendBehaviors
                     }
                 }
             }
-            if ($media['img'] == '') {
+            if ($media['img'] === '') {
                 $media['img'] = Ctx::EntryFirstImageHelper('m', true, '', true);
-                if ($media['img'] != '') {
+                if ($media['img'] !== '') {     // @phpstan-ignore-line Ctx::EntryFirstImageHelper() may return empty string
                     $tag = Ctx::EntryFirstImageHelper('m', true, '', false);
                     if (preg_match('/alt="([^"]+)"/', $tag, $malt)) {
                         $media['alt'] = $malt[1];
                     }
                 }
             }
-            if ($media['img'] == '' && $settings->description != '') {
+            if ($media['img'] === '' && $settings->description != '') {
                 // Use default image as decoration if set
                 $media['img'] = $settings->image;
                 $media['alt'] = '';
