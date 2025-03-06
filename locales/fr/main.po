@@ -3,16 +3,16 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Franck Paul <carnet.franck.paul@gmail.com>, 2024
+# Franck Paul <carnet.franck.paul@gmail.com>, 2025
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Dotclear 2 socialMeta module\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-03 05:08+0200\n"
+"POT-Creation-Date: 2025-03-06 12:41+0100\n"
 "PO-Revision-Date: 2023-05-26 12:45+0000\n"
-"Last-Translator: Franck Paul <carnet.franck.paul@gmail.com>, 2024\n"
+"Last-Translator: Franck Paul <carnet.franck.paul@gmail.com>, 2025\n"
 "Language-Team: French (https://app.transifex.com/open-time/teams/109573/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,11 +20,18 @@ msgstr ""
 "Language: fr\n"
 "Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
-msgid "Add social meta to your posts and pages"
-msgstr "Ajoute les métadonnées sociales à vos billets et pages"
-
 msgid "socialMeta"
 msgstr "socialMeta"
+
+msgid "Add social meta to your posts, pages and other contexts"
+msgstr ""
+"Ajouter des métadonnées sociales à vos posts, pages et autres contextes"
+
+msgid "Series"
+msgstr "Séries"
+
+msgid "Serie"
+msgstr "Série"
 
 msgid "Active socialMeta"
 msgstr "Activer socialMeta"
@@ -37,6 +44,11 @@ msgstr "Ajouter les métadonnées sociales aux billets"
 
 msgid "Add social meta on pages"
 msgstr "Ajouter les métadonnées sociales aux pages"
+
+msgid "Add social meta on other contexts (home, archive, category, tags, ...)"
+msgstr ""
+"Ajouter des métadonnées sociales dans les autres contextes (home, archive, "
+"catégorie, tags, ...)"
 
 msgid "Use Open Graph (Mastodon/Facebook) social meta:"
 msgstr "Insérer les métadonnées pour Open Graph (Mastodon/Facebook) :"
@@ -65,23 +77,27 @@ msgstr "Ce blog est un photoblog"
 msgid ""
 "Will use \"summary_large_image\" twitter card type rather than \"summary\", "
 "and will include the first original photo if possible rather than the medium"
-" thumbnail."
+" thumbnail for post and page contexts."
 msgstr ""
 "Utilisera le type de carte twitter \"summary_large_image\" plutôt que "
-"\"summary\" et insérera la première photo originale plutôt qu'une miniature "
-"moyenne."
+"\"summary\", et inclura si possible la première photo originale plutôt que "
+"la vignette moyenne pour les contextes des billets et des pages."
 
 msgid "Default description:"
 msgstr "Description par défaut :"
 
-msgid "Will be used if post (or page) have no text."
-msgstr "Sera utilisé en absence de texte dans le billet ou la page."
+msgid "Will be used if post (or page) have no text and for other contexts."
+msgstr ""
+"Sera utilisé si le billet (ou la page) n'a pas de texte et pour les autres "
+"contextes."
 
 msgid "Default image (URL):"
 msgstr "Image par défaut (URL) :"
 
-msgid "Will be used if post (or page) have no image."
-msgstr "Sera utilisé en absence d'image dans le billet ou la page."
+msgid "Will be used if post (or page) have no image and for other contexts."
+msgstr ""
+"Sera utilisé si le billet (ou la page) n'a pas d'image et pour les autres "
+"contextes."
 
 msgid "Save"
 msgstr "Enregistrer"
