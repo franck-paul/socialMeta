@@ -156,7 +156,7 @@ class FrontendBehaviors
                     break;
 
                 case 'tag':
-                    $url = App::blog()->url() . App::url()->getURLFor('tag', rawurlencode(App::frontend()->context()->meta->meta_id));
+                    $url = App::blog()->url() . App::url()->getURLFor('tag', rawurlencode((string) App::frontend()->context()->meta->meta_id));
                     $title .= ' - ' . __('Tag') . ' &rsaquo; ' . App::frontend()->context()->meta->meta_id;
 
                     break;
@@ -168,7 +168,7 @@ class FrontendBehaviors
                     break;
 
                 case 'serie':
-                    $url = App::blog()->url() . App::url()->getURLFor('serie', rawurlencode(App::frontend()->context()->meta->meta_id));
+                    $url = App::blog()->url() . App::url()->getURLFor('serie', rawurlencode((string) App::frontend()->context()->meta->meta_id));
                     $title .= ' - ' . __('Serie') . ' &rsaquo; ' . App::frontend()->context()->meta->meta_id;
 
                     break;
@@ -201,7 +201,7 @@ class FrontendBehaviors
             if ($media['img'] === '' && $settings->image !== '') {
                 // Use default image as decoration if set
                 $media['img']   = $settings->image;
-                $media['large'] = $settings->photo ? true : false;
+                $media['large'] = (bool) $settings->photo;
                 $media['alt']   = '';
             }
         }
