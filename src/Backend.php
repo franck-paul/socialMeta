@@ -24,7 +24,7 @@ class Backend extends Process
     {
         // dead but useful code, in order to have translations
         __('socialMeta');
-        __('Add social meta to your posts and pages');
+        __('Add social meta to your posts, pages and other contexts');
 
         return self::status(My::checkContext(My::BACKEND));
     }

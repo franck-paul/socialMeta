@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Dotclear 2 socialMeta module\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-03 05:08+0200\n"
+"POT-Creation-Date: 2025-03-06 12:41+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,10 +16,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-msgid "Add social meta to your posts and pages"
+msgid "socialMeta"
 msgstr ""
 
-msgid "socialMeta"
+msgid "Add social meta to your posts, pages and other contexts"
+msgstr ""
+
+msgid "Series"
+msgstr ""
+
+msgid "Serie"
 msgstr ""
 
 msgid "Active socialMeta"
@@ -32,6 +38,9 @@ msgid "Add social meta on posts"
 msgstr ""
 
 msgid "Add social meta on pages"
+msgstr ""
+
+msgid "Add social meta on other contexts (home, archive, category, tags, ...)"
 msgstr ""
 
 msgid "Use Open Graph (Mastodon/Facebook) social meta:"
@@ -58,19 +67,19 @@ msgstr ""
 msgid "This blog is a photoblog"
 msgstr ""
 
-msgid "Will use \"summary_large_image\" twitter card type rather than \"summary\", and will include the first original photo if possible rather than the medium thumbnail."
+msgid "Will use \"summary_large_image\" twitter card type rather than \"summary\", and will include the first original photo if possible rather than the medium thumbnail for post and page contexts."
 msgstr ""
 
 msgid "Default description:"
 msgstr ""
 
-msgid "Will be used if post (or page) have no text."
+msgid "Will be used if post (or page) have no text and for other contexts."
 msgstr ""
 
 msgid "Default image (URL):"
 msgstr ""
 
-msgid "Will be used if post (or page) have no image."
+msgid "Will be used if post (or page) have no image and for other contexts."
 msgstr ""
 
 msgid "Save"

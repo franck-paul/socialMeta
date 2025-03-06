@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @brief socialMeta, a plugin for Dotclear 2
  *
@@ -58,6 +59,7 @@ class Manage extends Process
                 $settings->put('active', false, App::blogWorkspace()::NS_BOOL, 'Active', false);
                 $settings->put('on_post', true, App::blogWorkspace()::NS_BOOL, 'Add social meta on post', false);
                 $settings->put('on_page', false, App::blogWorkspace()::NS_BOOL, 'Add social meta on page', false);
+                $settings->put('on_other', false, App::blogWorkspace()::NS_BOOL, 'Add social meta on other contexts', false);
                 $settings->put('twitter_account', '', App::blogWorkspace()::NS_STRING, 'Twitter account', false);
                 $settings->put('mastodon_account', '', App::blogWorkspace()::NS_STRING, 'Mastodon account', false);
                 $settings->put('facebook', true, App::blogWorkspace()::NS_BOOL, 'Insert Facebook meta', false);
@@ -79,6 +81,7 @@ class Manage extends Process
                 $sm_active           = !empty($_POST['sm_active']);
                 $sm_on_post          = !empty($_POST['sm_on_post']);
                 $sm_on_page          = !empty($_POST['sm_on_page']);
+                $sm_on_other         = !empty($_POST['sm_on_other']);
                 $sm_twitter_account  = trim(Html::escapeHTML($_POST['sm_twitter_account']));
                 $sm_mastodon_account = trim(Html::escapeHTML($_POST['sm_mastodon_account']));
                 $sm_facebook         = !empty($_POST['sm_facebook']);
@@ -92,6 +95,7 @@ class Manage extends Process
                 $settings->put('active', $sm_active, App::blogWorkspace()::NS_BOOL);
                 $settings->put('on_post', $sm_on_post, App::blogWorkspace()::NS_BOOL);
                 $settings->put('on_page', $sm_on_page, App::blogWorkspace()::NS_BOOL);
+                $settings->put('on_other', $sm_on_other, App::blogWorkspace()::NS_BOOL);
                 $settings->put('twitter_account', $sm_twitter_account, App::blogWorkspace()::NS_STRING);
                 $settings->put('mastodon_account', $sm_mastodon_account, App::blogWorkspace()::NS_STRING);
                 $settings->put('facebook', $sm_facebook, App::blogWorkspace()::NS_BOOL);
@@ -126,6 +130,7 @@ class Manage extends Process
         $sm_active           = (bool) $settings->active;
         $sm_on_post          = (bool) $settings->on_post;
         $sm_on_page          = (bool) $settings->on_page;
+        $sm_on_other         = (bool) $settings->on_other;
         $sm_twitter_account  = $settings->twitter_account;
         $sm_mastodon_account = $settings->mastodon_account;
         $sm_facebook         = (bool) $settings->facebook;
@@ -180,6 +185,15 @@ class Manage extends Process
                                     ->value(1),
                                 (new Label(__('Add social meta on pages')))
                                     ->for('sm_on_page')
+                                    ->class('classic'),
+                            ]),
+                        (new Para())
+                            ->separator(' ')
+                            ->items([
+                                (new Checkbox('sm_on_other', $sm_on_other))
+                                    ->value(1),
+                                (new Label(__('Add social meta on other contexts (home, archive, category, tags, ...)')))
+                                    ->for('sm_on_other')
                                     ->class('classic'),
                             ]),
                         (new Single('hr')),
@@ -297,7 +311,7 @@ class Manage extends Process
                             ]),
                         (new Note('summary_large_image'))
                             ->class('form-note')
-                            ->text(__('Will use "summary_large_image" twitter card type rather than "summary", and will include the first original photo if possible rather than the medium thumbnail.')),
+                            ->text(__('Will use "summary_large_image" twitter card type rather than "summary", and will include the first original photo if possible rather than the medium thumbnail for post and page contexts.')),
                         // Default description
                         (new Para())
                             ->separator(' ')
@@ -312,7 +326,7 @@ class Manage extends Process
                             ]),
                         (new Note('default_description'))
                             ->class('form-note')
-                            ->text(__('Will be used if post (or page) have no text.')),
+                            ->text(__('Will be used if post (or page) have no text and for other contexts.')),
                         // Default image
                         (new Para())
                             ->separator(' ')
@@ -327,7 +341,7 @@ class Manage extends Process
                             ]),
                         (new Note('default_image'))
                             ->class('form-note')
-                            ->text(__('Will be used if post (or page) have no image.')),
+                            ->text(__('Will be used if post (or page) have no image and for other contexts.')),
                     ]),
                 // Button
                 (new Para())
