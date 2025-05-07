@@ -15,9 +15,9 @@ $this->registerModule(
     'socialMeta',
     'Add social meta to your posts and pages',
     'Franck Paul',
-    '6.0',
+    '6.1',
     [
-        'date'        => '2025-03-06T12:47:47+0100',
+        'date'        => '2025-05-07T10:15:01+0200',
         'requires'    => [['core', '2.31']],
         'permissions' => 'My',
         'type'        => 'plugin',
