@@ -41,13 +41,13 @@ class FrontendBehaviors
 
         // Check if context is a single one (post, page, …)
         $single = false;
-        if (App::url()->getType() === 'post' && App::frontend()->context()->posts->post_type === 'post') {
+        if (in_array(App::url()->getType(), ['post', 'preview']) && App::frontend()->context()->posts->post_type === 'post') {
             // Its a single post
             if (!$settings->on_post) {
                 return '';
             }
             $single = true;
-        } elseif (App::url()->getType() === 'pages' && App::frontend()->context()->posts->post_type == 'page') {
+        } elseif (in_array(App::url()->getType(), ['pages', 'preview']) && App::frontend()->context()->posts->post_type == 'page') {
             // Its a single page
             if (!$settings->on_page) {
                 return '';
