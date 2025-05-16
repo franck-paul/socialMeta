@@ -130,7 +130,7 @@ class FrontendBehaviors
                     if (!is_null(App::frontend()->context()->archives)) {
                         // Month archive
                         $url = App::frontend()->context()->archives->url();
-                        $title .= ' &rsaquo ' . Date::dt2str('%B %Y', App::frontend()->context()->archives->dt);
+                        $title .= ' &rsaquo; ' . Date::dt2str('%B %Y', App::frontend()->context()->archives->dt);
                     }
 
                     break;
