@@ -1,11 +1,11 @@
 <modules xmlns:da="http://dotaddict.org/da/">
   <module id="socialMeta">
     <name>socialMeta</name>
-    <version>7.0</version>
+    <version>7.1</version>
     <author>Franck Paul</author>
     <desc>Add social meta to your posts and pages</desc>
-    <date>2025-09-07T15:47:34+0200</date>
-    <file>https://github.com/franck-paul/socialMeta/releases/download/7.0/plugin-socialMeta-7.0.zip</file>
+    <date>2025-09-22T10:25:28+0200</date>
+    <file>https://github.com/franck-paul/socialMeta/releases/download/7.1/plugin-socialMeta-7.1.zip</file>
     <da:dcmin>2.36</da:dcmin>
     <da:details>https://open-time.net/?q=socialMeta</da:details>
     <da:support>https://github.com/franck-paul/socialMeta</da:support>
