@@ -218,7 +218,6 @@ class FrontendBehaviors
 
             // Facebook/Mastodon meta
             echo
-            '<!-- Facebook/Mastodon (Open Graph) -->' . "\n" .
             '<meta property="og:type" content="article">' . "\n" .
             '<meta property="og:title" content="' . $title . '">' . "\n" .
             '<meta property="og:url" content="' . $url . '">' . "\n" .
@@ -242,7 +241,6 @@ class FrontendBehaviors
         if ($settings->google) {
             // Google+
             echo
-            '<!-- Google -->' . "\n" .
             '<meta itemprop="name" content="' . $title . '">' . "\n" .
             '<meta itemprop="description" content="' . $content . '">' . "\n";
             if (strlen((string) $media['img']) !== 0) {
@@ -260,7 +258,6 @@ class FrontendBehaviors
 
             // Twitter
             echo
-            '<!-- Twitter -->' . "\n" .
             '<meta name="twitter:card" content="' . ($media['large'] ? 'summary_large_image' : 'summary') . '">' . "\n" .
             '<meta name="twitter:title" content="' . $title . '">' . "\n" .
             '<meta name="twitter:description" content="' . $content . '">' . "\n";
