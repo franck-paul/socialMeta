@@ -207,17 +207,28 @@ class Manage
                                     ->for('sm_facebook')
                                     ->class('classic'),
                             ]),
+                        (new Note())
+                            ->text(__('Example of Open Graph metadata inserted into the header:')),
                         (new Text(
                             'pre',
-                            html::escapeHTML(
-                                '<!-- Open Graph (Mastodon/Facebook) -->' . "\n" .
-                                '<meta property="og:title" content="Plugin socialMeta 0.2 pour Dotclear">' . "\n" .
-                                '<meta property="og:url" content="http://open-time.net/post/2014/01/20/Plugin-socialMeta-02-pour-Dotclear">' . "\n" .
-                                '<meta property="og:site_name" content="Open-Time">' . "\n" .
-                                '<meta property="og:description" content="Nouvelle version de ce petit plugin, ...">' . "\n" .
-                                '<meta property="og:image" content="http://open-time.net/public/illustrations/2014/.googleplus-twitter-facebook_m.jpg">' . "\n" .
-                                '<meta property="og:image:alt" content="G+, Twitter et Facebook">' . "\n" .
-                                '<meta property="fediverse:creator" content="@franckpaul@mstdn.fr">' . "\n"
+                            sprintf(
+                                html::escapeHTML(
+                                    '<meta property="og:type" content="website">' . "\n" .
+                                    '<meta property="og:title" content="%s">' . "\n" .
+                                    '<meta property="og:url" content="%s">' . "\n" .
+                                    '<meta property="og:site_name" content="%s">' . "\n" .
+                                    '<meta property="og:description" content="%s">' . "\n" .
+                                    '<meta property="og:image" content="%s">' . "\n" .
+                                    '<meta property="og:image:alt" content="%s">' . "\n" .
+                                    '<meta property="fediverse:creator" content="%s">' . "\n"
+                                ),
+                                '<mark>' . App::blog()->name() . '</mark>',
+                                '<mark>' . App::blog()->url() . '</mark>',
+                                '<mark>' . App::blog()->name() . '</mark>',
+                                '<mark>' . $sm_description . '</mark>',
+                                '<mark>' . $sm_image . '</mark>',
+                                '',
+                                '<mark>' . $sm_mastodon_account . '</mark>'
                             )
                         )),
                         // Specific Google
@@ -230,13 +241,19 @@ class Manage
                                     ->for('sm_google')
                                     ->class('classic'),
                             ]),
+                        (new Note())
+                            ->text(__('Example of Google metadata inserted into the header:')),
                         (new Text(
                             'pre',
-                            html::escapeHTML(
-                                '<!-- Google -->' . "\n" .
-                                '<meta itemprop="name" content="Plugin socialMeta 0.2 pour Dotclear">' . "\n" .
-                                '<meta itemprop="description" content="Nouvelle version de ce petit plugin, ...">' . "\n" .
-                                '<meta itemprop="image" content="http://open-time.net/public/illustrations/2014/.googleplus-twitter-facebook_m.jpg">' . "\n"
+                            sprintf(
+                                html::escapeHTML(
+                                    '<meta itemprop="name" content="%s">' . "\n" .
+                                    '<meta itemprop="description" content="%s">' . "\n" .
+                                    '<meta itemprop="image" content="%s">' . "\n"
+                                ),
+                                '<mark>' . App::blog()->name() . '</mark>',
+                                '<mark>' . $sm_description . '</mark>',
+                                '<mark>' . $sm_image . '</mark>'
                             )
                         )),
                         // Specific Twitter
@@ -245,21 +262,29 @@ class Manage
                             ->items([
                                 (new Checkbox('sm_twitter', $sm_twitter))
                                     ->value(1),
-                                (new Label(__('Use Twitter social meta:')))
+                                (new Label(__('Use Twitter/X social meta:')))
                                     ->for('sm_twitter')
                                     ->class('classic'),
                             ]),
+                        (new Note())
+                            ->text(__('Example of Twitter/X metadata inserted into the header:')),
                         (new Text(
                             'pre',
-                            html::escapeHTML(
-                                '<!-- Twitter -->' . "\n" .
-                                '<meta name="twitter:card" content="summary">' . "\n" .
-                                '<meta name="twitter:title" content="Plugin socialMeta 0.2 pour Dotclear">' . "\n" .
-                                '<meta name="twitter:description" content="Nouvelle version de ce petit plugin, ...">' . "\n" .
-                                '<meta name="twitter:image" content="http://open-time.net/public/illustrations/2014/.googleplus-twitter-facebook_m.jpg">' . "\n" .
-                                '<meta name="twitter:image:alt" content="G+, Twitter et Facebook">' . "\n" .
-                                '<meta name="twitter:site" content="@franckpaul">' . "\n" .
-                                '<meta name="twitter:creator" content="@franckpaul">' . "\n"
+                            sprintf(
+                                html::escapeHTML(
+                                    '<meta name="twitter:card" content="summary">' . "\n" .
+                                    '<meta name="twitter:title" content="%s">' . "\n" .
+                                    '<meta name="twitter:description" content="%s">' . "\n" .
+                                    '<meta name="twitter:image" content="%s">' . "\n" .
+                                    '<meta name="twitter:image:alt" content="">' . "\n" .
+                                    '<meta name="twitter:site" content="%s">' . "\n" .
+                                    '<meta name="twitter:creator" content="%s">' . "\n"
+                                ),
+                                '<mark>' . App::blog()->name() . '</mark>',
+                                '<mark>' . $sm_description . '</mark>',
+                                '<mark>' . $sm_image . '</mark>',
+                                '<mark>' . $sm_twitter_account . '</mark>',
+                                '<mark>' . $sm_twitter_account . '</mark>',
                             )
                         )),
                     ]),
@@ -268,21 +293,6 @@ class Manage
                     ->legend((new Legend(__('Settings'))))
                     ->class('fieldset')
                     ->fields([
-                        // Twitter account
-                        (new Para())
-                            ->separator(' ')
-                            ->items([
-                                (new Label(__('Twitter account:')))
-                                    ->for('sm_twitter_account'),
-                                (new Input('sm_twitter_account'))
-                                    ->value(Html::escapeHTML($sm_twitter_account))
-                                    ->size(30)
-                                    ->maxlength(128)
-                                    ->extra('aria-describedby="prefix-twitter_account"'),
-                            ]),
-                        (new Note('prefix-twitter_account'))
-                            ->class('form-note')
-                            ->text(__('With or without @ prefix.')),
                         // Mastodon account
                         (new Para())
                             ->separator(' ')
@@ -298,6 +308,21 @@ class Manage
                         (new Note('prefix-twitter_account'))
                             ->class('form-note')
                             ->text(__('@user@mastodon_instance.ext (see your Mastodon profile)')),
+                        // Twitter account
+                        (new Para())
+                            ->separator(' ')
+                            ->items([
+                                (new Label(__('Twitter account:')))
+                                    ->for('sm_twitter_account'),
+                                (new Input('sm_twitter_account'))
+                                    ->value(Html::escapeHTML($sm_twitter_account))
+                                    ->size(30)
+                                    ->maxlength(128)
+                                    ->extra('aria-describedby="prefix-twitter_account"'),
+                            ]),
+                        (new Note('prefix-twitter_account'))
+                            ->class('form-note')
+                            ->text(__('With or without @ prefix.')),
                         // Photoblog
                         (new Para())
                             ->separator(' ')

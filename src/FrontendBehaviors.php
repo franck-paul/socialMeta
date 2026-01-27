@@ -218,7 +218,7 @@ class FrontendBehaviors
 
             // Facebook/Mastodon meta
             echo
-            '<meta property="og:type" content="article">' . "\n" .
+            '<meta property="og:type" content="' . ($single ? 'article' : 'website') . '">' . "\n" .
             '<meta property="og:title" content="' . $title . '">' . "\n" .
             '<meta property="og:url" content="' . $url . '">' . "\n" .
             '<meta property="og:site_name" content="' . App::blog()->name() . '">' . "\n" .
