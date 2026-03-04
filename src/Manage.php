@@ -79,21 +79,21 @@ class Manage
         if ($_POST !== []) {
             try {
                 // Post data helpers
-                $getBool = fn (string $name): bool => !empty($_POST[$name]);
-                $getStr  = fn (string $name, string $default = ''): string => isset($_POST[$name]) && is_string($val = $_POST[$name]) ? $val : $default;
+                $_Bool = fn (string $name): bool => !empty($_POST[$name]);
+                $_Str  = fn (string $name, string $default = ''): string => isset($_POST[$name]) && is_string($val = $_POST[$name]) ? $val : $default;
 
-                $sm_active           = $getBool('sm_active');
-                $sm_on_post          = $getBool('sm_on_post');
-                $sm_on_page          = $getBool('sm_on_page');
-                $sm_on_other         = $getBool('sm_on_other');
-                $sm_twitter_account  = trim(Html::escapeHTML($getStr('sm_twitter_account')));
-                $sm_mastodon_account = trim(Html::escapeHTML($getStr('sm_mastodon_account')));
-                $sm_facebook         = $getBool('sm_facebook');
-                $sm_google           = $getBool('sm_google');
-                $sm_twitter          = $getBool('sm_twitter');
-                $sm_photo            = $getBool('sm_photo');
-                $sm_description      = trim(Html::escapeHTML($getStr('sm_description')));
-                $sm_image            = trim(Html::escapeHTML($getStr('sm_image')));
+                $sm_active           = $_Bool('sm_active');
+                $sm_on_post          = $_Bool('sm_on_post');
+                $sm_on_page          = $_Bool('sm_on_page');
+                $sm_on_other         = $_Bool('sm_on_other');
+                $sm_twitter_account  = trim(Html::escapeHTML($_Str('sm_twitter_account')));
+                $sm_mastodon_account = trim(Html::escapeHTML($_Str('sm_mastodon_account')));
+                $sm_facebook         = $_Bool('sm_facebook');
+                $sm_google           = $_Bool('sm_google');
+                $sm_twitter          = $_Bool('sm_twitter');
+                $sm_photo            = $_Bool('sm_photo');
+                $sm_description      = trim(Html::escapeHTML($_Str('sm_description')));
+                $sm_image            = trim(Html::escapeHTML($_Str('sm_image')));
 
                 # Everything's fine, save options
                 $settings->put('active', $sm_active, App::blogWorkspace()::NS_BOOL);
@@ -133,21 +133,21 @@ class Manage
         $settings = My::settings();
 
         // Variable data helpers
-        $getBool = fn (mixed $var): bool => (bool) $var;
-        $getStr  = fn (mixed $var, string $default = ''): string => $var !== null && is_string($val = $var) ? $val : $default;
+        $_Bool = fn (mixed $var): bool => (bool) $var;
+        $_Str  = fn (mixed $var, string $default = ''): string => $var !== null && is_string($val = $var) ? $val : $default;
 
-        $sm_active           = $getBool($settings->active);
-        $sm_on_post          = $getBool($settings->on_post);
-        $sm_on_page          = $getBool($settings->on_page);
-        $sm_on_other         = $getBool($settings->on_other);
-        $sm_twitter_account  = $getStr($settings->twitter_account);
-        $sm_mastodon_account = $getStr($settings->mastodon_account);
-        $sm_facebook         = $getBool($settings->facebook);
-        $sm_google           = $getBool($settings->google);
-        $sm_twitter          = $getBool($settings->twitter);
-        $sm_photo            = $getBool($settings->photo);
-        $sm_description      = $getStr($settings->description);
-        $sm_image            = $getStr($settings->image);
+        $sm_active           = $_Bool($settings->active);
+        $sm_on_post          = $_Bool($settings->on_post);
+        $sm_on_page          = $_Bool($settings->on_page);
+        $sm_on_other         = $_Bool($settings->on_other);
+        $sm_twitter_account  = $_Str($settings->twitter_account);
+        $sm_mastodon_account = $_Str($settings->mastodon_account);
+        $sm_facebook         = $_Bool($settings->facebook);
+        $sm_google           = $_Bool($settings->google);
+        $sm_twitter          = $_Bool($settings->twitter);
+        $sm_photo            = $_Bool($settings->photo);
+        $sm_description      = $_Str($settings->description);
+        $sm_image            = $_Str($settings->image);
 
         App::backend()->page()->openModule(My::name());
 

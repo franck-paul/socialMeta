@@ -41,8 +41,8 @@ class FrontendBehaviors
         }
 
         // Variable data helpers
-        $getStr = fn (mixed $var, string $default = ''): string => $var !== null && is_string($val = $var) ? $val : $default;
-        $getInt = fn (mixed $var, int $default = 0): int => $var !== null && is_numeric($val = $var) ? (int) $val : $default;
+        $_Str = fn (mixed $var, string $default = ''): string => $var !== null && is_string($val = $var) ? $val : $default;
+        $_Int = fn (mixed $var, int $default = 0): int => $var !== null && is_numeric($val = $var) ? (int) $val : $default;
 
         // Check if context is a single one (post, page, …)
         $single = false;
@@ -67,10 +67,10 @@ class FrontendBehaviors
             $url = App::frontend()->context()->posts->getURL();
 
             // Post/Page title
-            $title = Html::escapeHTML($getStr(App::frontend()->context()->posts->post_title ?? ''));
+            $title = Html::escapeHTML($_Str(App::frontend()->context()->posts->post_title ?? ''));
 
             // Post/Page content
-            $content = $getStr(App::frontend()->context()->posts->getExcerpt()) . ' ' . $getStr(App::frontend()->context()->posts->getContent());
+            $content = $_Str(App::frontend()->context()->posts->getExcerpt()) . ' ' . $_Str(App::frontend()->context()->posts->getContent());
             $content = Html::decodeEntities(Html::clean($content));
             $content = preg_replace('/\s+/', ' ', $content);
             $content = Html::escapeHTML($content);
@@ -121,7 +121,7 @@ class FrontendBehaviors
                 $media['img'] = $settings->image;
                 $media['alt'] = '';
             }
-            $media_img = $getStr($media['img']);
+            $media_img = $_Str($media['img']);
             if ($media_img !== '' && !str_starts_with($media_img, 'http')) {
                 $root         = preg_replace('#^(.+?//.+?)/(.*)$#', '$1', (string) App::blog()->url());
                 $media['img'] = $root . $media_img;
@@ -139,23 +139,23 @@ class FrontendBehaviors
                     if (App::frontend()->context()->archives instanceof MetaRecord) {
                         // Month archive
                         $url = App::frontend()->context()->archives->url();
-                        $title .= ' &rsaquo; ' . Date::dt2str('%B %Y', $getStr(App::frontend()->context()->archives->dt, 'now'));
+                        $title .= ' &rsaquo; ' . Date::dt2str('%B %Y', $_Str(App::frontend()->context()->archives->dt, 'now'));
                     }
 
                     break;
 
                 case 'category':
                     if (App::frontend()->context()->categories instanceof MetaRecord) {
-                        $url = App::blog()->url() . App::url()->getURLFor('category', $getStr(App::frontend()->context()->categories->cat_url));
+                        $url = App::blog()->url() . App::url()->getURLFor('category', $_Str(App::frontend()->context()->categories->cat_url));
                         // Add category parents' title
-                        $categories = App::blog()->getCategoryParents($getInt(App::frontend()->context()->categories->cat_id));
+                        $categories = App::blog()->getCategoryParents($_Int(App::frontend()->context()->categories->cat_id));
                         $first      = true;
                         while ($categories->fetch()) {
-                            $title .= ($first ? ' - ' : ' &rsaquo; ') . $getStr($categories->cat_title);
+                            $title .= ($first ? ' - ' : ' &rsaquo; ') . $_Str($categories->cat_title);
                             $first = false;
                         }
                         // Add current category title
-                        $title .= ($first ? ' - ' : ' &rsaquo; ') . $getStr(App::frontend()->context()->categories->cat_title);
+                        $title .= ($first ? ' - ' : ' &rsaquo; ') . $_Str(App::frontend()->context()->categories->cat_title);
                     }
 
                     break;
@@ -168,7 +168,7 @@ class FrontendBehaviors
 
                 case 'tag':
                     if (App::frontend()->context()->meta instanceof MetaRecord) {
-                        $meta_id = $getStr(App::frontend()->context()->meta->meta_id);
+                        $meta_id = $_Str(App::frontend()->context()->meta->meta_id);
                         if ($meta_id !== '') {
                             $url = App::blog()->url() . App::url()->getURLFor('tag', rawurlencode($meta_id));
                             $title .= ' - ' . __('Tag') . ' &rsaquo; ' . $meta_id;
@@ -185,7 +185,7 @@ class FrontendBehaviors
 
                 case 'serie':
                     if (App::frontend()->context()->meta instanceof MetaRecord) {
-                        $meta_id = $getStr(App::frontend()->context()->meta->meta_id);
+                        $meta_id = $_Str(App::frontend()->context()->meta->meta_id);
                         if ($meta_id !== '') {
                             $url = App::blog()->url() . App::url()->getURLFor('serie', rawurlencode($meta_id));
                             $title .= ' - ' . __('Serie') . ' &rsaquo; ' . $meta_id;
@@ -231,7 +231,7 @@ class FrontendBehaviors
 
         if ($settings->facebook) {
             // Mastodon account
-            $account = $getStr($settings->mastodon_account);
+            $account = $_Str($settings->mastodon_account);
             if ($account !== '' && !str_starts_with($account, '@')) {
                 // Ensure that account begins with a @ (as in @myself@mastodon.instance)
                 $account = '@' . $account;
@@ -241,9 +241,9 @@ class FrontendBehaviors
             echo
             '<meta property="og:type" content="' . ($single ? 'article' : 'website') . '">' . "\n" .
             '<meta property="og:title" content="' . $title . '">' . "\n" .
-            '<meta property="og:url" content="' . $getStr($url) . '">' . "\n" .
+            '<meta property="og:url" content="' . $_Str($url) . '">' . "\n" .
             '<meta property="og:site_name" content="' . App::blog()->name() . '">' . "\n" .
-            '<meta property="og:description" content="' . $getStr($content) . '">' . "\n";
+            '<meta property="og:description" content="' . $_Str($content) . '">' . "\n";
             if (strlen((string) $media['img']) !== 0) {
                 echo
                 '<meta property="og:image" content="' . $media['img'] . '">' . "\n";
@@ -263,7 +263,7 @@ class FrontendBehaviors
             // Google+
             echo
             '<meta itemprop="name" content="' . $title . '">' . "\n" .
-            '<meta itemprop="description" content="' . $getStr($content) . '">' . "\n";
+            '<meta itemprop="description" content="' . $_Str($content) . '">' . "\n";
             if (strlen((string) $media['img']) !== 0) {
                 echo
                 '<meta itemprop="image" content="' . $media['img'] . '">' . "\n";
@@ -272,7 +272,7 @@ class FrontendBehaviors
 
         if ($settings->twitter) {
             // Twitter account
-            $account = $getStr($settings->twitter_account);
+            $account = $_Str($settings->twitter_account);
             if ($account !== '' && !str_starts_with($account, '@')) {
                 $account = '@' . $account;
             }
@@ -281,7 +281,7 @@ class FrontendBehaviors
             echo
             '<meta name="twitter:card" content="' . ($media['large'] ? 'summary_large_image' : 'summary') . '">' . "\n" .
             '<meta name="twitter:title" content="' . $title . '">' . "\n" .
-            '<meta name="twitter:description" content="' . $getStr($content) . '">' . "\n";
+            '<meta name="twitter:description" content="' . $_Str($content) . '">' . "\n";
             if (strlen((string) $media['img']) !== 0) {
                 echo
                 '<meta name="twitter:image" content="' . $media['img'] . '">' . "\n";
