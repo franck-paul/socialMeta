@@ -51,12 +51,14 @@ class FrontendBehaviors
             if (!$settings->on_post) {
                 return '';
             }
+
             $single = true;
         } elseif (in_array(App::url()->getType(), ['pages', 'preview']) && App::frontend()->context()->posts instanceof MetaRecord && App::frontend()->context()->posts->post_type == 'page') {
             // Its a single page
             if (!$settings->on_page) {
                 return '';
             }
+
             $single = true;
         } elseif (!$settings->on_other) {
             return '';
@@ -88,6 +90,7 @@ class FrontendBehaviors
                     }
                 }
             }
+
             // Post/Page first image
             $media = new ArrayObject([
                 'img'   => '',
@@ -107,6 +110,7 @@ class FrontendBehaviors
                     }
                 }
             }
+
             if ($media['img'] === '') {
                 $media['img'] = Ctx::EntryFirstImageHelper('m', true, '', true);
                 if ($media['img'] !== '') {
@@ -116,11 +120,13 @@ class FrontendBehaviors
                     }
                 }
             }
+
             if ($media['img'] === '' && $settings->image !== '') {
                 // Use default image as decoration if set
                 $media['img'] = $settings->image;
                 $media['alt'] = '';
             }
+
             $media_img = $_Str($media['img']);
             if ($media_img !== '' && !str_starts_with($media_img, 'http')) {
                 $root         = preg_replace('#^(.+?//.+?)/(.*)$#', '$1', (string) App::blog()->url());
@@ -154,6 +160,7 @@ class FrontendBehaviors
                             $title .= ($first ? ' - ' : ' &rsaquo; ') . $_Str($categories->cat_title);
                             $first = false;
                         }
+
                         // Add current category title
                         $title .= ($first ? ' - ' : ' &rsaquo; ') . $_Str(App::frontend()->context()->categories->cat_title);
                     }
