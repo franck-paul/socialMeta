@@ -42,18 +42,23 @@ class FrontendBehaviors
 
         // Variable data helpers
         $_Str = fn (mixed $var, string $default = ''): string => $var !== null && is_string($val = $var) ? $val : $default;
-        $_Int = fn (mixed $var, int $default = 0): int => $var !== null && is_numeric($val = $var) ? (int) $val : $default;
 
         // Check if context is a single one (post, page, …)
         $single = false;
-        if (in_array(App::url()->getType(), ['post', 'preview']) && App::frontend()->context()->posts instanceof MetaRecord && App::frontend()->context()->posts->post_type === 'post') {
+        if (in_array(App::url()->getType(), ['post', 'preview'])
+            && App::frontend()->context()->posts instanceof MetaRecord
+            && App::frontend()->context()->posts->strField('post_type') === 'post'
+        ) {
             // Its a single post
             if (!$settings->on_post) {
                 return '';
             }
 
             $single = true;
-        } elseif (in_array(App::url()->getType(), ['pages', 'preview']) && App::frontend()->context()->posts instanceof MetaRecord && App::frontend()->context()->posts->post_type == 'page') {
+        } elseif (in_array(App::url()->getType(), ['pages', 'preview'])
+            && App::frontend()->context()->posts instanceof MetaRecord
+            && App::frontend()->context()->posts->strField('post_type') === 'page'
+        ) {
             // Its a single page
             if (!$settings->on_page) {
                 return '';
@@ -69,7 +74,7 @@ class FrontendBehaviors
             $url = App::frontend()->context()->posts->getURL();
 
             // Post/Page title
-            $title = Html::escapeHTML($_Str(App::frontend()->context()->posts->post_title ?? ''));
+            $title = Html::escapeHTML(App::frontend()->context()->posts->strField('post_title'));
 
             // Post/Page content
             $content = $_Str(App::frontend()->context()->posts->getExcerpt()) . ' ' . $_Str(App::frontend()->context()->posts->getContent());
@@ -145,24 +150,24 @@ class FrontendBehaviors
                     if (App::frontend()->context()->archives instanceof MetaRecord) {
                         // Month archive
                         $url = App::frontend()->context()->archives->url();
-                        $title .= ' &rsaquo; ' . Date::dt2str('%B %Y', $_Str(App::frontend()->context()->archives->dt, 'now'));
+                        $title .= ' &rsaquo; ' . Date::dt2str('%B %Y', App::frontend()->context()->archives->strField('dt') ?: 'now');
                     }
 
                     break;
 
                 case 'category':
                     if (App::frontend()->context()->categories instanceof MetaRecord) {
-                        $url = App::blog()->url() . App::url()->getURLFor('category', $_Str(App::frontend()->context()->categories->cat_url));
+                        $url = App::blog()->url() . App::url()->getURLFor('category', App::frontend()->context()->categories->strField('cat_url'));
                         // Add category parents' title
-                        $categories = App::blog()->getCategoryParents($_Int(App::frontend()->context()->categories->cat_id));
+                        $categories = App::blog()->getCategoryParents(App::frontend()->context()->categories->intField('cat_id'));
                         $first      = true;
                         while ($categories->fetch()) {
-                            $title .= ($first ? ' - ' : ' &rsaquo; ') . $_Str($categories->cat_title);
+                            $title .= ($first ? ' - ' : ' &rsaquo; ') . $categories->strField('cat_title');
                             $first = false;
                         }
 
                         // Add current category title
-                        $title .= ($first ? ' - ' : ' &rsaquo; ') . $_Str(App::frontend()->context()->categories->cat_title);
+                        $title .= ($first ? ' - ' : ' &rsaquo; ') . App::frontend()->context()->categories->strField('cat_title');
                     }
 
                     break;
@@ -175,7 +180,7 @@ class FrontendBehaviors
 
                 case 'tag':
                     if (App::frontend()->context()->meta instanceof MetaRecord) {
-                        $meta_id = $_Str(App::frontend()->context()->meta->meta_id);
+                        $meta_id = App::frontend()->context()->meta->strField('meta_id');
                         if ($meta_id !== '') {
                             $url = App::blog()->url() . App::url()->getURLFor('tag', rawurlencode($meta_id));
                             $title .= ' - ' . __('Tag') . ' &rsaquo; ' . $meta_id;
@@ -192,7 +197,7 @@ class FrontendBehaviors
 
                 case 'serie':
                     if (App::frontend()->context()->meta instanceof MetaRecord) {
-                        $meta_id = $_Str(App::frontend()->context()->meta->meta_id);
+                        $meta_id = App::frontend()->context()->meta->strField('meta_id');
                         if ($meta_id !== '') {
                             $url = App::blog()->url() . App::url()->getURLFor('serie', rawurlencode($meta_id));
                             $title .= ' - ' . __('Serie') . ' &rsaquo; ' . $meta_id;
