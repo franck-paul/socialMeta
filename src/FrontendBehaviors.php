@@ -30,12 +30,12 @@ class FrontendBehaviors
         $settings = My::settings();
 
         // Check settings and context
-        if (!$settings->active) {
+        if (!$settings->getBool('active')) {
             // Plugin inactive on this blog
             return '';
         }
 
-        if (!$settings->facebook && !$settings->google && !$settings->twitter) {
+        if (!$settings->getBool('facebook') && !$settings->getBool('google') && !$settings->getBool('twitter')) {
             // None of social metadata section is enabled for this blog
             return '';
         }
@@ -50,7 +50,7 @@ class FrontendBehaviors
             && App::frontend()->context()->posts->strField('post_type') === 'post'
         ) {
             // Its a single post
-            if (!$settings->on_post) {
+            if (!$settings->getBool('on_post')) {
                 return '';
             }
 
@@ -60,12 +60,12 @@ class FrontendBehaviors
             && App::frontend()->context()->posts->strField('post_type') === 'page'
         ) {
             // Its a single page
-            if (!$settings->on_page) {
+            if (!$settings->getBool('on_page')) {
                 return '';
             }
 
             $single = true;
-        } elseif (!$settings->on_other) {
+        } elseif (!$settings->getBool('on_other')) {
             return '';
         }
 
@@ -85,11 +85,11 @@ class FrontendBehaviors
 
             if ($content == '') {
                 // Use default description if any
-                $content = $settings->description;
-                if ($content == '') {
+                $content = $settings->getStr('description', false);
+                if ($content === '') {
                     // Use blog description if any
                     $content = Html::clean(App::blog()->desc());
-                    if ($content == '') {
+                    if ($content === '') {
                         // Use blog title
                         $content = App::blog()->name();
                     }
@@ -104,7 +104,7 @@ class FrontendBehaviors
             ]);
             // Give 3rd party plugins the opportunity to give media info
             App::behavior()->callBehavior('socialMetaMedia', $media);
-            if ($media['img'] === '' && $settings->photo) {
+            if ($media['img'] === '' && $settings->getBool('photo')) {
                 // Photoblog, use original photo rather than small one
                 $media['img'] = Ctx::EntryFirstImageHelper('o', true, '', true);
                 if ($media['img'] !== '') {
@@ -126,9 +126,9 @@ class FrontendBehaviors
                 }
             }
 
-            if ($media['img'] === '' && $settings->image !== '') {
+            if ($media['img'] === '' && $settings->getStr('image', false) !== '') {
                 // Use default image as decoration if set
-                $media['img'] = $settings->image;
+                $media['img'] = $settings->getStr('image', false);
                 $media['alt'] = '';
             }
 
@@ -213,8 +213,8 @@ class FrontendBehaviors
             }
 
             // Use default description if any
-            $content = $settings->description;
-            if ($content == '') {
+            $content = $settings->getStr('description', false);
+            if ($content === '') {
                 // Use blog description if any
                 $content = Html::clean(App::blog()->desc());
                 if ($content === '') {
@@ -231,20 +231,20 @@ class FrontendBehaviors
             // Give 3rd party plugins the opportunity to give media info
             App::behavior()->callBehavior('socialMetaMedia', $media);
 
-            if ($media['img'] === '' && $settings->image !== '') {
+            if ($media['img'] === '' && $settings->getStr('image', false) !== '') {
                 // Use default image as decoration if set
-                $media['img']   = $settings->image;
-                $media['large'] = (bool) $settings->photo;
+                $media['img']   = $settings->getStr('image', false);
+                $media['large'] = $settings->getBool('photo', false);
                 $media['alt']   = '';
             }
         }
 
         // Everything is ready, it's time to output social metadata
 
-        if ($settings->facebook) {
+        if ($settings->getBool('facebook')) {
             // Mastodon account
-            $account = $_Str($settings->mastodon_account);
-            if ($account !== '' && !str_starts_with($account, '@')) {
+            $account = $settings->getStr('mastodon_account', false);
+            if ($account !== '' && !str_starts_with((string) $account, '@')) {
                 // Ensure that account begins with a @ (as in @myself@mastodon.instance)
                 $account = '@' . $account;
             }
@@ -265,13 +265,13 @@ class FrontendBehaviors
                 }
             }
 
-            if (strlen($account) !== 0) {
+            if (strlen((string) $account) !== 0) {
                 echo
                 '<meta name="fediverse:creator" content="' . $account . '">' . "\n";
             }
         }
 
-        if ($settings->google) {
+        if ($settings->getBool('google')) {
             // Google+
             echo
             '<meta itemprop="name" content="' . $title . '">' . "\n" .
@@ -282,10 +282,10 @@ class FrontendBehaviors
             }
         }
 
-        if ($settings->twitter) {
+        if ($settings->getBool('twitter')) {
             // Twitter account
-            $account = $_Str($settings->twitter_account);
-            if ($account !== '' && !str_starts_with($account, '@')) {
+            $account = $settings->getStr('twitter_account', false);
+            if ($account !== '' && !str_starts_with((string) $account, '@')) {
                 $account = '@' . $account;
             }
 
@@ -303,7 +303,7 @@ class FrontendBehaviors
                 }
             }
 
-            if (strlen($account) !== 0) {
+            if (strlen((string) $account) !== 0) {
                 echo
                 '<meta name="twitter:site" content="' . $account . '">' . "\n" .
                 '<meta name="twitter:creator" content="' . $account . '">' . "\n";

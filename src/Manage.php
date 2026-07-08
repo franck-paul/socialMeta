@@ -53,7 +53,7 @@ class Manage
         }
 
         $settings = My::settings();
-        if (is_null($settings->active)) {
+        if (is_null($settings->get('active'))) {
             try {
                 // Add default settings values if necessary
                 $settings->put('active', false, App::blogWorkspace()::NS_BOOL, 'Active', false);
@@ -132,22 +132,18 @@ class Manage
 
         $settings = My::settings();
 
-        // Variable data helpers
-        $_Bool = fn (mixed $var): bool => (bool) $var;
-        $_Str  = fn (mixed $var, string $default = ''): string => $var !== null && is_string($val = $var) ? $val : $default;
-
-        $sm_active           = $_Bool($settings->active);
-        $sm_on_post          = $_Bool($settings->on_post);
-        $sm_on_page          = $_Bool($settings->on_page);
-        $sm_on_other         = $_Bool($settings->on_other);
-        $sm_twitter_account  = $_Str($settings->twitter_account);
-        $sm_mastodon_account = $_Str($settings->mastodon_account);
-        $sm_facebook         = $_Bool($settings->facebook);
-        $sm_google           = $_Bool($settings->google);
-        $sm_twitter          = $_Bool($settings->twitter);
-        $sm_photo            = $_Bool($settings->photo);
-        $sm_description      = $_Str($settings->description);
-        $sm_image            = $_Str($settings->image);
+        $sm_active           = $settings->getBool('active', false);
+        $sm_on_post          = $settings->getBool('on_post', false);
+        $sm_on_page          = $settings->getBool('on_page', false);
+        $sm_on_other         = $settings->getBool('on_other', false);
+        $sm_twitter_account  = $settings->getStr('twitter_account', false);
+        $sm_mastodon_account = $settings->getStr('mastodon_account', false);
+        $sm_facebook         = $settings->getBool('facebook', false);
+        $sm_google           = $settings->getBool('google', false);
+        $sm_twitter          = $settings->getBool('twitter', false);
+        $sm_photo            = $settings->getBool('photo', false);
+        $sm_description      = $settings->getStr('description', false);
+        $sm_image            = $settings->getStr('image', false);
 
         App::backend()->page()->openModule(My::name());
 
