@@ -45,7 +45,7 @@ class FrontendBehaviors
 
         // Check if context is a single one (post, page, …)
         $single = false;
-        if (in_array(App::url()->getType(), ['post', 'preview'])
+        if (App::url()->isType(['post', 'preview'])
             && App::frontend()->context()->posts instanceof MetaRecord
             && App::frontend()->context()->posts->strField('post_type') === 'post'
         ) {
@@ -55,7 +55,7 @@ class FrontendBehaviors
             }
 
             $single = true;
-        } elseif (in_array(App::url()->getType(), ['pages', 'preview'])
+        } elseif (App::url()->isType(['pages', 'preview'])
             && App::frontend()->context()->posts instanceof MetaRecord
             && App::frontend()->context()->posts->strField('post_type') === 'page'
         ) {
