@@ -35,7 +35,10 @@ class FrontendBehaviors
             return '';
         }
 
-        if (!$settings->getBool('facebook') && !$settings->getBool('google') && !$settings->getBool('twitter')) {
+        if (!$settings->getBool('facebook')
+            && !$settings->getBool('google')
+            && !$settings->getBool('twitter')
+        ) {
             // None of social metadata section is enabled for this blog
             return '';
         }
