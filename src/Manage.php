@@ -308,7 +308,7 @@ class Manage
                                     ->value(Html::escapeHTML($sm_mastodon_account))
                                     ->size(30)
                                     ->maxlength(128)
-                                    ->extra('aria-describedby="prefix-mastodon_account"'),
+                                    ->ariaDescribedby('prefix-mastodon_account'),
                             ]),
                         (new Note('prefix-twitter_account'))
                             ->class('form-note')
@@ -323,7 +323,7 @@ class Manage
                                     ->value(Html::escapeHTML($sm_twitter_account))
                                     ->size(30)
                                     ->maxlength(128)
-                                    ->extra('aria-describedby="prefix-twitter_account"'),
+                                    ->ariaDescribedby('prefix-twitter_account'),
                             ]),
                         (new Note('prefix-twitter_account'))
                             ->class('form-note')
@@ -337,7 +337,7 @@ class Manage
                                 (new Label(__('This blog is a photoblog')))
                                     ->for('sm_photo')
                                     ->class('classic')
-                                    ->extra('aria-describedby="summary_large_image"'),
+                                    ->ariaDescribedby('summary_large_image'),
                             ]),
                         (new Note('summary_large_image'))
                             ->class('form-note')
@@ -352,7 +352,7 @@ class Manage
                                     ->value(html::escapeHTML($sm_description))
                                     ->size(80)
                                     ->maxlength(255)
-                                    ->extra('aria-describedby="default_description"'),
+                                    ->ariaDescribedby('default_description'),
                             ]),
                         (new Note('default_description'))
                             ->class('form-note')
@@ -367,7 +367,7 @@ class Manage
                                     ->value(html::escapeHTML($sm_image))
                                     ->size(80)
                                     ->maxlength(255)
-                                    ->extra('aria-describedby="default_image"'),
+                                    ->ariaDescribedby('default_image'),
                             ]),
                         (new Note('default_image'))
                             ->class('form-note')
