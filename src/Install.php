@@ -44,6 +44,7 @@ class Install
         $settings->put('facebook', true, App::blogWorkspace()::NS_BOOL, 'Insert Facebook meta', false, true);
         $settings->put('google', true, App::blogWorkspace()::NS_BOOL, 'Insert Google meta', false, true);
         $settings->put('twitter', true, App::blogWorkspace()::NS_BOOL, 'Insert Twitter meta', false, true);
+        $settings->put('json_ld', true, App::blogWorkspace()::NS_BOOL, 'Insert JSON-LD meta', false, true);
         $settings->put('photo', false, App::blogWorkspace()::NS_BOOL, 'Photoblog', false, true);
         $settings->put('description', '', App::blogWorkspace()::NS_STRING, 'Default description', false, true);
         $settings->put('image', '', App::blogWorkspace()::NS_STRING, 'Default image', false, true);

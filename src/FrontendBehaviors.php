@@ -38,6 +38,7 @@ class FrontendBehaviors
         if (!$settings->getBool('facebook')
             && !$settings->getBool('google')
             && !$settings->getBool('twitter')
+            && !$settings->getBool('json_ld')
         ) {
             // None of social metadata section is enabled for this blog
             return '';
@@ -48,6 +49,7 @@ class FrontendBehaviors
 
         // Check if context is a single one (post, page, …)
         $single = false;
+        $schema = 'WebPage';
         if (App::url()->isType(['post', 'preview'])
             && App::frontend()->context()->posts instanceof MetaRecord
             && App::frontend()->context()->posts->strField('post_type') === 'post'
@@ -58,6 +60,7 @@ class FrontendBehaviors
             }
 
             $single = true;
+            $schema = 'Article';
         } elseif (App::url()->isType(['pages', 'preview'])
             && App::frontend()->context()->posts instanceof MetaRecord
             && App::frontend()->context()->posts->strField('post_type') === 'page'
@@ -70,7 +73,16 @@ class FrontendBehaviors
             $single = true;
         } elseif (!$settings->getBool('on_other')) {
             return '';
+        } elseif (App::url()->isType(['home'])) {
+            $schema = 'WebSite';
         }
+
+        $title  = App::blog()->name();
+        $url    = App::blog()->url();
+        $editor = App::blog()->settings()->get('system')->getStr('editor');
+        $lang   = App::blog()->settings()->get('system')->getStr('lang');
+        $date   = Date::str('%Y%m%d', App::blog()->upddt(), App::blog()->settings()->get('system')->getStr('blog_timezone'));
+        $author = $editor;
 
         if ($single) {
             // Post/Page URL
@@ -78,6 +90,16 @@ class FrontendBehaviors
 
             // Post/Page title
             $title = Html::escapeHTML(App::frontend()->context()->posts->strField('post_title'));
+
+            // Editor/Author
+            $author = App::frontend()->context()->posts->getAuthorCN();
+
+            // Page/Post language
+            $post_lang = App::frontend()->context()->posts->strField('post_lang');
+            $lang      = $post_lang !== '' ? $post_lang : $lang;
+
+            // Page/Post date
+            $date = App::frontend()->context()->posts->getDate('%Y%m%d');
 
             // Post/Page content
             $content = $_Str(App::frontend()->context()->posts->getExcerpt()) . ' ' . $_Str(App::frontend()->context()->posts->getContent());
@@ -142,8 +164,6 @@ class FrontendBehaviors
             }
         } else {
             // Home, Posts, Archive, Archive month, Tags, Tag, Series, Serie, …
-            $url   = App::blog()->url();
-            $title = App::blog()->name();
 
             switch (App::url()->getType()) {
                 case 'archive':
@@ -310,6 +330,75 @@ class FrontendBehaviors
                 echo
                 '<meta name="twitter:site" content="' . $account . '">' . "\n" .
                 '<meta name="twitter:creator" content="' . $account . '">' . "\n";
+            }
+        }
+
+        if ($settings->getBool('json_ld')) {
+            $json_lines = [
+                '  "@context": "https://schema.org"',
+                '  "@type": "' . $schema . '"',
+            ];
+
+            $valid = true;
+
+            switch ($schema) {
+                case 'WebSite':
+                    $json_lines[] = '  "name": "' . App::blog()->name() . '"';
+                    $json_lines[] = '  "url": "' . $url . '"';
+                    $json_lines[] = '  "inLanguage": "' . $lang . '"';
+
+                    if ($editor !== '') {
+                        $json_lines[] = '  "author": { "@type": "Person", "name": "' . $editor . '" }';
+                    }
+
+                    break;
+
+                case 'WebPage':
+                    $json_lines[] = '  "name": "' . $title . '"';
+                    $json_lines[] = '  "url": "' . $url . '"';
+                    $json_lines[] = '  "inLanguage": "' . $lang . '"';
+
+                    if ($editor !== '') {
+                        $json_lines[] = '  "author": { "@type": "Person", "name": "' . $editor . '" }';
+                    } else {
+                        // Author is mandatory for WebPage
+                        $valid = false;
+                    }
+
+                    break;
+
+                case 'Article':
+                    $json_lines[] = '  "name": "' . $title . '"';
+                    $json_lines[] = '  "url": "' . $url . '"';
+                    $json_lines[] = '  "inLanguage": "' . $lang . '"';
+                    $json_lines[] = '  "author": { "@type": "Person", "name": "' . $author . '" }';
+                    $json_lines[] = '  "datePublished": "' . $date . '"';
+
+                    if (strlen((string) $media['img']) !== 0) {
+                        $json_lines[] = '  "image": [ "' . $media['img'] . '" ]';
+                    } else {
+                        // Image is mandatory for Article
+                        $valid = false;
+                    }
+
+                    if ($editor !== '') {
+                        $json_lines[] = '  "publisher": { "@type": "Person", "name": "' . $editor . '" }';
+                    }
+
+                    break;
+
+                default:
+                    // code...
+                    break;
+            }
+
+            if ($valid) {
+                echo
+                '<script type="application/ld+json">' . "\n" .
+                '{' . "\n" .
+                implode(',' . "\n", $json_lines) . "\n" .
+                '}' . "\n" .
+                '</script>' . "\n";
             }
         }
 
