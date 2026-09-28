@@ -73,7 +73,7 @@ class FrontendBehaviors
             $single = true;
         } elseif (!$settings->getBool('on_other')) {
             return '';
-        } elseif (App::url()->isType(['home'])) {
+        } elseif (App::url()->isType(['default', 'default-page', 'static'])) {
             $schema = 'WebSite';
         }
 
