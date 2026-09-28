@@ -18,6 +18,7 @@ Les métadonnées disponibles sont :
 * Open Graph (utilisées par Mastodon, Facebook, …)
 * Google (itemprop)
 * Twitter/X
+* JSON-LD
 
 Il est possible de définir le compte Twitter et le compte Mastodon à utiliser si fourni(s), la description par défaut si aucune autre n'est trouvée (exemple d'une catégorie sans description) et une image par défaut si aucune n'est disponible en fonction du contexte.
 
