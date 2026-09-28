@@ -221,7 +221,7 @@ class Manage
                         (new Text(
                             'pre',
                             sprintf(
-                                html::escapeHTML(
+                                Html::escapeHTML(
                                     '<meta property="og:type" content="website">' . "\n" .
                                     '<meta property="og:title" content="%s">' . "\n" .
                                     '<meta property="og:url" content="%s">' . "\n" .
@@ -255,7 +255,7 @@ class Manage
                         (new Text(
                             'pre',
                             sprintf(
-                                html::escapeHTML(
+                                Html::escapeHTML(
                                     '<meta itemprop="name" content="%s">' . "\n" .
                                     '<meta itemprop="description" content="%s">' . "\n" .
                                     '<meta itemprop="image" content="%s">' . "\n"
@@ -280,7 +280,7 @@ class Manage
                         (new Text(
                             'pre',
                             sprintf(
-                                html::escapeHTML(
+                                Html::escapeHTML(
                                     '<meta name="twitter:card" content="summary">' . "\n" .
                                     '<meta name="twitter:title" content="%s">' . "\n" .
                                     '<meta name="twitter:description" content="%s">' . "\n" .
@@ -388,7 +388,7 @@ class Manage
                                 (new Label(__('Default description:')))
                                     ->for('sm_description'),
                                 (new Input('sm_description'))
-                                    ->value(html::escapeHTML($sm_description))
+                                    ->value(Html::escapeHTML($sm_description))
                                     ->size(80)
                                     ->maxlength(255)
                                     ->extra('aria-describedby="default_description"'),
@@ -403,7 +403,7 @@ class Manage
                                 (new Label(__('Default image (URL):')))
                                     ->for('sm_image'),
                                 (new Input('sm_image'))
-                                    ->value(html::escapeHTML($sm_image))
+                                    ->value(Html::escapeHTML($sm_image))
                                     ->size(80)
                                     ->maxlength(255)
                                     ->extra('aria-describedby="default_image"'),
