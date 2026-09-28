@@ -65,6 +65,7 @@ class Manage
                 $settings->put('facebook', true, App::blogWorkspace()::NS_BOOL, 'Insert Facebook meta', false);
                 $settings->put('google', true, App::blogWorkspace()::NS_BOOL, 'Insert Google meta', false);
                 $settings->put('twitter', true, App::blogWorkspace()::NS_BOOL, 'Insert Twitter meta', false);
+                $settings->put('json_ld', true, App::blogWorkspace()::NS_BOOL, 'Insert JSON-LD meta', false);
                 $settings->put('photo', false, App::blogWorkspace()::NS_BOOL, 'Photoblog', false);
                 $settings->put('description', '', App::blogWorkspace()::NS_STRING, 'Default description', false);
                 $settings->put('image', '', App::blogWorkspace()::NS_STRING, 'Default image', false);
@@ -91,6 +92,7 @@ class Manage
                 $sm_facebook         = $_Bool('sm_facebook');
                 $sm_google           = $_Bool('sm_google');
                 $sm_twitter          = $_Bool('sm_twitter');
+                $sm_json_ld          = $_Bool('sm_json_ld');
                 $sm_photo            = $_Bool('sm_photo');
                 $sm_description      = trim(Html::escapeHTML($_Str('sm_description')));
                 $sm_image            = trim(Html::escapeHTML($_Str('sm_image')));
@@ -105,6 +107,7 @@ class Manage
                 $settings->put('facebook', $sm_facebook, App::blogWorkspace()::NS_BOOL);
                 $settings->put('google', $sm_google, App::blogWorkspace()::NS_BOOL);
                 $settings->put('twitter', $sm_twitter, App::blogWorkspace()::NS_BOOL);
+                $settings->put('json_ld', $sm_json_ld, App::blogWorkspace()::NS_BOOL);
                 $settings->put('photo', $sm_photo, App::blogWorkspace()::NS_BOOL);
                 $settings->put('description', $sm_description, App::blogWorkspace()::NS_STRING);
                 $settings->put('image', $sm_image, App::blogWorkspace()::NS_STRING);
@@ -141,6 +144,7 @@ class Manage
         $sm_facebook         = $settings->getBool('facebook', false);
         $sm_google           = $settings->getBool('google', false);
         $sm_twitter          = $settings->getBool('twitter', false);
+        $sm_json_ld          = $settings->getBool('json_ld', false);
         $sm_photo            = $settings->getBool('photo', false);
         $sm_description      = $settings->getStr('description', false);
         $sm_image            = $settings->getStr('image', false);
@@ -290,6 +294,41 @@ class Manage
                                 '<mark>' . $sm_image . '</mark>',
                                 '<mark>' . $sm_twitter_account . '</mark>',
                                 '<mark>' . $sm_twitter_account . '</mark>',
+                            )
+                        )),
+                        // Specific JSON-LD
+                        (new Para())
+                            ->separator(' ')
+                            ->items([
+                                (new Checkbox('sm_json_ld', $sm_json_ld))
+                                    ->value(1),
+                                (new Label(__('Use JSON-LD social meta:')))
+                                    ->for('sm_json_ld')
+                                    ->class('classic'),
+                            ]),
+                        (new Note())
+                            ->text(__('Example of JSON-LD metadata inserted into the header:')),
+                        (new Text(
+                            'pre',
+                            sprintf(
+                                Html::escapeHTML(
+                                    '<script type="application/ld+json">' . "\n" .
+                                    '{' . "\n" .
+                                    '"@context": "https://schema.org",' . "\n" .
+                                    '"@type": "WebSite",' . "\n" .
+                                    '"name": "%s",' . "\n" .
+                                    '"url": "%s",' . "\n" .
+                                    '"description": "%s",' . "\n" .
+                                    '"inLanguage": "%s",' . "\n" .
+                                    '"author": { "@type": "Person", "name": "%s" }' . "\n" .
+                                    '}' . "\n" .
+                                    '</script>' . "\n"
+                                ),
+                                '<mark>' . App::blog()->name() . '</mark>',
+                                '<mark>' . App::blog()->url() . '</mark>',
+                                '<mark>' . $sm_description . '</mark>',
+                                '<mark>' . App::blog()->settings()->get('system')->getStr('lang') . '</mark>',
+                                '<mark>' . App::blog()->settings()->get('system')->getStr('editor') . '</mark>',
                             )
                         )),
                     ]),
