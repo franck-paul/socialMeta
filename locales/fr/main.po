@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Dotclear 2 socialMeta module\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-28 13:46+0200\n"
+"POT-Creation-Date: 2026-09-30 12:29+0200\n"
 "PO-Revision-Date: 2023-05-26 12:45+0000\n"
 "Last-Translator: Franck Paul <contact+transifex@open-time.net>, 2026\n"
 "Language-Team: French (https://app.transifex.com/open-time/teams/109573/fr/)\n"
@@ -53,26 +53,26 @@ msgstr ""
 msgid "Use Open Graph (Mastodon/Facebook) social meta:"
 msgstr "Insérer les métadonnées pour Open Graph (Mastodon/Facebook) :"
 
-msgid "Example of Open Graph metadata inserted into the header:"
-msgstr "Exemple de métadonnées Open Graph insérées dans l'en-tête :"
+msgid "Example of Open Graph metadata inserted into the header"
+msgstr "Exemple de métadonnées Open Graph insérées dans l'en-tête"
 
 msgid "Use Google social meta:"
 msgstr "Insérer les métadonnées pour Google :"
 
-msgid "Example of Google metadata inserted into the header:"
-msgstr "Exemple de métadonnées Google insérées dans l'en-tête :"
+msgid "Example of Google metadata inserted into the header"
+msgstr "Exemple de métadonnées Google insérées dans l'en-tête"
 
 msgid "Use Twitter/X social meta:"
 msgstr "Insérer les métadonnées pour Twitter/X :"
 
-msgid "Example of Twitter/X metadata inserted into the header:"
-msgstr "Exemple de métadonnées Twitter/X insérées dans l'en-tête :"
+msgid "Example of Twitter/X metadata inserted into the header"
+msgstr "Exemple de métadonnées Twitter/X insérées dans l'en-tête"
 
 msgid "Use JSON-LD social meta:"
 msgstr "Insérer les métadonnées au format JSON-LD :"
 
-msgid "Example of JSON-LD metadata inserted into the header:"
-msgstr "Exemple de métadonnées JSON-LD insérées dans l'en-tête :"
+msgid "Example of JSON-LD metadata inserted into the header"
+msgstr "Exemple de métadonnées JSON-LD insérées dans l'en-tête"
 
 msgid "Settings"
 msgstr "Réglages"
