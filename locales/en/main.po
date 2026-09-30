@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Dotclear 2 socialMeta module\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-28 13:46+0200\n"
+"POT-Creation-Date: 2026-09-30 12:29+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,25 +46,25 @@ msgstr ""
 msgid "Use Open Graph (Mastodon/Facebook) social meta:"
 msgstr ""
 
-msgid "Example of Open Graph metadata inserted into the header:"
+msgid "Example of Open Graph metadata inserted into the header"
 msgstr ""
 
 msgid "Use Google social meta:"
 msgstr ""
 
-msgid "Example of Google metadata inserted into the header:"
+msgid "Example of Google metadata inserted into the header"
 msgstr ""
 
 msgid "Use Twitter/X social meta:"
 msgstr ""
 
-msgid "Example of Twitter/X metadata inserted into the header:"
+msgid "Example of Twitter/X metadata inserted into the header"
 msgstr ""
 
 msgid "Use JSON-LD social meta:"
 msgstr ""
 
-msgid "Example of JSON-LD metadata inserted into the header:"
+msgid "Example of JSON-LD metadata inserted into the header"
 msgstr ""
 
 msgid "Settings"

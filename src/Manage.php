@@ -17,6 +17,7 @@ namespace Dotclear\Plugin\socialMeta;
 
 use Dotclear\App;
 use Dotclear\Helper\Html\Form\Checkbox;
+use Dotclear\Helper\Html\Form\Details;
 use Dotclear\Helper\Html\Form\Fieldset;
 use Dotclear\Helper\Html\Form\Form;
 use Dotclear\Helper\Html\Form\Input;
@@ -26,6 +27,7 @@ use Dotclear\Helper\Html\Form\Note;
 use Dotclear\Helper\Html\Form\Para;
 use Dotclear\Helper\Html\Form\Single;
 use Dotclear\Helper\Html\Form\Submit;
+use Dotclear\Helper\Html\Form\Summary;
 use Dotclear\Helper\Html\Form\Text;
 use Dotclear\Helper\Html\Html;
 use Dotclear\Helper\Process\TraitProcess;
@@ -149,7 +151,77 @@ class Manage
         $sm_description      = $settings->getStr('description', false);
         $sm_image            = $settings->getStr('image', false);
 
-        App::backend()->page()->openModule(My::name());
+        # Samples
+        $open_graph = sprintf(
+            Html::escapeHTML(
+                '<meta property="og:type" content="website">' . "\n" .
+                '<meta property="og:title" content="%s">' . "\n" .
+                '<meta property="og:url" content="%s">' . "\n" .
+                '<meta property="og:site_name" content="%s">' . "\n" .
+                '<meta property="og:description" content="%s">' . "\n" .
+                '<meta property="og:image" content="%s">' . "\n" .
+                '<meta property="og:image:alt" content="%s">' . "\n" .
+                '<meta property="fediverse:creator" content="%s">'
+            ),
+            '<mark>' . App::blog()->name() . '</mark>',
+            '<mark>' . App::blog()->url() . '</mark>',
+            '<mark>' . App::blog()->name() . '</mark>',
+            '<mark>' . $sm_description . '</mark>',
+            '<mark>' . $sm_image . '</mark>',
+            '',
+            '<mark>' . $sm_mastodon_account . '</mark>'
+        );
+        $item_prop = sprintf(
+            Html::escapeHTML(
+                '<meta itemprop="name" content="%s">' . "\n" .
+                '<meta itemprop="description" content="%s">' . "\n" .
+                '<meta itemprop="image" content="%s">'
+            ),
+            '<mark>' . App::blog()->name() . '</mark>',
+            '<mark>' . $sm_description . '</mark>',
+            '<mark>' . $sm_image . '</mark>'
+        );
+        $twitter_meta = sprintf(
+            Html::escapeHTML(
+                '<meta name="twitter:card" content="summary">' . "\n" .
+                '<meta name="twitter:title" content="%s">' . "\n" .
+                '<meta name="twitter:description" content="%s">' . "\n" .
+                '<meta name="twitter:image" content="%s">' . "\n" .
+                '<meta name="twitter:image:alt" content="">' . "\n" .
+                '<meta name="twitter:site" content="%s">' . "\n" .
+                '<meta name="twitter:creator" content="%s">'
+            ),
+            '<mark>' . App::blog()->name() . '</mark>',
+            '<mark>' . $sm_description . '</mark>',
+            '<mark>' . $sm_image . '</mark>',
+            '<mark>' . $sm_twitter_account . '</mark>',
+            '<mark>' . $sm_twitter_account . '</mark>',
+        );
+        $json_ld = sprintf(
+            Html::escapeHTML(
+                '<script type="application/ld+json">' . "\n" .
+                '{' . "\n" .
+                '"@context": "https://schema.org",' . "\n" .
+                '"@type": "WebSite",' . "\n" .
+                '"name": "%s",' . "\n" .
+                '"url": "%s",' . "\n" .
+                '"description": "%s",' . "\n" .
+                '"inLanguage": "%s",' . "\n" .
+                '"author": { "@type": "Person", "name": "%s" }' . "\n" .
+                '}' . "\n" .
+                '</script>'
+            ),
+            '<mark>' . App::blog()->name() . '</mark>',
+            '<mark>' . App::blog()->url() . '</mark>',
+            '<mark>' . $sm_description . '</mark>',
+            '<mark>' . App::blog()->settings()->get('system')->getStr('lang') . '</mark>',
+            '<mark>' . App::blog()->settings()->get('system')->getStr('editor') . '</mark>',
+        );
+
+        App::backend()->page()->openModule(
+            My::name(),
+            My::cssLoad('admin')
+        );
 
         echo App::backend()->page()->breadcrumb(
             [
@@ -206,7 +278,8 @@ class Manage
                                     ->class('classic'),
                             ]),
                         (new Single('hr')),
-                        // Specific Facebook
+
+                        // Specific Facebook/Mastodon
                         (new Para())
                             ->separator(' ')
                             ->items([
@@ -216,30 +289,20 @@ class Manage
                                     ->for('sm_facebook')
                                     ->class('classic'),
                             ]),
-                        (new Note())
-                            ->text(__('Example of Open Graph metadata inserted into the header:')),
-                        (new Text(
-                            'pre',
-                            sprintf(
-                                Html::escapeHTML(
-                                    '<meta property="og:type" content="website">' . "\n" .
-                                    '<meta property="og:title" content="%s">' . "\n" .
-                                    '<meta property="og:url" content="%s">' . "\n" .
-                                    '<meta property="og:site_name" content="%s">' . "\n" .
-                                    '<meta property="og:description" content="%s">' . "\n" .
-                                    '<meta property="og:image" content="%s">' . "\n" .
-                                    '<meta property="og:image:alt" content="%s">' . "\n" .
-                                    '<meta property="fediverse:creator" content="%s">' . "\n"
-                                ),
-                                '<mark>' . App::blog()->name() . '</mark>',
-                                '<mark>' . App::blog()->url() . '</mark>',
-                                '<mark>' . App::blog()->name() . '</mark>',
-                                '<mark>' . $sm_description . '</mark>',
-                                '<mark>' . $sm_image . '</mark>',
-                                '',
-                                '<mark>' . $sm_mastodon_account . '</mark>'
-                            )
-                        )),
+                        (new Details())
+                            ->class(['form-note', 'socialmeta_sample'])
+                            ->summary((new Summary(__('Example of Open Graph metadata inserted into the header'))))
+                            ->items([
+                                (new Para('open_graph', 'pre'))
+                                    ->items([
+                                        (new Para(null, 'code'))
+                                            ->class('language-html')
+                                            ->items([
+                                                (new Text(null, $open_graph)),
+                                            ]),
+                                    ]),
+                            ]),
+
                         // Specific Google
                         (new Para())
                             ->separator(' ')
@@ -250,21 +313,20 @@ class Manage
                                     ->for('sm_google')
                                     ->class('classic'),
                             ]),
-                        (new Note())
-                            ->text(__('Example of Google metadata inserted into the header:')),
-                        (new Text(
-                            'pre',
-                            sprintf(
-                                Html::escapeHTML(
-                                    '<meta itemprop="name" content="%s">' . "\n" .
-                                    '<meta itemprop="description" content="%s">' . "\n" .
-                                    '<meta itemprop="image" content="%s">' . "\n"
-                                ),
-                                '<mark>' . App::blog()->name() . '</mark>',
-                                '<mark>' . $sm_description . '</mark>',
-                                '<mark>' . $sm_image . '</mark>'
-                            )
-                        )),
+                        (new Details())
+                            ->class(['form-note', 'socialmeta_sample'])
+                            ->summary((new Summary(__('Example of Google metadata inserted into the header'))))
+                            ->items([
+                                (new Para('open_graph', 'pre'))
+                                    ->items([
+                                        (new Para(null, 'code'))
+                                            ->class('language-html')
+                                            ->items([
+                                                (new Text(null, $item_prop)),
+                                            ]),
+                                    ]),
+                            ]),
+
                         // Specific Twitter
                         (new Para())
                             ->separator(' ')
@@ -275,27 +337,20 @@ class Manage
                                     ->for('sm_twitter')
                                     ->class('classic'),
                             ]),
-                        (new Note())
-                            ->text(__('Example of Twitter/X metadata inserted into the header:')),
-                        (new Text(
-                            'pre',
-                            sprintf(
-                                Html::escapeHTML(
-                                    '<meta name="twitter:card" content="summary">' . "\n" .
-                                    '<meta name="twitter:title" content="%s">' . "\n" .
-                                    '<meta name="twitter:description" content="%s">' . "\n" .
-                                    '<meta name="twitter:image" content="%s">' . "\n" .
-                                    '<meta name="twitter:image:alt" content="">' . "\n" .
-                                    '<meta name="twitter:site" content="%s">' . "\n" .
-                                    '<meta name="twitter:creator" content="%s">' . "\n"
-                                ),
-                                '<mark>' . App::blog()->name() . '</mark>',
-                                '<mark>' . $sm_description . '</mark>',
-                                '<mark>' . $sm_image . '</mark>',
-                                '<mark>' . $sm_twitter_account . '</mark>',
-                                '<mark>' . $sm_twitter_account . '</mark>',
-                            )
-                        )),
+                        (new Details())
+                            ->class(['form-note', 'socialmeta_sample'])
+                            ->summary((new Summary(__('Example of Twitter/X metadata inserted into the header'))))
+                            ->items([
+                                (new Para('open_graph', 'pre'))
+                                    ->items([
+                                        (new Para(null, 'code'))
+                                            ->class('language-html')
+                                            ->items([
+                                                (new Text(null, $twitter_meta)),
+                                            ]),
+                                    ]),
+                            ]),
+
                         // Specific JSON-LD
                         (new Para())
                             ->separator(' ')
@@ -306,32 +361,21 @@ class Manage
                                     ->for('sm_json_ld')
                                     ->class('classic'),
                             ]),
-                        (new Note())
-                            ->text(__('Example of JSON-LD metadata inserted into the header:')),
-                        (new Text(
-                            'pre',
-                            sprintf(
-                                Html::escapeHTML(
-                                    '<script type="application/ld+json">' . "\n" .
-                                    '{' . "\n" .
-                                    '"@context": "https://schema.org",' . "\n" .
-                                    '"@type": "WebSite",' . "\n" .
-                                    '"name": "%s",' . "\n" .
-                                    '"url": "%s",' . "\n" .
-                                    '"description": "%s",' . "\n" .
-                                    '"inLanguage": "%s",' . "\n" .
-                                    '"author": { "@type": "Person", "name": "%s" }' . "\n" .
-                                    '}' . "\n" .
-                                    '</script>' . "\n"
-                                ),
-                                '<mark>' . App::blog()->name() . '</mark>',
-                                '<mark>' . App::blog()->url() . '</mark>',
-                                '<mark>' . $sm_description . '</mark>',
-                                '<mark>' . App::blog()->settings()->get('system')->getStr('lang') . '</mark>',
-                                '<mark>' . App::blog()->settings()->get('system')->getStr('editor') . '</mark>',
-                            )
-                        )),
+                        (new Details())
+                            ->class(['form-note', 'socialmeta_sample'])
+                            ->summary((new Summary(__('Example of JSON-LD metadata inserted into the header'))))
+                            ->items([
+                                (new Para('open_graph', 'pre'))
+                                    ->items([
+                                        (new Para(null, 'code'))
+                                            ->class('language-html')
+                                            ->items([
+                                                (new Text(null, $json_ld)),
+                                            ]),
+                                    ]),
+                            ]),
                     ]),
+
                 // Settings
                 (new Fieldset('sm_conf'))
                     ->legend((new Legend(__('Settings'))))

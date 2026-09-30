@@ -1,0 +1,8 @@
+.socialmeta_sample {
+  margin: 1em;
+
+  pre {
+    padding: 1em;
+    font-size: round(nearest, calc(1em / 1.2), 1px);
+  }
+}
