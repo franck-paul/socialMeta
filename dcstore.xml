@@ -1,11 +1,11 @@
 <modules xmlns:da="http://dotaddict.org/da/">
   <module id="socialMeta">
     <name>socialMeta</name>
-    <version>8.2</version>
+    <version>8.3</version>
     <author>Franck Paul</author>
     <desc>Add social meta to your posts and pages</desc>
-    <date>2026-09-28T14:39:49+0200</date>
-    <file>https://github.com/franck-paul/socialMeta/releases/download/8.2/plugin-socialMeta-8.2.zip</file>
+    <date>2026-09-30T12:38:42+0200</date>
+    <file>https://github.com/franck-paul/socialMeta/releases/download/8.3/plugin-socialMeta-8.3.zip</file>
     <da:dcmin>2.39</da:dcmin>
     <da:details>https://dotclear.org/plugin/detail/socialMeta</da:details>
     <da:support>https://github.com/franck-paul/socialMeta</da:support>
