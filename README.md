@@ -3,7 +3,7 @@
 [![Release](https://img.shields.io/github/v/release/franck-paul/socialMeta)](https://github.com/franck-paul/socialMeta/releases)
 [![Date](https://img.shields.io/github/release-date/franck-paul/socialMeta)](https://github.com/franck-paul/socialMeta/releases)
 [![Issues](https://img.shields.io/github/issues/franck-paul/socialMeta)](https://github.com/franck-paul/socialMeta/issues)
-[![License](https://img.shields.io/github/license/franck-paul/socialMeta)](https://github.com/franck-paul/socialMeta/blob/master/LICENSE)
+[![License](https://img.shields.io/github/license/franck-paul/socialMeta)](https://github.com/franck-paul/socialMeta/blob/main/LICENSE)
 
 ## Description
 
