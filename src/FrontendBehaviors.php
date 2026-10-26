@@ -159,7 +159,7 @@ class FrontendBehaviors
 
             $media_img = $_Str($media['img']);
             if ($media_img !== '' && !str_starts_with($media_img, 'http')) {
-                $root         = preg_replace('#^(.+?//.+?)/(.*)$#', '$1', (string) App::blog()->url());
+                $root         = preg_replace('#^(.+?//.+?)/(.*)$#', '$1', App::blog()->url());
                 $media['img'] = $root . $media_img;
             }
         } else {
@@ -267,7 +267,7 @@ class FrontendBehaviors
         if ($settings->getBool('facebook')) {
             // Mastodon account
             $account = $settings->getStr('mastodon_account', false);
-            if ($account !== '' && !str_starts_with((string) $account, '@')) {
+            if ($account !== '' && !str_starts_with($account, '@')) {
                 // Ensure that account begins with a @ (as in @myself@mastodon.instance)
                 $account = '@' . $account;
             }
@@ -288,7 +288,7 @@ class FrontendBehaviors
                 }
             }
 
-            if (strlen((string) $account) !== 0) {
+            if (strlen($account) !== 0) {
                 echo
                 '<meta name="fediverse:creator" content="' . $account . '">' . "\n";
             }
@@ -308,7 +308,7 @@ class FrontendBehaviors
         if ($settings->getBool('twitter')) {
             // Twitter account
             $account = $settings->getStr('twitter_account', false);
-            if ($account !== '' && !str_starts_with((string) $account, '@')) {
+            if ($account !== '' && !str_starts_with($account, '@')) {
                 $account = '@' . $account;
             }
 
@@ -326,7 +326,7 @@ class FrontendBehaviors
                 }
             }
 
-            if (strlen((string) $account) !== 0) {
+            if (strlen($account) !== 0) {
                 echo
                 '<meta name="twitter:site" content="' . $account . '">' . "\n" .
                 '<meta name="twitter:creator" content="' . $account . '">' . "\n";
