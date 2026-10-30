@@ -108,7 +108,7 @@ class FrontendBehaviors
             $content = Html::escapeHTML($content);
             $content = Text::cutString($content, 180);
 
-            if ($content == '') {
+            if ($content === '') {
                 // Use default description if any
                 $content = $settings->getStr('description', false);
                 if ($content === '') {
@@ -320,7 +320,7 @@ class FrontendBehaviors
             if (strlen((string) $media['img']) !== 0) {
                 echo
                 '<meta name="twitter:image" content="' . $media['img'] . '">' . "\n";
-                if ($media['alt'] != '') {
+                if ($media['alt'] !== '') {
                     echo
                     '<meta name="twitter:image:alt" content="' . $media['alt'] . '">' . "\n";
                 }
