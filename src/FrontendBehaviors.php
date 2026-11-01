@@ -30,15 +30,15 @@ class FrontendBehaviors
         $settings = My::settings();
 
         // Check settings and context
-        if (!$settings->getBool('active')) {
+        if (!$settings->getBool('active', false)) {
             // Plugin inactive on this blog
             return '';
         }
 
-        if (!$settings->getBool('facebook')
-            && !$settings->getBool('google')
-            && !$settings->getBool('twitter')
-            && !$settings->getBool('json_ld')
+        if (!$settings->getBool('facebook', false)
+            && !$settings->getBool('google', false)
+            && !$settings->getBool('twitter', false)
+            && !$settings->getBool('json_ld', false)
         ) {
             // None of social metadata section is enabled for this blog
             return '';
@@ -55,7 +55,7 @@ class FrontendBehaviors
             && App::frontend()->context()->posts->strField('post_type') === 'post'
         ) {
             // Its a single post
-            if (!$settings->getBool('on_post')) {
+            if (!$settings->getBool('on_post', false)) {
                 return '';
             }
 
@@ -66,12 +66,12 @@ class FrontendBehaviors
             && App::frontend()->context()->posts->strField('post_type') === 'page'
         ) {
             // Its a single page
-            if (!$settings->getBool('on_page')) {
+            if (!$settings->getBool('on_page', false)) {
                 return '';
             }
 
             $single = true;
-        } elseif (!$settings->getBool('on_other')) {
+        } elseif (!$settings->getBool('on_other', false)) {
             return '';
         } elseif (App::url()->isType(['default', 'default-page', 'static'])) {
             $schema = 'WebSite';
@@ -129,13 +129,13 @@ class FrontendBehaviors
             ]);
             // Give 3rd party plugins the opportunity to give media info
             App::behavior()->callBehavior('socialMetaMedia', $media);
-            if ($media['img'] === '' && $settings->getBool('photo')) {
+            if ($media['img'] === '' && $settings->getBool('photo', false)) {
                 // Photoblog, use original photo rather than small one
                 $media['img'] = Ctx::EntryFirstImageHelper('o', true, '', true);
                 if ($media['img'] !== '') {
                     $media['large'] = true;
                     $tag            = Ctx::EntryFirstImageHelper('o', true, '', false);
-                    if (preg_match('/alt="([^"]+)"/', $tag, $malt)) {
+                    if ((bool) preg_match('/alt="([^"]+)"/', $tag, $malt)) {
                         $media['alt'] = $malt[1];
                     }
                 }
@@ -145,7 +145,7 @@ class FrontendBehaviors
                 $media['img'] = Ctx::EntryFirstImageHelper('m', true, '', true);
                 if ($media['img'] !== '') {
                     $tag = Ctx::EntryFirstImageHelper('m', true, '', false);
-                    if (preg_match('/alt="([^"]+)"/', $tag, $malt)) {
+                    if ((bool) preg_match('/alt="([^"]+)"/', $tag, $malt)) {
                         $media['alt'] = $malt[1];
                     }
                 }
@@ -264,7 +264,7 @@ class FrontendBehaviors
 
         // Everything is ready, it's time to output social metadata
 
-        if ($settings->getBool('facebook')) {
+        if ($settings->getBool('facebook', false)) {
             // Mastodon account
             $account = $settings->getStr('mastodon_account', false);
             if ($account !== '' && !str_starts_with($account, '@')) {
@@ -294,7 +294,7 @@ class FrontendBehaviors
             }
         }
 
-        if ($settings->getBool('google')) {
+        if ($settings->getBool('google', false)) {
             // Google+
             echo
             '<meta itemprop="name" content="' . $title . '">' . "\n" .
@@ -305,7 +305,7 @@ class FrontendBehaviors
             }
         }
 
-        if ($settings->getBool('twitter')) {
+        if ($settings->getBool('twitter', false)) {
             // Twitter account
             $account = $settings->getStr('twitter_account', false);
             if ($account !== '' && !str_starts_with($account, '@')) {
@@ -314,7 +314,7 @@ class FrontendBehaviors
 
             // Twitter
             echo
-            '<meta name="twitter:card" content="' . ($media['large'] ? 'summary_large_image' : 'summary') . '">' . "\n" .
+            '<meta name="twitter:card" content="' . ((bool) $media['large'] ? 'summary_large_image' : 'summary') . '">' . "\n" .
             '<meta name="twitter:title" content="' . $title . '">' . "\n" .
             '<meta name="twitter:description" content="' . $_Str($content) . '">' . "\n";
             if (strlen((string) $media['img']) !== 0) {
@@ -333,7 +333,7 @@ class FrontendBehaviors
             }
         }
 
-        if ($settings->getBool('json_ld')) {
+        if ($settings->getBool('json_ld', false)) {
             $json_lines = [
                 '  "@context": "https://schema.org"',
                 '  "@type": "' . $schema . '"',
