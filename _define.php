@@ -18,9 +18,9 @@ if (isset($this) && is_object($this) && method_exists($this, 'registerModule') &
         'socialMeta',
         'Add social meta to your posts and pages',
         'Franck Paul',
-        '8.3',
+        '9.0',
         [
-            'date'        => '2026-08-03T10:10:59+0200',
+            'date'        => '2026-11-08T10:22:34+0100',
             'requires'    => [['core', '2.40']],
             'permissions' => 'My',
             'type'        => 'plugin',
